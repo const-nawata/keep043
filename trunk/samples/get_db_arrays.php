@@ -24,6 +24,8 @@ function getDbArray(){
 	echo "-------------------------------------------------------------------------------------------------------------<br>";
 
 
+	//	Test comment for Google SVN
+	
 	$sql	=
 "SELECT `json`.`item` AS `item` FROM `json`";
 	$result	= $mysqli_obj->query( $sql );
