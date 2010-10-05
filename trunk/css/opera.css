@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+div.headerDiv {
+	height: 128px;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	/* To redefine for Safari 4 */
+	div.headerDiv {
+		height: 130px;
+	}
+	/*
+	.edit_pane_input, .edit_pane_txt_ar, .edit_pane_sel{
+		width: 260px;
+	}
+	input{
+		height: 20px;
+	}
+	*/
+}
