@@ -1,5 +1,6 @@
 <?php
 DEFINE( '_IS_DEBUG', false );
+
 /*
 $tf_ID = "ID";
 $tf_id = "id";
