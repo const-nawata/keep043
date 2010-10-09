@@ -934,7 +934,7 @@ class utils_ut{
 		$mask	= 0;
 		switch( $isoWeekDay ){
 			case self::c_iso_nMonday:		$mask	= self::c_mondayMask; break;
-			case self::c_iso_nTuesday:		$mask	= self::c_nTuesday; break;
+			case self::c_iso_nTuesday:		$mask	= self::c_tuesdayMask; break;
 			case self::c_iso_nWednesday:	$mask	= self::c_wednesdayMask; break;
 			case self::c_iso_nThursday:		$mask	= self::c_thursdayMask; break;
 			case self::c_iso_nFriday:		$mask	= self::c_fridayMask; break;
