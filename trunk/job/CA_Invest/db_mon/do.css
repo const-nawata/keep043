@@ -1,0 +1,158 @@
+@CHARSET "UTF-8";
+
+body{
+    background-color: #EFFFEE;
+}
+
+body, body * {
+    font-family: Arial;
+    font-size: 16px;
+}
+
+.red{
+    color: #EE0000;
+}
+
+.Ttl_head{
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+/*
+.qnt_tables{
+	padding-bottom: 5px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #C1643C;
+}
+*/
+
+.org_code_info{
+    color: #CC4444;
+    font-style: italic;
+}
+
+/*
+.log_info_td{
+	vertical-align: top;
+	background-color: #D5C9FF;
+	padding: 5px;
+	width: 660px; 
+}
+
+.logHead{
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: #888822;
+}
+
+.logContent{
+	overflow: scroll;
+	width: 660px;
+}
+
+.logContent *{
+	background-color: #FFEEEE;
+}
+
+.infoLog, .infoLog *{
+    font-size: 11px;
+    margin: 0;
+}
+
+.infoLog{
+	padding-left: 10px;
+	width: 600px;
+	white-space: normal;
+}
+
+.infoLogTitle{
+    text-align: left;
+    padding: 5px 0 2px 10px; /*trbl*/
+    /*margin: 0;
+    font-size: 11px;
+    font-weight: bold;
+}
+*/
+.ut_info{
+	font-size: 12px;
+}
+
+.sell_name, .sell_info{
+	height: 15px;
+	table-layout: fixed;
+    padding: 0 20px 0 20px; /*trbl*/
+    text-align: left;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+
+/*
+.sell_title{
+	font-weight: bold;
+	text-align: center;
+	background-color: #FFEDB2;
+}
+*/
+
+
+.sell_name{
+    font-weight: bold;
+
+}
+
+.sell_info{
+	width: 1px;
+	text-align: right;
+}
+
+
+/*
+.columnBorder{
+	border-right: 1px solid;
+}
+
+.gen_info{
+    padding: 0;
+    font-size: 12px;
+}
+*/
+
+
+.host_info{
+    font-size: 12px;
+    font-weight: normal;
+}
+pre{
+	padding: 0;
+}
+
+.log_emt_line_TD{
+	height: 20px;
+}
+
+.log_title_TD{
+	text-align: center;
+	padding-bottom: 5px;
+	border-bottom:  1px solid;
+}
+
+.log_d_t_TD, .log_level_TD, .log_content_TD{
+	font-size: 12px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 5px;
+	border-right: 1px solid;
+	border-bottom: 1px solid;
+	padding-top: 5px;
+}
+
+.log_d_t_TD{
+	/*width: 50px;*/
+	white-space: nowrap;
+	border-left: 1px solid;
+}
