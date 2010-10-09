@@ -17,8 +17,8 @@ class anyAgendaUtility extends PHPUnit_Framework_TestCase{
 	const _is_7_BB		= false;
 
 	//	Off days
-	const _is_8_BB		= true;
-	const _is_9_BB		= false;
+	const _is_8_BB		= false;
+	const _is_9_BB		= true;
 	const _is_10_BB		= false;
 
 	protected function setUp(){
