@@ -543,7 +543,7 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 //------------------------------------------------------------------------------------- _UT_ORG_CODE
 
 	public function test_Ttl_07_16_HasNoAppsAndFreeTimes__SetOffDays_DayPtt(){											//_is_9_BB
-		if( 0&& ( self::_is_9_BB || self::_is_all ) && !$_SESSION[ 'is_skip' ] ){
+		if( ( self::_is_9_BB || self::_is_all ) && !$_SESSION[ 'is_skip' ] ){
 			$_SESSION[ 'is_skip' ]	= true;
 			global $CA_PATH; include( $CA_PATH.'std.php' );
 
@@ -581,10 +581,9 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 					$d_t	= date( 'Y-m-d H:i:s', strtotime( $period.' day', $mk ) );
 				}
 
-				$ags	= $agendas[ 1 ][ 'AGENDA_ID' ];
 				$time_now	= '06:00';	//----------------------------------
 				$now		= $db_today.' '.$time_now.':00';
-				$month_info	= bl::getAnyAgendaForMonth( $now, 10, 2010, $app_types[ 0 ][ 'ID' ], $ags, false );
+				$month_info	= bl::getAnyAgendaForMonth( 10, 2010, $app_types[ 0 ][ 'ID' ], $agendas[ 1 ][ 'AGENDA_ID' ], -2, $today, $time_now );
 				$this->assertEquals( 31, count( $month_info ), "\n***** Assert 1. Checked time: $time_now. *****\nWrong quantity of itmes.\nReceived data:\n".print_r(  $month_info, true )."\n" );
 				foreach( $month_info as $db_date => $item ){
 					$condition	= array_key_exists( $db_date, $off_db_dates ) ? ( 0 == $item ) : ( 1 == $item );
@@ -599,7 +598,7 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 //------------------------------------------------------------------------------------- _UT_ORG_CODE
 
 	public function test_Ttl_07_16_HasNoAppsAndFreeTimes__SetOffDays_WeekPtt(){											//_is_10_BB
-		if( 0&& ( self::_is_10_BB || self::_is_all ) && !$_SESSION[ 'is_skip' ] ){
+		if( ( self::_is_10_BB || self::_is_all ) && !$_SESSION[ 'is_skip' ] ){
 			$_SESSION[ 'is_skip' ]	= true;
 			global $CA_PATH; include( $CA_PATH.'std.php' );
 
@@ -620,49 +619,39 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 			);
 			utils_ut::addItem( 'off_day', $item_data );
 
-
-//print_r( $off_days );
-
-
-//exit;
-
-echo "\n\n";
+			$chk_today	= '01-10-2010'; $db_chk_today = date( 'd-m-Y', strtotime( $chk_today ) );
+			$mk_item	= $mk; // See $mk in dates.php
 			for( $first_day_add = 0; $first_day_add < 7; $first_day_add++ ){
-				$d_t_start	= date( 'Y-m-d H:i:s', strtotime( $first_day_add.' day', $mk ) );
+				$off_data	= array(
+					'DAY_ID'		=> $off_days[ 0 ][ 'DAY_ID' ],
+					'START_DATE'	=> date( 'Y-m-d', $mk_item )
+				);
+				utils_ut::updateTable( 'ca_daysoff', $off_data );
+				for( $period = 1; $period <= 2; $period++ ){
+					for( $pattern = 1; $pattern < 10; $pattern++ ){
+						$ptt_data	= array(
+							'ID'		=> $off_days[ 0 ][ 'PATT_ID' ],
+							'PERIOD'	=> $period,
+							'WEEK_DAYS'	=> $pattern
+						);
+						utils_ut::updateTable( 'ca_daysoff_pattern', $ptt_data );
+						$off_days[ 0 ]	= utils_ut::get_off_day_ById( $off_days[ 0 ][ 'DAY_ID' ] );
+						$free_days	= utils_ut::findFreeDaysOfMonthByDayOffItem( 10, 2010, $off_days[ 0 ] );
 
-				$mk_dt_start	= strtotime( $d_t_start );
-
-echo "d_t_start: $d_t_start # week day: ".date( 'N', $mk_dt_start )." # week ".date( 'W', $mk_dt_start )."\n\n";
-
-
-
-				for( $period = 1; $period <= 4; $period++ ){
-					$valid_weeks	= array();
-					$d_t	= $d_t_start;
-					while( $d_t <= '2010-10-31 00:00:00'){
+						$time_now	= '06:00';	//----------------------------------
+						$now		= $db_today.' '.$time_now.':00';
+						$month_info	= bl::getAnyAgendaForMonth( 10, 2010, $app_types[ 0 ][ 'ID' ], $agendas[ 1 ][ 'AGENDA_ID' ], -2, $chk_today, $time_now );
+						foreach( $month_info as $db_date => $item ){
+							$condition	= ( $db_date >= $db_chk_today && array_key_exists( $db_date, $free_days ) ) ? ( 1 == $item ) : ( 0 == $item );
+							$this->assertTrue( $condition, "\n***** Assert 2. Checked time: $time_now. *****\nWrong value for date: ".date( 'd-m-Y', strtotime( $db_date ) ).".\n".
+								"Days off date start: ".$off_days[ 0 ][ 'START_DATE' ].", end: ".$off_days[ 0 ][ 'END_DATE' ].
+								"\nPeriod: ".$period.", pattern: ".$pattern.
+								"\nReceived data:\n".print_r(  $month_info, true )."\n" );
+						}
 					}
-
-
-
-					for( $pattern = 1; $pattern < 128; $pattern++ ){
-					}
-
-
-
-
-
-
-
-
-//					$new_data	= array(
-//						'ID'	=> $off_days[ 0 ][ 'PATT_ID' ],
-//						'PERIOD'	=> $period
-//					);
-//					utils_ut::updateTable( 'ca_daysoff_pattern', $new_data );
-//					$off_days[ 0 ]	= utils_ut::get_off_day_ById( $off_days[ 0 ][ 'DAY_ID' ] );
 				}
+				$mk_item	= strtotime( '+1 day', $mk_item );
 			}
-
 
 
             $_SESSION[ 'is_skip' ]	= false;
