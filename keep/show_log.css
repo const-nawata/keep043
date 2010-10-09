@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+
+body,* {
+	font-size: 12px;
+	font-family: arial;
+	background-color: #F9EFE5;
+}
+
+b {
+	color: #339999;
+	font-size: 18px;
+}
+
+.ttl {
+	padding-bottom: 20px;
+	/*background-color: #eeaacc;*/
+	width: 100%;
+}
+
+.hat_sell,.info_sell {
+	padding: 5px 10px 5px 10px;
+	border-right: 1px solid;
+}
+
+.hat_sell {
+	font-size: 16px;
+	font-weight: bold;
+	border-bottom: 1px solid;
+	text-align: center;
+	background-color: #F9bcaa;
+}
+
+.info_sell {
+	font-size: 14px;
+	vertical-align: top;
+	text-align: right;
+	background-color: #F4E6F1;
+}
+
+.info_cnt {
+	width: 800px;
+	padding: 5px;
+	background-color: #EADEE8;
+	text-align: left;
+}
