@@ -19,7 +19,9 @@ class anyAgendaUtility extends PHPUnit_Framework_TestCase{
 	//	Off days
 	const _is_8_BB		= false;
 	const _is_9_BB		= false;
-	const _is_10_BB		= true;
+	const _is_10_BB		= false;
+	const _is_11_BB		= false;
+//	const _is_12_BB		= true;	//REMARK: This test is always anabled
 
 	protected function setUp(){
 		session_tuning::initSessionData();

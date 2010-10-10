@@ -34,29 +34,18 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 				//	App types
 			utils_ut::addItem( 'app_type' );
 
-			$ag_ids	= array();
-			foreach( $agendas as $agenda ){
-				$ag_ids[]	= $agenda[ 'AGENDA_ID' ];
-			}
-			$ags	= implode( ',', $ag_ids );
-
-
 			$d_t_now	= '2010-01-10 06:00:00'; include( $CA_PATH.'dates.php' );
-//			$time_now	= '16:00';	//----------------------------------
 
 				$m	= microtime();
 				list( $a1, $a2 ) = explode( " ", $m );
 				$m1	= $a2 + $a1;
 
-//			$today = '10-01-2010'; $db_today = date( 'Y-m-d', strtotime( $today ) );
-//			$now		= $db_today.' '.$time_now.':00';
-//			$month_info	= bl::getAnyAgendaForMonth( $now, 1, 2010, $app_types[ 0 ][ 'ID' ], $ags, true );
 			$month_info	= bl::getAnyAgendaForMonth( 1, 2010, $app_types[ 0 ][ 'ID' ], -2, -2, $today, $time_now );
 
 				$m	= microtime(  );
 				list( $a1, $a2 ) = explode( " ", $m );
 				$m2	= $a2 + $a1;
-				echo "<div style='position: absolute; top: 0px; left: 500px;'>Performance time for `getAnyAgendaForMonth` method is ".( $m2 - $m1 )." sec</div>";
+				echo "<div style='position: absolute; top: 5px; left: 500px;'>Performance for `getAnyAgendaForMonth` method is ".( $m2 - $m1 )." sec (Simple)</div>";
 
 
             $_SESSION[ 'is_skip' ]	= false;
@@ -573,20 +562,14 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 				utils_ut::updateTable( 'ca_daysoff_pattern', $new_data );
 				$off_days[ 0 ]	= utils_ut::get_off_day_ById( $off_days[ 0 ][ 'DAY_ID' ] );
 
-				$d_t	= $d_t_now;
-				$off_db_dates	= array();
-				while( $d_t < '2010-10-31 00:00:00' ){
-					$mk	= strtotime( $d_t );
-					$off_db_dates[ date( 'Y-m-d', $mk ) ]	= 1;
-					$d_t	= date( 'Y-m-d H:i:s', strtotime( $period.' day', $mk ) );
-				}
+				$free_days	= utils_ut::findFreeDaysOfMonthByDayOffItem( 10, 2010, $off_days[ 0 ] );
 
 				$time_now	= '06:00';	//----------------------------------
 				$now		= $db_today.' '.$time_now.':00';
 				$month_info	= bl::getAnyAgendaForMonth( 10, 2010, $app_types[ 0 ][ 'ID' ], $agendas[ 1 ][ 'AGENDA_ID' ], -2, $today, $time_now );
 				$this->assertEquals( 31, count( $month_info ), "\n***** Assert 1. Checked time: $time_now. *****\nWrong quantity of itmes.\nReceived data:\n".print_r(  $month_info, true )."\n" );
 				foreach( $month_info as $db_date => $item ){
-					$condition	= array_key_exists( $db_date, $off_db_dates ) ? ( 0 == $item ) : ( 1 == $item );
+					$condition	= array_key_exists( $db_date, $free_days ) ? ( 1 == $item ) : ( 0 == $item );
 					$this->assertTrue( $condition, "\n***** Assert 2. Checked time: $time_now. *****\nWrong value for date: ".date( 'd-m-Y', strtotime( $db_date ) ).". Period: $period\nReceived data:\n".print_r(  $month_info, true )."\n" );
 				}
 			}
@@ -619,7 +602,7 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 			);
 			utils_ut::addItem( 'off_day', $item_data );
 
-			$chk_today	= '01-10-2010'; $db_chk_today = date( 'd-m-Y', strtotime( $chk_today ) );
+			$chk_today	= '07-10-2010'; $db_chk_today = date( 'Y-m-d', strtotime( $chk_today ) );
 			$mk_item	= $mk; // See $mk in dates.php
 			for( $first_day_add = 0; $first_day_add < 7; $first_day_add++ ){
 				$off_data	= array(
@@ -657,6 +640,142 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
             $_SESSION[ 'is_skip' ]	= false;
         }else{ $this->markTestSkipped(); }
 	}
+//------------------------------------------------------------------------------------- _UT_ORG_CODE
+
+	public function test_Ttl_07_16_HasFreeTimes_WeekPtt(){																//_is_11_BB
+		if( ( self::_is_11_BB || self::_is_all ) && !$_SESSION[ 'is_skip' ] ){
+			$_SESSION[ 'is_skip' ]	= true;
+			global $CA_PATH; include( $CA_PATH.'std.php' );
+
+			self::createEnvironment_01();
+
+			//	App types
+			utils_ut::addItem( 'app_type' );
+
+			//Off Days
+			$d_t_now	= '2010-10-01 00:00:00'; include( $CA_PATH.'dates.php' );
+			$item_data	= array(
+				'AGENDA_ID'		=> $agendas[ 1 ][ 'AGENDA_ID' ],
+				'START_DATE'	=> '01-10-2010',
+				'END_DATE'		=> '31-12-2010'
+			);
+
+			$item_data[ 'START_TIME' ]	= '07:00';
+			$item_data[ 'END_TIME' ]	= '11:00';
+			utils_ut::addItem( 'free_time', $item_data );
+
+			$item_data[ 'START_TIME' ]	= '12:00';
+			$item_data[ 'END_TIME' ]	= '16:00';
+			utils_ut::addItem( 'free_time', $item_data );
+
+			$item_data[ 'START_TIME' ]	= '11:00';
+			$item_data[ 'END_TIME' ]	= '12:00';
+			$item_data[ 'PATT_ID' ]		= 1;
+			$item_data[ 'CYCLE' ]		= utils_ut::_cycle_week;
+			$item_data[ 'PERIOD' ]		= 1;
+			utils_ut::addItem( 'free_time', $item_data );
+
+			$chk_today	= '07-10-2010'; $db_chk_today = date( 'Y-m-d', strtotime( $chk_today ) );
+			$mk_item	= $mk; // See $mk in dates.php
+			for( $first_day_add = 0; $first_day_add < 7; $first_day_add++ ){
+				$off_data	= array(
+					'DAY_ID'		=> $free_times[ 2 ][ 'DAY_ID' ],
+					'START_DATE'	=> date( 'Y-m-d', $mk_item )
+				);
+				utils_ut::updateTable( 'ca_free_times', $off_data );
+
+				for( $period = 1; $period <= 2; $period++ ){
+					for( $pattern = 85; $pattern < 95; $pattern++ ){
+						$ptt_data	= array(
+							'ID'		=> $free_times[ 2 ][ 'PATT_ID' ],
+							'PERIOD'	=> $period,
+							'WEEK_DAYS'	=> $pattern
+						);
+						utils_ut::updateTable( 'ca_daysoff_pattern', $ptt_data );
+						$free_times[ 2 ]	= utils_ut::get_free_time_ById( $free_times[ 2 ][ 'DAY_ID' ] );
+
+						$free_days	= utils_ut::findFreeDaysOfMonthByDayOffItem( 10, 2010, $free_times[ 2 ] );
+
+						$time_now	= '06:00';	//----------------------------------
+						$now		= $db_today.' '.$time_now.':00';
+						$month_info	= bl::getAnyAgendaForMonth( 10, 2010, $app_types[ 0 ][ 'ID' ], $agendas[ 1 ][ 'AGENDA_ID' ], -2, $chk_today, $time_now );
+						foreach( $month_info as $db_date => $item ){
+							$condition	= ( $db_date >= $db_chk_today && array_key_exists( $db_date, $free_days ) ) ? ( 1 == $item ) : ( 0 == $item );
+							$this->assertTrue( $condition, "\n***** Assert 2. Checked time: $time_now. *****\nWrong value for date: ".date( 'd-m-Y', strtotime( $db_date ) ).".\n".
+								"Days off date start: ".$free_times[ 2 ][ 'START_DATE' ].", end: ".$free_times[ 2 ][ 'END_DATE' ].
+								"\nPeriod: ".$period.", pattern: ".$pattern.
+								"\nReceived data:\n".print_r(  $month_info, true )."\n" );
+						}
+					}
+				}
+				$mk_item	= strtotime( '+1 day', $mk_item );
+			}
+
+
+            $_SESSION[ 'is_skip' ]	= false;
+        }else{ $this->markTestSkipped(); }
+	}
+//------------------------------------------------------------------------------------- _UT_ORG_CODE
+
+     public function test_Performance_Complex(){	//	Performance														//_is_12
+		if( !$_SESSION[ 'is_skip' ] ){
+			$_SESSION[ 'is_skip' ]		= true;
+			global $CA_PATH; include( $CA_PATH.'std.php' );
+
+			//	Agendas
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+			utils_ut::addItem( 'agenda' );
+
+				//	App types
+			utils_ut::addItem( 'app_type' );
+
+			$free_time	= array(
+				'AGENDA_ID'		=> $agendas[ 1 ][ 'AGENDA_ID' ],
+				'START_DATE'	=> '01-10-2010',
+				'END_DATE' 		=> '31-10-2010',
+				'START_TIME'	=> '09:00',
+				'END_TIME'		=> '09:00'
+			);
+			foreach( $agendas as $agenda ){
+				$free_time[ 'AGENDA_ID' ]	= $agenda[ 'AGENDA_ID' ];
+				utils_ut::addItem( 'free_time', $free_time );
+			}
+
+			$d_t_now	= '2010-01-01 06:00:00'; include( $CA_PATH.'dates.php' );
+
+				$m	= microtime();
+				list( $a1, $a2 ) = explode( " ", $m );
+				$m1	= $a2 + $a1;
+
+			$month_info	= bl::getAnyAgendaForMonth( 10, 2010, $app_types[ 0 ][ 'ID' ], -2, -2, $today, $time_now );
+
+				$m	= microtime(  );
+				list( $a1, $a2 ) = explode( " ", $m );
+				$m2	= $a2 + $a1;
+				echo "<div style='position: absolute; top: 20px; left: 500px;'>Performance for `getAnyAgendaForMonth` method is ".( $m2 - $m1 )." sec (Complex)</div>";
+
+
+            $_SESSION[ 'is_skip' ]	= false;
+        }else{ $this->markTestSkipped(); }
+     }
 //------------------------------------------------------------------------------------- _UT_ORG_CODE
 
 

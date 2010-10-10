@@ -1,5 +1,45 @@
 DELIMITER //
 
+
+
+
+
+DROP PROCEDURE IF EXISTS `is_day_off`//
+CREATE PROCEDURE `is_day_off`( IN `p_ag_id` INT, IN `p_date` DATE, IN `p_start_date` DATE )
+	COMMENT 'defines if day is off'
+	NOT DETERMINISTIC
+BEGIN
+	SET @ag_id	= `p_ag_id`;
+	SET @v_date	= `p_date`;
+	SET @off_items	= 'SELECT COUNT(*) INTO @v_count FROM `ca_daysoff`
+	LEFT JOIN `ca_daysoff_pattern` ON `ca_daysoff_pattern`.`ID` = `ca_daysoff`.`PATT_ID`
+	WHERE `AGENDA_ID` = ? AND ( ? BETWEEN `START_DATE` AND `END_DATE` ) 
+	AND `isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) )';
+	PREPARE off_items_stmt FROM @off_items;
+	EXECUTE off_items_stmt USING @ag_id, @v_date, @v_date;
+
+
+
+
+	SELECT @v_count AS `v_count`;
+
+
+
+
+
+-- 	SELECT COUNT(*) AS `count`  FROM `ca_daysoff`
+-- 	LEFT JOIN `ca_daysoff_pattern` ON `ca_daysoff_pattern`.`ID` = `ca_daysoff`.`PATT_ID`
+-- 	WHERE `AGENDA_ID` = `p_ag_id`
+-- 	;
+END//
+
+CALL `is_day_off`( 1, '2010-10-10', '2010-10-01' )//
+
+
+
+
+/*
+
 DROP FUNCTION IF EXISTS `get_marker`//
 CREATE FUNCTION `get_marker`()
 	RETURNS VARCHAR(16) CHARSET utf8
@@ -29,7 +69,7 @@ BEGIN
 END//
 -- -------------------------------------------------------------------------------------------------
 
-/*
+
 INSERT INTO `CA_APPOINTMENTS`
   (`CA_APPOINTMENTS`.`APPTYPE_ID`,
   `CA_APPOINTMENTS`.`START_DATE`,
@@ -40,7 +80,7 @@ VALUES
    '2010-08-10',
    '23:45:00',
    'aaa')//
-*/
+
 
 
 
@@ -67,7 +107,7 @@ SHOW PROCESSLIST//
 
 KILL 47//
 
-/*
+
 
 
 
@@ -421,7 +461,7 @@ DELETE `intervals` FROM `ca_free_times` AS `intervals`,
 WHERE intervals.`START_TIME` = absorbed.`START_TIME` AND intervals.`END_TIME` = absorbed.`END_TIME`
 //
 
-*/
+
 
 
  SET @ttt = 2//
@@ -436,7 +476,7 @@ SELECT IF( 2 = 32, 1, 3) AS aaaa //
 
 
 
-/*
+
 
 	SET @clean_absorbtion = CONCAT(
 	'DELETE intervals ',
@@ -452,7 +492,7 @@ SELECT IF( 2 = 32, 1, 3) AS aaaa //
 	'    (oi1._start > oi2._start AND oi1._end <= oi2._end))) absorbed ',
 	'WHERE ',
 	'  intervals.agenda_id = absorbed.agenda_id AND intervals._start = absorbed._start AND intervals._end = absorbed._end;' );
-	*/
+*/
 
 
 
