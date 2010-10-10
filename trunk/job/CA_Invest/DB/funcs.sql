@@ -69,20 +69,42 @@ END//
 -- -------------------------------------------------------------------------------------------------
 */
 DROP FUNCTION IF EXISTS `isDateValidByPattern`//
-CREATE FUNCTION `isDateValidByPattern`( `tst_date` DATE, `start_date` DATE, `cycle` TINYINT(4), `period` INT(11), `week_days` TINYINT(4) )
+CREATE FUNCTION `isDateValidByPattern`( `p_date` DATE, `p_start_date` DATE, `p_cycle` TINYINT(4), `p_period` INT(11), `p_week_days` TINYINT(4) )
 	RETURNS BOOLEAN NOT DETERMINISTIC
-	COMMENT 'Return assigned to appointment agendas ids'
+	COMMENT 'Return pattern definitions'
 BEGIN
+	DECLARE `count_days` INT;
+	DECLARE `week_monday`, `first_week_monday` DATE;
 
-	CASE `cycle`
+
+	CASE `p_cycle`
 		WHEN 1 THEN		#	Day Cycle
+			IF ( DATEDIFF( `p_date`, `p_start_date` ) MOD `p_period` ) = 0 THEN
+				RETURN TRUE;
+			ELSE
+				RETURN FALSE;
+			END IF;
 
-			RETURN TRUE;
+-- 			RETURN TRUE;
 
 		WHEN 2 THEN		#	Week Cycle
+			SET `count_days` = DATE_FORMAT( `p_date`, '%w' );
+			SET `count_days` = IF( !`count_days`, 7, `count_days`) - 1;
+			SET `week_monday` = `p_date` - INTERVAL `count_days` DAY;
 
-			RETURN TRUE;
+			SET `count_days` = DATE_FORMAT( `p_start_date`, '%w' );
+			SET `count_days` = IF( !`count_days`, 7, `count_days`) - 1;
+			SET `first_week_monday` = `p_start_date` - INTERVAL `count_days` DAY;
 
+			IF 
+				( ( DATEDIFF( `week_monday`, `first_week_monday` ) / 7 ) MOD `p_period` ) = 0
+				AND 
+				( `p_week_days` & `get_week_day_mask`( `p_date` ) )
+			THEN
+				RETURN TRUE;
+			ELSE
+				RETURN FALSE;
+			END IF;
 		ELSE
 			RETURN TRUE;
 	END CASE;

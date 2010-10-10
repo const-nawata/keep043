@@ -159,6 +159,10 @@ FROM (
 		OPEN cursor_ag_cat;
 	END IF;
 
+	SET @off_items	= 'SELECT COUNT(*) INTO @is_day_off FROM `ca_daysoff` LEFT JOIN `ca_daysoff_pattern` ON `ca_daysoff_pattern`.`ID` = `ca_daysoff`.`PATT_ID`
+	WHERE `AGENDA_ID` = ? AND ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND `isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) )';
+	PREPARE off_items_stmt FROM @off_items;
+
 	
 
 ###	Timetables (Agendas) analizing loop
@@ -175,16 +179,6 @@ FROM (
 
 		IF NOT done THEN
 			SET @ag_id = `v_ag_id`;
-
-
-	-- SELECT @ag_id AS `ag_id`, `v_ag_start_time` AS `start`, `v_ag_end_time` AS `end`;
-	
-	-- 		SET `v_pos2`	= LOCATE( ',', p_ag_ids, `v_pos1` );
-	
-	-- 		IF `v_pos2` = 0 THEN	SET @ag_id	= SUBSTRING( `p_ag_ids`, `v_pos1` );
-	-- 		ELSE 				SET @ag_id	= SUBSTRING( `p_ag_ids`, `v_pos1`, ( `v_pos2` - `v_pos1` ) ); END IF;
-	
-	-- 		SELECT `START_TIME`, `END_TIME` FROM `ca_agendas` WHERE `AGENDA_ID` = @ag_id INTO `v_ag_start_time`, `v_ag_end_time`;
 	
 			SET @del_busy_items1	= CONCAT( 'DELETE FROM ', `v_busy_items_tbl_name` );
 			PREPARE del_busy_items_stmt1 FROM @del_busy_items1;
@@ -194,9 +188,6 @@ FROM (
 	###	All Days analizing loop
 			SET `v_cur_date`	= `v_first_date`;
 			REPEAT
-	
-	
-	
 				SET `v_prv_date`	= `v_cur_date` - INTERVAL 1 DAY;
 				SET `v_nxt_date`	= `v_cur_date` + INTERVAL 1 DAY;
 				SET `v_anx_date`	= `v_cur_date` + INTERVAL 2 DAY;
@@ -208,11 +199,14 @@ FROM (
 				ELSE
 					SET `v_ag_d_t_end`	= CONCAT( `v_nxt_date`, ' ', `v_ag_end_time` );
 				END IF;
-	
+
+				SET @udate = `v_cur_date`;
+				EXECUTE off_items_stmt USING @ag_id, @udate, @udate;
 	
 	### Single Day analizing.
 				IF( 
 					( LOCATE(`v_cur_date`, `v_result`, 1 ) = 0 ) AND 
+					( @is_day_off = 0 ) AND
 					( 
 						( `v_ag_start_time` = `v_ag_end_time` ) OR
 						( ( ( UNIX_TIMESTAMP(`v_ag_d_t_end`) - UNIX_TIMESTAMP(`p_d_t_now`) ) / 60 ) >= `v_app_type_dur` )
