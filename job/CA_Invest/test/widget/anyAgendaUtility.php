@@ -3,7 +3,7 @@ class anyAgendaUtility extends PHPUnit_Framework_TestCase{
 //	const _ptt_periods	= 3;
 
 
-	const _is_all = false;   //  false  true
+	const _is_all = true;   //  false  true
 
 //	const _is_0		= true;		//REMARK: This test is always anabled
 
