@@ -19,7 +19,6 @@ CREATE PROCEDURE `get_any_agenda_month`(IN `p_d_t_now` TIMESTAMP,
 	NOT DETERMINISTIC
 BEGIN
 	DECLARE `v_ag_id` INT;
--- 	DECLARE `v_pos1`, `v_pos2` INT DEFAULT 1;
 	DECLARE	`v_ag_start_time`, `v_ag_end_time` TIME;
 	DECLARE `v_first_date`, `v_last_date`, `v_prv_date`, `v_cur_date`, `v_nxt_date`, `v_anx_date`, `del_date`, `v_app_type_last_date` DATE;
 	DECLARE	`v_today` DATE DEFAULT DATE_FORMAT( `p_d_t_now`, '%Y-%m-%d' );
@@ -34,6 +33,9 @@ BEGIN
 	DECLARE `v_app_type_patt` INT  DEFAULT 127;
 	DECLARE `v_app_type_start`, `v_app_type_end` TIME DEFAULT '00:00:00';
 	DECLARE `v_is_multi` TINYINT(4) DEFAULT 0;
+
+	DECLARE `v_n_dates` TINYINT(4) DEFAULT 0;
+	DECLARE `v_n_month_days` TINYINT(4);
 
 
 	DECLARE done INT DEFAULT 0;
@@ -53,20 +55,6 @@ BEGIN
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 		
 ###	Declarations end ####################
-
-
-
-
-
-
-####	DEBUG ZONE START
--- IF `p_debug` THEN
--- 	DROP TABLE IF EXISTS `dbg_busy_items_tbl`;
--- 	CREATE TABLE `dbg_busy_items_tbl`( `cur_date` DATE, `d_t_start` TIMESTAMP, `d_t_end` TIMESTAMP ) ENGINE = MEMORY;
--- END IF;
-####	DEBUG ZONE END
-
-
 
 
 
@@ -137,6 +125,8 @@ FROM (
 
 
 ###	App type pattern, Today and max time dates rendering
+
+	SET `v_n_month_days` = DATE_FORMAT( LAST_DAY( CONCAT( `p_year`, '-', `p_month`, '-01') ), '%e' );
 	SET `v_cur_date`	= `v_first_date`;
 	REPEAT
 		IF  ( `v_cur_date` < `v_today` ) OR
@@ -144,6 +134,7 @@ FROM (
 			IF( `v_app_type_last_date` IS NULL, FALSE, ( `v_cur_date` > `v_app_type_last_date` ) )
 		THEN
 			SET `v_result` = CONCAT( `v_result`, '"', `v_cur_date`, '":0,' );
+			SET `v_n_dates` = `v_n_dates` + 1;
 		END IF;
 
 		SET `v_cur_date`	= DATE_ADD( `v_cur_date`, INTERVAL 1 DAY );
@@ -177,7 +168,7 @@ FROM (
 
 
 
-		IF NOT done THEN
+		IF NOT done AND `v_n_dates` < `v_n_month_days` THEN
 			SET @ag_id = `v_ag_id`;
 	
 			SET @del_busy_items1	= CONCAT( 'DELETE FROM ', `v_busy_items_tbl_name` );
@@ -314,13 +305,8 @@ FROM (
 						SET @app_tp_cond = '';
 					END IF;
 	
-	-- 				SET @free_d_t_end	= `v_ag_d_t_start`;
 					SET @free_d_t_end	= CONCAT( `v_cur_date`, ' 00:00:00');
 					SET @is_exists	= 0;
-	
-	
-	
-	-- SET @app_tp_cond = '';
 	
 	
 					SET @seek_interval = CONCAT(
@@ -328,7 +314,6 @@ FROM (
 	 FROM 
 		(SELECT 
 			1 AS `is_exists`, ',
-	-- 		'@free_d_t_end AS `fr_d_t_start`, ',
 			'IF( \'', `p_d_t_now`, '\' > @free_d_t_end, \'', `p_d_t_now`, '\', @free_d_t_end  ) AS `fr_d_t_start`, ',
 			'@free_d_t_end := `d_t_end`, 
 			`d_t_start` AS `fr_d_t_end`
@@ -341,46 +326,9 @@ FROM (
 					PREPARE seek_interval_stmt FROM @seek_interval;
 					EXECUTE seek_interval_stmt;
 	
-	
-	
-	
-	
-	
-	####	DEBUG ZONE START
-	-- IF `p_debug` THEN
-	-- 				SET @free_d_t_end	= CONCAT( `v_cur_date`, ' 00:00:00');
-	-- -- 				SET @is_exists	= 0;
-	-- 
-	-- 
-	-- 
-	-- 	SET @dbg_save_busy_items	= CONCAT( 
-	-- 'INSERT INTO  `dbg_busy_items_tbl`( `cur_date`, `d_t_start`, `d_t_end` )
-	-- 	( SELECT `cur_date`,  `fr_d_t_start` AS `d_t_start`,  `fr_d_t_end` AS `d_t_end`
-	--  FROM 
-	-- 	(SELECT 
-	-- 		\'', `v_cur_date`, '\' AS `cur_date`, ',
-	-- -- 		'@free_d_t_end AS `fr_d_t_start`, ',
-	-- 		'IF( \'', `p_d_t_now`, '\' > @free_d_t_end, \'', `p_d_t_now`, '\', @free_d_t_end  ) AS `fr_d_t_start`, ',
-	-- 		'@free_d_t_end := `d_t_end`, 
-	-- 		`d_t_start` AS `fr_d_t_end`
-	-- 	FROM ','( SELECT `d_t_start`, `d_t_end` FROM ', `v_busy_items_tbl_name`, ' ORDER BY `d_t_start` ) AS `ordered` ',
-	-- ') AS result_intervals 
-	-- WHERE 
-	-- 	`fr_d_t_start` < `fr_d_t_end` AND  `fr_d_t_start` < \'', `v_ag_d_t_end`, '\' AND 
-	-- 	( ( UNIX_TIMESTAMP( `fr_d_t_end` ) - UNIX_TIMESTAMP( `fr_d_t_start` ) ) / 60 ) >= ', `v_app_type_dur`, @app_tp_cond, ' LIMIT 1 )' );
-	-- 
-	-- 	PREPARE dbg_save_busy_items_stmt FROM @dbg_save_busy_items;
-	-- 	EXECUTE dbg_save_busy_items_stmt;
-	-- END IF;
-	####	DEBUG ZONE END
-	
-	
-	
-	
-	
-	  
 					IF @is_exists > 0 THEN
 						SET `v_result` = CONCAT( `v_result`, '"', `v_cur_date`, '":1,');
+						SET `v_n_dates` = `v_n_dates` + 1;
 					END IF;
 	
 				ELSEIF ( `v_n_get_day` < 3 ) THEN			# Single Day anilizing end
@@ -392,25 +340,20 @@ FROM (
 					SET `v_n_get_day`	= `v_n_get_day` + 1;
 				END IF;
 	
-				SET `v_cur_date`	= `v_nxt_date`;
+				IF `v_n_dates` < `v_n_month_days` THEN
+					SET `v_cur_date`	= `v_nxt_date`;
+				ELSE
+					SET `v_cur_date`	= `v_last_date` + INTERVAL 1 DAY;
+					SET done	= 1;
+				END IF;
+
+				
 			UNTIL `v_cur_date` > `v_last_date` END REPEAT;	### All Days analizing loop end
 	
-	-- 		SET `v_pos1`	= `v_pos2` + 1;
-	
-
-
-
-
-
-
+		ELSE
+			SET done	= 1;
 		END IF;
-
 	UNTIL done END REPEAT;
-
--- 	UNTIL `v_pos2` = 0 END REPEAT;		###	Timetables (Agendas) analizing loop end
-
-
-
 
 
 	SET @busy_items	= CONCAT( 'DROP TABLE IF EXISTS ', `v_busy_items_tbl_name` );

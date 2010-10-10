@@ -34,7 +34,7 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 				//	App types
 			utils_ut::addItem( 'app_type' );
 
-			$d_t_now	= '2010-01-10 06:00:00'; include( $CA_PATH.'dates.php' );
+			$d_t_now	= '2010-01-01 06:00:00'; include( $CA_PATH.'dates.php' );
 
 				$m	= microtime();
 				list( $a1, $a2 ) = explode( " ", $m );
@@ -45,7 +45,7 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 				$m	= microtime(  );
 				list( $a1, $a2 ) = explode( " ", $m );
 				$m2	= $a2 + $a1;
-				echo "<div style='position: absolute; top: 5px; left: 500px;'>Performance for `getAnyAgendaForMonth` method is ".( $m2 - $m1 )." sec (Simple)</div>";
+				echo "<div style='position: absolute; top: 10px; left: 500px;'>Performance for `getAnyAgendaForMonth` method is ".( $m2 - $m1 )." sec (Simple)</div>";
 
 
             $_SESSION[ 'is_skip' ]	= false;
@@ -770,7 +770,7 @@ class anyAgendaTestsSuite extends anyAgendaUtility{
 				$m	= microtime(  );
 				list( $a1, $a2 ) = explode( " ", $m );
 				$m2	= $a2 + $a1;
-				echo "<div style='position: absolute; top: 20px; left: 500px;'>Performance for `getAnyAgendaForMonth` method is ".( $m2 - $m1 )." sec (Complex)</div>";
+				echo "<div style='position: absolute; top: 25px; left: 500px;'>Performance for `getAnyAgendaForMonth` method is ".( $m2 - $m1 )." sec (Complex)</div>";
 
 
             $_SESSION[ 'is_skip' ]	= false;
