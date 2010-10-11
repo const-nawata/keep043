@@ -12,6 +12,8 @@
  * Those unit tests are created to check DB function to create chache content.
  */
 class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
+	const _is_all = false;   //  false  true //
+
 
 	//	Long tests limitations
 	const _is_fast		= true;
@@ -19,10 +21,8 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 	const _n_max_iters	= 10;	//Number of iterations.
 
 
-	const _is_all = true;   //  false  true //
-
 //	const _is_1_1_1		= false;	//REMARK:	Performance test. It is always on.
-	const _is_1_1_2		= true;	//REMARK:	Performance test. It is always on.
+	const _is_1_1_2		= false;	//REMARK:	Performance test. It is always on.
 
 	const _is_1_2_2		= false;
 	const _is_1_2_3		= false;
@@ -41,7 +41,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 	const _is_1_2_15	= false;
 	const _is_1_2_16	= false;
 	const _is_1_2_17	= false;
-	const _is_1_2_18	= false;
+	const _is_1_2_18	= true;
 	const _is_1_2_19	= false;
 
 	const _is_1_2_20	= false;
@@ -716,8 +716,8 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 			$today = '11-08-2010';
 
 
-			UT_utils::createBlockOfAppointments( $today, '10:00', '12:00', $agendas[ 1 ][ $agendasF_Id ], $app_types[ 5 ] );
-			UT_utils::createBlockOfAppointments( $today, '12:30', '15:00', $agendas[ 1 ][ $agendasF_Id ], $app_types[ 5 ] );
+			UT_utils::createBlockOfAppointments( $today, '10:00', '12:00', $agendas[ 1 ][ $agendasF_Id ], $app_types[ 5 ] );//07:00 - 16:00 (ag)
+			UT_utils::createBlockOfAppointments( $today, '12:30', '15:30', $agendas[ 1 ][ $agendasF_Id ], $app_types[ 5 ] );
 
 
 			//	Asserts
@@ -790,7 +790,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 			BlockDaysBL::insertFreeTimeRec( $blk_param );
 
 			$blk_param[ $dbTable_StartTime ]	= '12:30';
-			$blk_param[ $dbTable_EndTime ]		= '15:00';
+			$blk_param[ $dbTable_EndTime ]		= '15:10';
 			BlockDaysBL::insertFreeTimeRec( $blk_param );
 
 
@@ -861,7 +861,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 				PATTERN_ID			=> 0
 			);
 			BlockDaysBL::insertFreeTimeRec( $blk_param );
-			UT_utils::createBlockOfAppointments( $today, '12:30', '15:00', $agendas[ 1 ][ $agendasF_Id ], $app_types[ 5 ] );
+			UT_utils::createBlockOfAppointments( $today, '12:30', '15:30', $agendas[ 1 ][ $agendasF_Id ], $app_types[ 5 ] );
 
 
 			//	Asserts
@@ -929,7 +929,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 				$dbTable_StartDate	=> $today,
 				$dbTable_EndDate	=> $today,
 				$dbTable_StartTime	=> '12:30',
-				$dbTable_EndTime	=> '15:00',
+				$dbTable_EndTime	=> '15:10',
 				PATTERN_ID			=> 0
 			);
 			BlockDaysBL::insertFreeTimeRec( $blk_param );
@@ -1334,13 +1334,13 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 			$date	= '11-10-2010'; $db_date	= date( 'Y-m-d', strtotime( $date ) );
 
 			//	Appointments
-			UT_utils::createBlockOfAppointments( $date, '07:00', '12:00', $_SESSION[ 'valid_user_id' ], $app_types[ 5 ] );
+			UT_utils::createBlockOfAppointments( $date, '07:00', '13:00', $_SESSION[ 'valid_user_id' ], $app_types[ 5 ] );
 			//	13:00 - 14:00	free line
-			UT_utils::createBlockOfAppointments( $date, '13:00', '16:00', $_SESSION[ 'valid_user_id' ], $app_types[ 5 ] );
+			UT_utils::createBlockOfAppointments( $date, '14:00', '16:00', $_SESSION[ 'valid_user_id' ], $app_types[ 5 ] );
 
 
 			UT_utils::doMysqliReconnect( $this, 'test_TtlHasEmpty30MinLineByAppsBeyondAppType_Agenda_07_16__AppTypeStartEnd_09_12' );
-			$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 10, 2010, $app_types[ 1 ][ $appTypesF_Id ], $_SESSION[ 'valid_user_id' ], make_appointments_bl::_whole_list, '01-10-2010', '12:00' );
+			$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 10, 2010, $app_types[ 1 ][ $appTypesF_Id ], $_SESSION[ 'valid_user_id' ], make_appointments_bl::_whole_list, '01-10-2010', '12:01' );
             foreach( $month_info as $db_date => $item ){
             	$date	= date( 'd-m-Y', strtotime( $db_date ) );
 				$condition	= ( $db_date != '2010-10-01' && $db_date != '2010-10-11' ) ? ( 1 == $item ) : ( 0 == $item );
