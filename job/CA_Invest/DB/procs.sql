@@ -41,16 +41,16 @@ BEGIN
 	DECLARE done INT DEFAULT 0;
 
  	DECLARE cursor_ag_single CURSOR FOR
-		SELECT `ca_agendas`.`AGENDA_ID`, `START_TIME`, `END_TIME`  FROM `ca_agendas` WHERE `AGENDA_ID` = `p_ag_id`;
+		SELECT `CA_AGENDAS`.`AGENDA_ID`, `START_TIME`, `END_TIME`  FROM `CA_AGENDAS` WHERE `AGENDA_ID` = `p_ag_id`;
 
  	DECLARE cursor_ag_cat CURSOR FOR
-		SELECT `ca_agendas`.`AGENDA_ID`, `START_TIME`, `END_TIME` 
-		FROM `ca_agendas`
-		LEFT JOIN `ca_agendas_assigned_categories` ON `ca_agendas_assigned_categories`.`AGENDA_ID` = `ca_agendas`.`AGENDA_ID`
-		WHERE `ca_agendas_assigned_categories`.`AGE_CAT_ID` = `p_cat_id`;
+		SELECT `CA_AGENDAS`.`AGENDA_ID`, `START_TIME`, `END_TIME` 
+		FROM `CA_AGENDAS`
+		LEFT JOIN `CA_AGENDAS_ASSIGNED_CATEGORIES` ON `CA_AGENDAS_ASSIGNED_CATEGORIES`.`AGENDA_ID` = `CA_AGENDAS`.`AGENDA_ID`
+		WHERE `CA_AGENDAS_ASSIGNED_CATEGORIES`.`AGE_CAT_ID` = `p_cat_id`;
 
  	DECLARE cursor_ag_org CURSOR FOR
-		SELECT `ca_agendas`.`AGENDA_ID`, `START_TIME`, `END_TIME`  FROM `ca_agendas` WHERE `ORG_CODE` = `p_org_code`;
+		SELECT `CA_AGENDAS`.`AGENDA_ID`, `START_TIME`, `END_TIME`  FROM `CA_AGENDAS` WHERE `ORG_CODE` = `p_org_code`;
 
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
 		
@@ -72,7 +72,7 @@ BEGIN
 		`v_app_type_start`,
 		`v_app_type_end`,
 		`v_app_type_patt`
-	FROM `ca_appointment_types` WHERE `ID` = `p_app_type_id` LIMIT 1;
+	FROM `CA_APPOINTMENT_TYPES` WHERE `ID` = `p_app_type_id` LIMIT 1;
 
 
 	SET `v_busy_items_tbl_name`	= CONCAT( 'tmp_', `get_marker`() );
@@ -93,12 +93,12 @@ FROM (
 			CONCAT( DATE_ADD( ?, INTERVAL 1 DAY ), \' \', `END_TIME` ), 
 			CONCAT( ?, \' \', `END_TIME` ) ) AS `d_t_end`
 
-		FROM `ca_appointments` 
-		LEFT JOIN `ca_app_assigned_agendas` ON `ca_app_assigned_agendas`.`APP_ID` = `ca_appointments`.`APP_ID` 
-		LEFT JOIN `ca_daysoff_pattern` ON `ca_daysoff_pattern`.`ID` = `ca_appointments`.`PATT_ID` 
+		FROM `CA_APPOINTMENTS` 
+		LEFT JOIN `CA_APP_ASSIGNED_AGENDA` ON `CA_APP_ASSIGNED_AGENDA`.`APP_ID` = `CA_APPOINTMENTS`.`APP_ID` 
+		LEFT JOIN `CA_DAYSOFF_PATTERN` ON `CA_DAYSOFF_PATTERN`.`ID` = `CA_APPOINTMENTS`.`PATT_ID` 
 		WHERE ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND 
 		NOT ( `END_DATE` = ? AND `START_TIME` > `END_TIME` ) AND 
-		`ca_app_assigned_agendas`.`AGENDA_ID` = ? AND 
+		`CA_APP_ASSIGNED_AGENDA`.`AGENDA_ID` = ? AND 
 		`isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) ) 
 
 		UNION ALL 
@@ -108,8 +108,8 @@ FROM (
 			CONCAT( DATE_ADD( ?, INTERVAL 1 DAY ), \' \', `END_TIME` ), 
 			CONCAT( ?, \' \', `END_TIME` ) ) AS `d_t_end`
 
-		FROM `ca_free_times` 
-		LEFT JOIN `ca_daysoff_pattern` ON `ca_daysoff_pattern`.`ID` = `ca_free_times`.`PATT_ID`
+		FROM `CA_FREE_TIMES` 
+		LEFT JOIN `CA_DAYSOFF_PATTERN` ON `CA_DAYSOFF_PATTERN`.`ID` = `CA_FREE_TIMES`.`PATT_ID`
 		WHERE ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND 
 		NOT ( `END_DATE` = ? AND `START_TIME` > `END_TIME` ) AND 
 		`AGENDA_ID` = ? AND 
@@ -150,7 +150,7 @@ FROM (
 		OPEN cursor_ag_cat;
 	END IF;
 
-	SET @off_items	= 'SELECT COUNT(*) INTO @is_day_off FROM `ca_daysoff` LEFT JOIN `ca_daysoff_pattern` ON `ca_daysoff_pattern`.`ID` = `ca_daysoff`.`PATT_ID`
+	SET @off_items	= 'SELECT COUNT(*) INTO @is_day_off FROM `CA_DAYSOFF` LEFT JOIN `CA_DAYSOFF_PATTERN` ON `CA_DAYSOFF_PATTERN`.`ID` = `CA_DAYSOFF`.`PATT_ID`
 	WHERE `AGENDA_ID` = ? AND ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND `isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) )';
 	PREPARE off_items_stmt FROM @off_items;
 
