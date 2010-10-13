@@ -2596,8 +2596,10 @@ public function actionDoBackInWidgetStep4(){
 *                    [<db_date>] => 0 or agenda's id
 *                )
 */
-	public function getAvailableDaysForMonth_24( $month, $year, $appTypeId, $agId, $catId, $today='', $now='', $orgCode='' ){
+	public function getAvailableDaysForMonth_24( $month, $year, $appTypeId, $agId, $catId, $today='', $now='', $isTest=false, $orgCode='' ){
 		global $CA_PATH; include( $CA_PATH."variables_DB.php" );
+
+		$is_tst	= ( $isTest ) ? 'TRUE' : 'FALSE';
 
 //public static function getAvailableDaysForMonth_24( $month, $year, $appTypeId, $agId, $catId, $dtNow, $isTest, $orgCode )
 
@@ -2608,7 +2610,7 @@ public function actionDoBackInWidgetStep4(){
 		$db_now		= ( '' != $now )	? date( 'H:i:s', strtotime( $now ) ): date( 'H:i:s' );
 		$d_t_now	= $db_today.' '.$db_now;
 
-		$info	= make_appointments_dbl::getAvailableDaysForMonth_24( $month, $year, $appTypeId, $agId, $catId, $d_t_now, false, $org_code );
+		$info	= make_appointments_dbl::getAvailableDaysForMonth_24( $month, $year, $appTypeId, $agId, $catId, $d_t_now, $is_tst, $org_code );
 		$info	= $info[ 0 ][ 'res' ];
 		$info	= json_decode( $info, true );
 		ksort( $info );
