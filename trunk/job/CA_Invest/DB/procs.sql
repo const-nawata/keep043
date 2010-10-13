@@ -116,8 +116,69 @@ FROM (
 		`isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) ) 
 
 ) AS `ins_tbl`)' );
-
 	PREPARE get_busy_items_stmt FROM @get_busy_items;
+
+-- CURRENT_TIMESTAMP 2010-10-10 00:00:00
+
+
+--	DEBUG ZONE
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+-- IF `p_debug` THEN
+-- -- 	DROP TABLE IF EXISTS `tst_tbl`;
+-- 
+-- 	CREATE TABLE IF NOT EXISTS `tst_tbl` 
+-- 		( `d_t_start` TIMESTAMP DEFAULT '0000-00-00 00:00:00', `d_t_end` TIMESTAMP DEFAULT '0000-00-00 00:00:00', `info` VARCHAR(1000) DEFAULT '' ) ENGINE = MEMORY;
+-- 	
+-- 
+-- 	DELETE FROM `tst_tbl`;
+-- 
+-- 	SET @get_busy_items_dbg	= CONCAT(
+-- 'INSERT INTO `tst_tbl` ( `d_t_start`, `d_t_end`  ) 
+-- ( SELECT `d_t_start`, `d_t_end`
+-- FROM (
+-- 	SELECT 
+-- 		CONCAT( ?, \' \', `START_TIME` ) AS `d_t_start`, 
+-- 
+-- 		IF( ( `START_TIME` > `END_TIME`), 
+-- 			CONCAT( DATE_ADD( ?, INTERVAL 1 DAY ), \' \', `END_TIME` ), 
+-- 			CONCAT( ?, \' \', `END_TIME` ) ) AS `d_t_end`
+-- 
+-- 		FROM `CA_APPOINTMENTS` 
+-- 		LEFT JOIN `CA_APP_ASSIGNED_AGENDA` ON `CA_APP_ASSIGNED_AGENDA`.`APP_ID` = `CA_APPOINTMENTS`.`APP_ID` 
+-- 		LEFT JOIN `CA_DAYSOFF_PATTERN` ON `CA_DAYSOFF_PATTERN`.`ID` = `CA_APPOINTMENTS`.`PATT_ID` 
+-- 		WHERE ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND 
+-- 		NOT ( `END_DATE` = ? AND `START_TIME` > `END_TIME` ) AND 
+-- 		`CA_APP_ASSIGNED_AGENDA`.`AGENDA_ID` = ? AND 
+-- 		`isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) ) 
+-- 
+-- 		UNION ALL 
+-- 
+-- 	SELECT CONCAT( ?, \' \', `START_TIME` ) AS `d_t_start`, 
+-- 		IF( ( `START_TIME` > `END_TIME`), 
+-- 			CONCAT( DATE_ADD( ?, INTERVAL 1 DAY ), \' \', `END_TIME` ), 
+-- 			CONCAT( ?, \' \', `END_TIME` ) ) AS `d_t_end`
+-- 
+-- 		FROM `CA_FREE_TIMES` 
+-- 		LEFT JOIN `CA_DAYSOFF_PATTERN` ON `CA_DAYSOFF_PATTERN`.`ID` = `CA_FREE_TIMES`.`PATT_ID`
+-- 		WHERE ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND 
+-- 		NOT ( `END_DATE` = ? AND `START_TIME` > `END_TIME` ) AND 
+-- 		`AGENDA_ID` = ? AND 
+-- 		`isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) ) 
+-- 
+-- ) AS `ins_tbl`)' );
+-- 	PREPARE get_busy_items_stmt_dbg FROM @get_busy_items_dbg;
+-- 
+-- ELSE
+-- 	DROP TABLE IF EXISTS `tst_tbl`;
+-- END IF;
+--	DEBUG ZONE (end)
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+
+
 
 
 	SET `v_first_date`	= CONCAT( `p_year`, '-', `p_month`, '-01' );
@@ -263,7 +324,9 @@ FROM (
 					END IF;
 					PREPARE ins_ttl_stmt FROM @ins_ttl;
 					EXECUTE ins_ttl_stmt;
-	
+
+
+
 					### Delete inner busy elements
 					SET @del_absorbed	= CONCAT( 'DELETE `intervals` FROM ', `v_busy_items_tbl_name`, ' AS `intervals`,
 						( SELECT `oi1`.`d_t_start`, `oi1`.`d_t_end` 
@@ -284,11 +347,25 @@ FROM (
 						SET @app_tp_cond = CONCAT(
 	' AND(',
 		'(NOT(`fr_d_t_end` <= \'', `v_cur_date`, ' ', `v_app_type_start`, '\' OR `fr_d_t_start` > \'', `v_cur_date`, ' ', `v_app_type_end`, '\') AND ',
-		'((UNIX_TIMESTAMP(`fr_d_t_end`)-UNIX_TIMESTAMP(\'', `v_cur_date`, ' ', `v_app_type_start`, '\'))/60) >= ', `v_app_type_dur`, ') OR ',
+		'((UNIX_TIMESTAMP(`fr_d_t_end`)-UNIX_TIMESTAMP(\'', `v_cur_date`, ' ', `v_app_type_start`, '\'))/60) >= ', `v_app_type_dur`, ')'
+						);
+
+					IF ( `v_ag_start_time` > `v_app_type_start` AND `v_ag_start_time` <= `v_app_type_end` ) THEN
+						SET @app_tp_cond = CONCAT( @app_tp_cond, 
+' OR ',
 		'(NOT(`fr_d_t_end` <= \'', `v_nxt_date`, ' ', `v_app_type_start`, '\' OR `fr_d_t_start` > \'', `v_nxt_date`, ' ', `v_app_type_end`, '\') AND ',
-		'((UNIX_TIMESTAMP(`fr_d_t_end`)-UNIX_TIMESTAMP(\'', `v_nxt_date`, ' ', `v_app_type_start`, '\'))/60) >= ', `v_app_type_dur`, ')',
+		'((UNIX_TIMESTAMP(`fr_d_t_end`)-UNIX_TIMESTAMP(\'', `v_nxt_date`, ' ', `v_app_type_start`, '\'))/60) >= ', `v_app_type_dur`, ')'
+						);
+					END IF;
+					
+					SET @app_tp_cond = CONCAT( @app_tp_cond, 
 	') '
 						);
+
+
+
+
+
 	
 					ELSEIF `v_app_type_start` > `v_app_type_end` THEN
 						SET @app_tp_cond = CONCAT(
@@ -325,6 +402,49 @@ FROM (
 	
 					PREPARE seek_interval_stmt FROM @seek_interval;
 					EXECUTE seek_interval_stmt;
+
+
+--	DEBUG ZONE
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+-- IF `p_debug` AND `v_cur_date` = '2010-09-01' THEN
+-- 
+-- -- 					SET @seek_interval_dbg = CONCAT(
+-- -- 	'INSERT INTO `tst_tbl` ( `d_t_start`,  `d_t_end`, `info` )
+-- -- 	 SELECT `fr_d_t_start`,  `fr_d_t_end`, ', QUOTE( @app_tp_cond ), ' AS `info` FROM 
+-- -- 		(SELECT 
+-- -- 			1 AS `is_exists`, ',
+-- -- 			'IF( \'', `p_d_t_now`, '\' > @free_d_t_end, \'', `p_d_t_now`, '\', @free_d_t_end  ) AS `fr_d_t_start`, ',
+-- -- 			'@free_d_t_end := `d_t_end`, 
+-- -- 			`d_t_start` AS `fr_d_t_end`
+-- -- 		FROM ','( SELECT `d_t_start`, `d_t_end` FROM ', `v_busy_items_tbl_name`, ' ORDER BY `d_t_start` ) AS `ordered` ',
+-- -- 	') AS result_intervals 
+-- -- 	WHERE 
+-- -- 		`fr_d_t_start` < `fr_d_t_end` AND `fr_d_t_start` < \'', `v_ag_d_t_end`, '\' AND 
+-- -- 		( ( UNIX_TIMESTAMP( `fr_d_t_end` ) - UNIX_TIMESTAMP( `fr_d_t_start` ) ) / 60 ) >= ', `v_app_type_dur`, @app_tp_cond, ' LIMIT 1' );
+-- 	
+-- 
+-- 
+-- 						SET @seek_interval_dbg = CONCAT(
+-- 	'INSERT INTO `tst_tbl` ( `d_t_start`,  `d_t_end`, `info` )
+-- 	VALUES(\'2010-10-10 00:00:00\',\'2010-10-10 00:00:00\',', QUOTE( @app_tp_cond ), ')'
+-- 						);
+-- 
+-- 
+-- 					PREPARE seek_interval_stmt_dbg FROM @seek_interval_dbg;
+-- 					EXECUTE seek_interval_stmt_dbg;
+-- END IF;
+--	DEBUG ZONE (end)
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+
+
+
+
+
+
 	
 					IF @is_exists > 0 THEN
 						SET `v_result` = CONCAT( `v_result`, '"', `v_cur_date`, '":1,');
