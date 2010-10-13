@@ -390,10 +390,12 @@ class make_appointments_dbl{
 	public static function getAvailableDaysForMonth_24( $month, $year, $appTypeId, $agId, $catId, $dtNow, $isTest, $orgCode ){
 		global $CA_PATH, $logger, $mysqli_obj; include( $CA_PATH."variables_DB.php" );
 
-		$is_tst	= ( $isTest ) ? 'TRUE' : 'FALSE';
+//		$is_tst	= ( $isTest ) ? 'TRUE' : 'FALSE';
 
 		$sql	=
-"CALL `get_any_agenda_month`( '".$dtNow."', ".$month.", ".$year.", ".$appTypeId.", ".$agId.", ".$catId.", '".$orgCode."', ".$is_tst." )";
+"CALL `get_any_agenda_month`( '".$dtNow."', ".$month.", ".$year.", ".$appTypeId.", ".$agId.", ".$catId.", '".$orgCode."', ".$isTest." )";
+
+echo "\n\n$sql\n\n";
 
 		if( $mysqli_obj->multi_query( $sql ) ){
 			while( $result = $mysqli_obj->use_result() ){
