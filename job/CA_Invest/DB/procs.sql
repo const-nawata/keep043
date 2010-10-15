@@ -447,13 +447,27 @@ FROM (
 
 ### Absent Days analizing loop
 	SET `v_cur_date`	= `v_first_date`;
-	REPEAT
+
+
+
+-- 	REPEAT
+-- 		IF ( LOCATE(`v_cur_date`, `v_result`, 1 ) = 0 ) THEN
+-- 			SET `v_result`	= CONCAT( `v_result`, '"', `v_cur_date`, '":0,');
+-- 			SET `v_n_dates`	= `v_n_dates` + 1;
+-- 		END IF;
+-- 
+-- 		SET `v_cur_date`	= `v_cur_date` + INTERVAL 1 DAY;
+-- 	UNTIL `v_cur_date` > `v_last_date` END REPEAT;	### Absent Days analizing loop end
+
+
+	WHILE( `v_n_dates` < `v_n_month_days` )DO
 		IF ( LOCATE(`v_cur_date`, `v_result`, 1 ) = 0 ) THEN
 			SET `v_result`	= CONCAT( `v_result`, '"', `v_cur_date`, '":0,');
+			SET `v_n_dates`	= `v_n_dates` + 1;
 		END IF;
 
 		SET `v_cur_date`	= `v_cur_date` + INTERVAL 1 DAY;
-	UNTIL `v_cur_date` > `v_last_date` END REPEAT;	### Absent Days analizing loop end
+	END WHILE;
 
   
   

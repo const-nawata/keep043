@@ -14,17 +14,10 @@
 class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 	const _is_all = false;   //  false  true //
 
-
-	//	Long tests limitations
-	const _is_fast		= true;
-	const _n_of_periods	= 3;
-	const _n_max_iters	= 10;	//Number of iterations.
-
-
 //	const _is_1_1_1		= false;	//REMARK:	Performance test. It is always on.
-	const _is_1_1_2		= false;	//REMARK:	Performance test. It is always on.
+//	const _is_1_1_2		= false;	//REMARK:	Performance test. It is always on.
 
-	const _is_1_2_2		= false;
+	const _is_1_2_2		= true;
 	const _is_1_2_3		= false;
 	const _is_1_2_4		= false;
 	const _is_1_2_5		= false;
@@ -41,13 +34,20 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 	const _is_1_2_15	= false;
 	const _is_1_2_16	= false;
 	const _is_1_2_17	= false;
-	const _is_1_2_18	= true;
+	const _is_1_2_18	= false;
 	const _is_1_2_19	= false;
 
 	const _is_1_2_20	= false;
 	const _is_1_2_21	= false;
 	const _is_1_2_22	= false;	//REMARK: Very long duration if not fast.
 	const _is_1_2_23	= false;	//REMARK: Very long duration if not fast.
+
+	//	Long tests limitations
+	const _is_fast		= true;
+	const _n_of_periods	= 3;
+	const _n_max_iters	= 20;	//Number of iterations.
+
+
 
     protected function setUp(){
     	session_tuning::initSessionData();
@@ -129,7 +129,8 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 	private function doAsserts_001( $ag_id, $cat_id, $app_type_id, $nIter = 0 ){
 		global $CA_PATH; include( $CA_PATH."test/UT_std_vars.php" ); include( $CA_PATH."variables_DB.php" );
 
-			$today = '10-01-2010'; $db_today	= utils_bl::GetDbDate( $today );
+			$today		= '10-01-2010'; //$db_today	= utils_bl::GetDbDate( $today );
+			$db_today	= date( 'Y-m-d', strtotime( $today ) );
 
 			//Agendas ttls
 			//	0		11:00 - 20:00
@@ -142,7 +143,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 
 			$curr_time = '12:00';	//----------------------------------
 			UT_utils::doMysqliReconnect( $this, 'test_AgendasHaveNoAppsAndFreeTimesAndAppTypeHasNoConstraints' );
-            $month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 1, 2010, $app_type_id, $ag_id, $cat_id, $today, $curr_time );
+            $month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 1, 2010, $app_type_id, $ag_id, $cat_id, $today, $curr_time, true );
 
 			$this->assertEquals( 31, count( $month_info ), "\n***** Assert 1/Iteration $nIter *****\nWrong quantity of itmes.\nReceived data:\n".print_r(  $month_info, true )."\n" );
 
@@ -154,7 +155,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 
 			$curr_time = '16:00';	//----------------------------------
 			UT_utils::doMysqliReconnect( $this, 'test_AgendasHaveNoAppsAndFreeTimesAndAppTypeHasNoConstraints' );
-            $month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 1, 2010, $app_type_id, $ag_id, $cat_id, $today, $curr_time );
+            $month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 1, 2010, $app_type_id, $ag_id, $cat_id, $today, $curr_time, true );
 
 			$this->assertEquals( 31, count( $month_info ), "\n***** Assert 3/Iteration $nIter *****\nWrong quantity of itmes.\nReceived data:\n".print_r(  $month_info, true )."\n" );
 
@@ -464,12 +465,19 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 "<div style='position:absolute;top:0;left:400px;background-color: #FFdddd;'>Performance time for `getAvailableDaysForMonth_24` is ".( $m2 - $m1 ).". (Simple test)</div>";
 				echo $str;
 
+			$this->assertEquals( 31, count( $month_info ), "\n***** Assert 1 *****\nWrong quantity of itmes.\nReceived data:\n".print_r(  $month_info, true )."\n" );
+			foreach( $month_info as $db_date => $item ){
+				$condition	= ( 1 == $item );
+				$this->assertTrue( $condition, "\n***** Assert 2 *****\nWrong value for date: ".date( 'd_m-Y', strtotime( $db_date ) ).".\nReceived data:\n".print_r(  $month_info, true )."\n" );
+			}
+
+
         }else{ $this->markTestSkipped(); }
      }
 //-------------------------------------------------------------------------------------------------- _UT_ORG_CODE
 
      public function test_Performance_AllDaysBlockedByFreeTimes(){										//	_is_1_1_2
-         if( self::_is_1_1_2 || !$_SESSION[ 'is_skip' ] ){	//	Performance
+         if(!$_SESSION[ 'is_skip' ] ){	//	Performance
             global $CA_PATH; include( $CA_PATH."test/UT_std_vars.php" ); include( $CA_PATH."variables_DB.php" );
 
             $agendas	= UT_utils::createAgendas_UT( 20, '07:00', '16:00' );//1
@@ -512,6 +520,14 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 				$str	=
 "<div style='position:absolute;top:18;left:400px;background-color: #FFdddd;'>Performance time for `getAvailableDaysForMonth_24` is ".( $m2 - $m1 ).". (Free times test)</div>";
 				echo $str;
+
+				$this->assertEquals( 31, count( $month_info ), "\n***** Assert 1/Iteration $nIter *****\nWrong quantity of itmes.\nReceived data:\n".print_r(  $month_info, true )."\n" );
+			$this->assertEquals( 31, count( $month_info ), "\n***** Assert 1 *****\nWrong quantity of itmes.\nReceived data:\n".print_r(  $month_info, true )."\n" );
+			foreach( $month_info as $db_date => $item ){
+				$condition	= ( 0 == $item );
+				$this->assertTrue( $condition, "\n***** Assert 2 *****\nWrong value for date: ".date( 'd_m-Y', strtotime( $db_date ) ).".\nReceived data:\n".print_r(  $month_info, true )."\n" );
+			}
+
 
         }else{ $this->markTestSkipped(); }
      }
@@ -1010,11 +1026,6 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
             	$mk_s	= strtotime( '+1 month', $mk_s );
             }
 
-
-//print_r( $mk_months );
-
-
-
 			$tst_cnt	= 0;
 			for( $add_days = 0; $add_days < 7; $add_days++ ){
 				$new_blk[ $dbTable_StartDate ]	= date( 'd-m-Y', strtotime( '+'.$add_days.' day', $mk_start ) );
@@ -1030,7 +1041,8 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 		            for( $period = 1; $period <= 3; $period++ ){
 		            	$new_blk[ $daysoffPatternF_Period ]		= $period;
 
-		            	for( $pattern = 1; $pattern < 127; $pattern++ ){
+		            	$start_patt	= ( !self::_is_fast ) ? 1 : 87;
+		            	for( $pattern = $start_patt; $pattern < 127; $pattern++ ){
 							$new_blk[ $daysoffPatternF_WeekDays ]	= $pattern;
 							$add_info	= "Week days: $pattern, period: $period. Date start: ".$new_blk[ $dbTable_StartDate ].", end: ".$new_blk[ $dbTable_EndDate ].".";
 							( self::_is_fast ) ? $add_info .= "\nLimited by ".self::_n_max_iters." iterations. Iteration number is $tst_cnt.":'';
@@ -1069,8 +1081,6 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 																		if( self::_is_fast && ( $tst_cnt > self::_n_max_iters ) ){ break; }
 			}
 
-
-//echo "\n\n tst_cnt: $tst_cnt\n\n";
 
             $_SESSION[ 'is_skip' ]	= false;
         }else{ $this->markTestSkipped(); }
@@ -1229,7 +1239,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 
 			$curr_time	= '22:30';
 			UT_utils::doMysqliReconnect( $this, 'test_AgendaHasAlmostBusy_23_23_TTL' );
-            $month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 8, 2010, $app_types[ 0 ][ $appTypesF_Id ], $agendas[ 4 ][ $agendasF_Id ], make_appointments_bl::_whole_list, $today, $curr_time );
+            $month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 8, 2010, $app_types[ 0 ][ $appTypesF_Id ], $agendas[ 4 ][ $agendasF_Id ], make_appointments_bl::_whole_list, $today, $curr_time, true );
 			foreach( $month_info as $db_date => $item ){
 				$date	= date( 'd-m-Y', strtotime( $db_date ) );
 				$condition	= ( $db_date < $db_today ) ? ( 0 == $item ) : ( 1 == $item );
@@ -1580,7 +1590,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 			}
 
 			UT_utils::doMysqliReconnect( $this, 'test_AgendaHasAlmostBusy_23_23_TTL' );
-			$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 9, 2010, $app_types[ 1 ][ $appTypesF_Id ], $_SESSION[ 'valid_user_id' ], make_appointments_bl::_whole_list, '01-09-2010', '12:00' );
+			$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 9, 2010, $app_types[ 1 ][ $appTypesF_Id ], $_SESSION[ 'valid_user_id' ], make_appointments_bl::_whole_list, '01-09-2010', '12:00', true );
             foreach( $month_info as $db_date => $item ){
             	$date	= date( 'd-m-Y', strtotime( $db_date ) );
 				$condition	= ( $db_date != '2010-09-13' ) ? ( 1 == $item ) : ( 0 == $item );
@@ -1651,6 +1661,11 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 			//	12:00 - 13:00	free line
 			$d_t	= date( 'Y-m-d H:i:s', strtotime( '+60 minute', strtotime( $d_t ) ) );
 			$d_t_last	= date( 'Y-m-d H:i:s', strtotime( '+1 day', strtotime( $d_t_start ) ) );
+
+//echo "\n$d_t_last \ ";
+//$d_t_last	= date( 'Y-m-d H:i:s', strtotime( '+1 hour', strtotime( $d_t_last ) ) );
+//echo "$d_t_last\n";
+
 			while( $d_t < $d_t_last ){
 				$ini_app[ 'time' ]	= date( 'H:i', strtotime( $d_t ) );
 				$ini_app[ 'date' ]	= date( 'd-m-Y', strtotime( $d_t ) );
@@ -1659,8 +1674,8 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 				$d_t	= date( 'Y-m-d H:i:s', strtotime( '+'.$app_types[ 0 ][ $appTypesF_Time ].' minute', strtotime( $d_t ) ) );
 			}
 
-			UT_utils::doMysqliReconnect( $this, 'test_AgendaHasAlmostBusy_23_23_TTL' );
-			$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 9, 2010, $app_types[ 1 ][ $appTypesF_Id ], $_SESSION[ 'valid_user_id' ], make_appointments_bl::_whole_list, '01-09-2010', '12:00' );
+			UT_utils::doMysqliReconnect( $this, 'test_TtlHasEmpty30MinLineByAppsBeyondAppType_Agenda_08_08__AppTypeStartEnd_08_10' );
+			$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( 9, 2010, $app_types[ 1 ][ $appTypesF_Id ], $_SESSION[ 'valid_user_id' ], make_appointments_bl::_whole_list, '01-09-2010', '12:00', true );
             foreach( $month_info as $db_date => $item ){
             	$date	= date( 'd-m-Y', strtotime( $db_date ) );
 				$condition	= ( $db_date != '2010-09-01' && $db_date != '2010-09-13' ) ? ( 1 == $item ) : ( 0 == $item );
@@ -2080,13 +2095,14 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 			for( $add_days = 0; $add_days < 7; $add_days++ ){
 				$new_blk[ $dbTable_StartDate ]	= date( 'd-m-Y', strtotime( '+'.$add_days.' day', $mk_start ) );
 
-				$today	= '07-01-2011'; $curr_time = '12:00';
+				$today	= '07-01-2011'; $db_today = date( 'Y-m-d', strtotime( $today ) );
+				$curr_time = '12:00';
 
 //				$today	= '30-12-2010'; $curr_time = '12:00';
 //				for( $tdd = 0; $tdd < 16; $tdd = $tdd + 4 ){//4
-					$mk_tdd	= strtotime( $today );
-					$today	= date( 'd-m-Y', strtotime( '+'.$tdd.' day', $mk_tdd ) );
-					$db_today	= date( 'Y-m-d', strtotime( '+'.$tdd.' day', $mk_tdd ) );
+//					$mk_tdd	= strtotime( $today );
+//					$today	= date( 'd-m-Y', strtotime( '+'.$tdd.' day', $mk_tdd ) );
+//					$db_today	= date( 'Y-m-d', strtotime( '+'.$tdd.' day', $mk_tdd ) );
 
 		            for( $period = 1; $period <= 3; $period++ ){
 		            	$new_blk[ $daysoffPatternF_Period ]		= $period;
@@ -2103,7 +2119,7 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 								$year	= intval( date( 'Y', $mk_month ) );
 //			//	Get month info
 //	//							UT_utils::doMysqliReconnect( $this, 'test_AgendaHasOffDays_AllWeekPatterns' );
-								$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( $month, $year, $app_types[ 4 ][ $appTypesF_Id ], $agendas[ 1 ][ $agendasF_Id ], make_appointments_bl::_whole_list, $today, $curr_time );
+								$month_info	= make_appointments_bl::getAvailableDaysForMonth_24( $month, $year, $app_types[ 4 ][ $appTypesF_Id ], $agendas[ 1 ][ $agendasF_Id ], make_appointments_bl::_whole_list, $today, $curr_time, true );
 //
 								$month_exp0	= UT_utils::findFreeDaysOfMonthByDayOffItem( $mk_month, $free_times[ 0 ] );
 								$month_exp1	= UT_utils::findFreeDaysOfMonthByDayOffItem( $mk_month, $free_times[ 1 ] );
@@ -2129,8 +2145,6 @@ class anyAgendaForMonth_Widget extends PHPUnit_Framework_TestCase{
 //				}
 																		if( self::_is_fast && ( $tst_cnt > self::_n_max_iters ) ){ break; }
 			}
-
-//echo "\n\ntst_cnt: $tst_cnt\n\n";
 
 
             $_SESSION[ 'is_skip' ]	= false;
