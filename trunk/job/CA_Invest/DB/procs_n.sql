@@ -1,10 +1,12 @@
 DELIMITER //
+-- -------------------------------------------------------------------------------------------------
+-- -------------------------------------------------------------------------------------------------
+ 
+
 
 
 -- REMARK. Min time is not used!!!
 DROP PROCEDURE IF EXISTS `get_any_agenda_month`//
-
-
 
 CREATE PROCEDURE `get_any_agenda_month`(IN `p_d_t_now` TIMESTAMP,
 										IN `p_month` TINYINT,
@@ -23,12 +25,11 @@ BEGIN
 	DECLARE	`v_today` DATE DEFAULT DATE_FORMAT( `p_d_t_now`, '%Y-%m-%d' );
 	DECLARE	`v_n_get_day` INT DEFAULT 3;
 
-	DECLARE /*`v_ag_d_t_start`, `v_ag_d_t_end`,*/ `v_max_d_t` TIMESTAMP;
+	DECLARE  `v_max_d_t` TIMESTAMP;
 
 	DECLARE `v_result` VARCHAR(470) DEFAULT '';
 	DECLARE `v_busy_items_tbl_name` VARCHAR(20) DEFAULT '';
 
--- 	DECLARE `v_app_type_dur` INT DEFAULT 0;
 	DECLARE `v_app_type_patt` INT  DEFAULT 127;
 	DECLARE `v_app_type_start`, `v_app_type_end` TIME DEFAULT '00:00:00';
 	DECLARE `v_is_multi` TINYINT(4) DEFAULT 0;
@@ -56,7 +57,7 @@ BEGIN
 ###	Declarations end ####################
 
 
-
+	###	App type parameters
 	SELECT 
 		`TIME`,
 		`v_today` + INTERVAL `MAX_TIME` DAY,
@@ -65,7 +66,7 @@ BEGIN
 		`AT_PERIOD_END_TIME`,
 		`AT_PERIOD_DAY`
 	INTO 
-		@s_app_type_dur,
+		@app_typ_dur,
 		`v_app_type_last_date`,
 		`v_is_multi`,
 		`v_app_type_start`,
@@ -122,18 +123,18 @@ FROM (
 --	------------------------------------------------------------------------------------------------
 --	------------------------------------------------------------------------------------------------
 --	------------------------------------------------------------------------------------------------
--- IF `p_debug` THEN
--- -- 	DROP TABLE IF EXISTS `tst_tbl`;
--- 
--- 	CREATE TABLE IF NOT EXISTS `tst_tbl` 
--- 		( `d_t_start` TIMESTAMP DEFAULT '0000-00-00 00:00:00', `d_t_end` TIMESTAMP DEFAULT '0000-00-00 00:00:00', `info` VARCHAR(1000) DEFAULT '' ) ENGINE = MEMORY;
--- 	
--- 
--- 	DELETE FROM `tst_tbl`;
--- 
--- ELSE
+IF `p_debug` THEN
 -- 	DROP TABLE IF EXISTS `tst_tbl`;
--- END IF;
+
+	CREATE TABLE IF NOT EXISTS `tst_tbl` 
+		( `d_t_start` TIMESTAMP DEFAULT '0000-00-00 00:00:00', `d_t_end` TIMESTAMP DEFAULT '0000-00-00 00:00:00', `info` VARCHAR(1000) DEFAULT '' ) ENGINE = MEMORY;
+	
+
+	DELETE FROM `tst_tbl`;
+
+ELSE
+	DROP TABLE IF EXISTS `tst_tbl`;
+END IF;
 --	DEBUG ZONE (end)
 --	------------------------------------------------------------------------------------------------
 --	------------------------------------------------------------------------------------------------
@@ -147,7 +148,6 @@ FROM (
 
 
 ###	App type pattern, Today and max time dates rendering
-
 	SET `v_n_month_days` = DATE_FORMAT( LAST_DAY( CONCAT( `p_year`, '-', `p_month`, '-01') ), '%e' );
 	SET `v_cur_date`	= `v_first_date`;
 	REPEAT
@@ -162,8 +162,6 @@ FROM (
 		SET `v_cur_date`	= DATE_ADD( `v_cur_date`, INTERVAL 1 DAY );
 	UNTIL `v_cur_date` > `v_last_date` END REPEAT; 
 
-
-
 	IF( `p_ag_id` != -2 ) THEN
 		OPEN cursor_ag_single;
 	ELSEIF( `p_ag_id` = -2 AND `p_cat_id` = -2 )THEN
@@ -172,28 +170,21 @@ FROM (
 		OPEN cursor_ag_cat;
 	END IF;
 
-	SET @off_items	= 'SELECT COUNT(*) INTO @is_day_off FROM `CA_DAYSOFF` LEFT JOIN `CA_DAYSOFF_PATTERN` ON `CA_DAYSOFF_PATTERN`.`ID` = `CA_DAYSOFF`.`PATT_ID`
-	WHERE `AGENDA_ID` = ? AND ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND `isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) )';
-	PREPARE off_items_stmt FROM @off_items;
 
-	
+	###	Prepared queries
+	SET @off_items	=
+'SELECT TRUE INTO @is_day_off FROM `CA_DAYSOFF` 
+WHERE EXISTS(
+	SELECT `DAY_ID` FROM `CA_DAYSOFF`
+	LEFT JOIN `CA_DAYSOFF_PATTERN` ON `CA_DAYSOFF_PATTERN`.`ID` = `CA_DAYSOFF`.`PATT_ID`
+	WHERE `AGENDA_ID` = ? AND ( ? BETWEEN `START_DATE` AND `END_DATE` ) AND `isDateValidByPattern`( ?, `START_DATE`, IFNULL( `CYCLE`, 0 ), IFNULL( `PERIOD`, 0 ), IFNULL( `WEEK_DAYS`, 0 ) )
+) LIMIT 1';
+	PREPARE off_items_stmt FROM @off_items;
+-- ---------------------------
+
 	SET @ins_busy	= CONCAT( 'INSERT INTO ', `v_busy_items_tbl_name`, '( `d_t_start`, `d_t_end`  )VALUES( ?, ? )' );
 	PREPARE ins_busy_stmt FROM @ins_busy;
---	-----------------------------------
-
-	SET @del_absorbed	= CONCAT( 'DELETE `intervals` FROM ', `v_busy_items_tbl_name`, ' AS `intervals`,
-		( SELECT `oi1`.`d_t_start`, `oi1`.`d_t_end` 
-			FROM ',
-				`v_busy_items_tbl_name`, ' AS `oi1`,',
-				`v_busy_items_tbl_name`, ' AS `oi2`
-			WHERE (
-				( `oi1`.`d_t_start` >= `oi2`.`d_t_start` AND `oi1`.`d_t_end` <  `oi2`.`d_t_end` ) OR 
-				( `oi1`.`d_t_start` >  `oi2`.`d_t_start` AND `oi1`.`d_t_end` <= `oi2`.`d_t_end` )
-			)
-		) AS `absorbed`
-	WHERE `intervals`.`d_t_start` = `absorbed`.`d_t_start` AND `intervals`.`d_t_end` = `absorbed`.`d_t_end`' );
-	PREPARE del_absorbed_stmt FROM @del_absorbed;
---	-----------------------------------
+-- ---------------------------
 
 	SET @seek_interval = CONCAT(
 	'SELECT `is_exists` INTO  @is_exists 
@@ -209,13 +200,30 @@ FROM (
 		`fr_d_t_start` < `fr_d_t_end` AND `fr_d_t_start` < ? AND `fr_d_t_end` > ? AND
 		( ( UNIX_TIMESTAMP( `fr_d_t_end` ) - UNIX_TIMESTAMP( `fr_d_t_start` ) ) / 60 ) >= ? LIMIT 1' );
 	PREPARE seek_interval_stmt FROM @seek_interval;
---	-----------------------------------
+-- ---------------------------
 
-	SET @del_busy_items2	= CONCAT( 'DELETE FROM ', `v_busy_items_tbl_name`, ' WHERE `d_t_end` <= ? OR `d_t_start` = `d_t_end`' );
+	SET @del_absorbed	= CONCAT( 'DELETE `intervals` FROM ', `v_busy_items_tbl_name`, ' AS `intervals`,
+		( SELECT `oi1`.`d_t_start`, `oi1`.`d_t_end` 
+			FROM ',
+				`v_busy_items_tbl_name`, ' AS `oi1`,',
+				`v_busy_items_tbl_name`, ' AS `oi2`
+			WHERE (
+				( `oi1`.`d_t_start` >= `oi2`.`d_t_start` AND `oi1`.`d_t_end` <  `oi2`.`d_t_end` ) OR 
+				( `oi1`.`d_t_start` >  `oi2`.`d_t_start` AND `oi1`.`d_t_end` <= `oi2`.`d_t_end` )
+			)
+		) AS `absorbed`
+	WHERE `intervals`.`d_t_start` = `absorbed`.`d_t_start` AND `intervals`.`d_t_end` = `absorbed`.`d_t_end`' );
+	PREPARE del_absorbed_stmt FROM @del_absorbed;
+-- ---------------------------
+
+	SET @del_busy_items2	=
+	CONCAT(
+'DELETE FROM ', `v_busy_items_tbl_name`, ' WHERE `d_t_end` <= ? OR `d_t_start` = `d_t_end`' );
 	PREPARE del_busy_items_stmt2 FROM @del_busy_items2;
---	-----------------------------------
+-- ---------------------------
 
-###	Timetables (Agendas) analizing loop
+
+	###	Timetables (Agendas) analizing loop
 	REPEAT
 		IF `p_ag_id` != -2 THEN
 			FETCH cursor_ag_single INTO `v_ag_id`, `v_ag_start_time`, `v_ag_end_time`;
@@ -225,8 +233,6 @@ FROM (
 			FETCH cursor_ag_cat INTO `v_ag_id`, `v_ag_start_time`, `v_ag_end_time`;
 		END IF;
 
-
-
 		IF NOT done AND `v_n_dates` < `v_n_month_days` THEN
 			SET @ag_id = `v_ag_id`;
 	
@@ -234,33 +240,33 @@ FROM (
 			PREPARE del_busy_items_stmt1 FROM @del_busy_items1;
 			EXECUTE del_busy_items_stmt1;
 	
-	
 	###	All Days analizing loop
 			SET `v_cur_date`	= `v_first_date`;
-			REPEAT
+-- 			REPEAT
+			WHILE( `v_cur_date` <= `v_last_date` AND `v_n_dates` < `v_n_month_days` )DO
 				SET `v_prv_date`	= `v_cur_date` - INTERVAL 1 DAY;
 				SET `v_nxt_date`	= `v_cur_date` + INTERVAL 1 DAY;
 				SET `v_anx_date`	= `v_cur_date` + INTERVAL 2 DAY;
 				SET `v_aax_date`	= `v_cur_date` + INTERVAL 3 DAY;
 	
-				SET @s_ag_d_t_start	= CONCAT( `v_cur_date`, ' ', `v_ag_start_time` );
+				SET @pv_ag_d_t_start	= CONCAT( `v_cur_date`, ' ', `v_ag_start_time` );
 	
 				IF `v_ag_start_time` < `v_ag_end_time` THEN
-					SET @s_ag_d_t_end	= CONCAT( `v_cur_date`, ' ', `v_ag_end_time` );
+					SET @pv_ag_d_t_end	= CONCAT( `v_cur_date`, ' ', `v_ag_end_time` );
 				ELSE
-					SET @s_ag_d_t_end	= CONCAT( `v_nxt_date`, ' ', `v_ag_end_time` );
+					SET @pv_ag_d_t_end	= CONCAT( `v_nxt_date`, ' ', `v_ag_end_time` );
 				END IF;
 
+				SET @is_day_off = FALSE;
 				SET @udate = `v_cur_date`;
 				EXECUTE off_items_stmt USING @ag_id, @udate, @udate;
 	
 	### Single Day analizing.
-				IF( 
+				IF( NOT @is_day_off AND
 					( LOCATE(`v_cur_date`, `v_result`, 1 ) = 0 ) AND 
-					( @is_day_off = 0 ) AND
 					( 
 						( `v_ag_start_time` = `v_ag_end_time` ) OR
-						( ( ( UNIX_TIMESTAMP(@s_ag_d_t_end) - UNIX_TIMESTAMP(`p_d_t_now`) ) / 60 ) >= @s_app_type_dur )
+						( ( ( UNIX_TIMESTAMP(@pv_ag_d_t_end) - UNIX_TIMESTAMP(`p_d_t_now`) ) / 60 ) >= @app_typ_dur )
 						
 					)
 				) THEN
@@ -370,75 +376,81 @@ FROM (
 						EXECUTE ins_busy_stmt USING @d_t_start_busy, @d_t_end_busy;
 					END IF;
 
-			### Before agenda and boundary items of timetable deletion.
-					EXECUTE del_busy_items_stmt2 USING @s_ag_d_t_start;
+	### Before agenda and boundary items of timetable deletion.
+					EXECUTE del_busy_items_stmt2 USING @pv_ag_d_t_start;
 
 					IF( `v_ag_start_time` = `v_ag_end_time` )THEN
-						SET @d_t_start_busy	= CONCAT( `v_cur_date`, ' ', '00:00:00' );
-						SET @d_t_end_busy	= @s_ag_d_t_start;
+						SET `v_max_d_t`	= CONCAT( `v_aax_date`, ' ', `v_ag_end_time` );
+
+						SET @d_t_start_busy	= CONCAT( `v_cur_date`, ' ', ' 00:00:00' );
+						SET @d_t_end_busy	= @pv_ag_d_t_start;
 						EXECUTE ins_busy_stmt USING @d_t_start_busy, @d_t_end_busy;
+
 
 						SET @d_t_start_busy	= `v_max_d_t`;
 						SET @d_t_end_busy	= `v_max_d_t`;
 						EXECUTE ins_busy_stmt USING @d_t_start_busy, @d_t_end_busy;
 					END IF;
+	
+--	DEBUG ZONE (exapmpe)
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+--	------------------------------------------------------------------------------------------------
+IF `p_debug` AND `v_cur_date` = '2010-01-10' THEN
+						SET @seek_interval_dbg = CONCAT(
+	'INSERT INTO `tst_tbl` ( `d_t_start`,  `d_t_end`, `info` )
+	SELECT `d_t_start`, `d_t_end`, \'InFo\' FROM ', `v_busy_items_tbl_name`
+						);
 
-			### Delete inner busy elements
-					EXECUTE del_absorbed_stmt;
-	
-			###	Empty time seeking
-					SET @free_d_t_end	= CONCAT( `v_cur_date`, ' 00:00:00');
-					SET @is_exists	= 0;
-	
-	
---	DEBUG ZONE
---	------------------------------------------------------------------------------------------------
---	------------------------------------------------------------------------------------------------
---	------------------------------------------------------------------------------------------------
--- IF `p_debug` AND `v_cur_date` = '2011-01-09' THEN
+					PREPARE seek_interval_stmt_dbg1 FROM @seek_interval_dbg;
+					EXECUTE seek_interval_stmt_dbg1;
+
 -- 						SET @seek_interval_dbg = CONCAT(
 -- 	'INSERT INTO `tst_tbl` ( `d_t_start`,  `d_t_end`, `info` )
--- 	VALUES(\'', `v_cur_date`, ' 00:00:00\',\'', `v_cur_date`, ' 11:11:11\', \'is_exists: ', @is_exists, '\')'
+-- 	VALUES ( )'
 -- 						);
 -- 
 -- 					PREPARE seek_interval_stmt_dbg1 FROM @seek_interval_dbg;
 -- 					EXECUTE seek_interval_stmt_dbg1;
--- END IF;
+
+
+END IF;
 --	DEBUG ZONE (end)
 --	------------------------------------------------------------------------------------------------
 --	------------------------------------------------------------------------------------------------
 --	------------------------------------------------------------------------------------------------
 
 
-					SET @s_p_d_t_now	= `p_d_t_now`;
-					EXECUTE seek_interval_stmt USING @s_p_d_t_now, @s_p_d_t_now, @s_ag_d_t_end, @s_ag_d_t_start, @s_app_type_dur;
+	### Delete inner busy elements
+					EXECUTE del_absorbed_stmt;
+
+	###	Empty timeslots seeking
+					SET @free_d_t_end	= CONCAT( `v_cur_date`, ' 00:00:00');
+					SET @is_exists	= 0;
+	
+
+					SET @pp_d_t_now	= `p_d_t_now`;
+					EXECUTE seek_interval_stmt USING @pp_d_t_now, @pp_d_t_now, @pv_ag_d_t_end, @pv_ag_d_t_start, @app_typ_dur;
 	
 					IF @is_exists > 0 THEN
 						SET `v_result` = CONCAT( `v_result`, '"', `v_cur_date`, '":1,');
 						SET `v_n_dates` = `v_n_dates` + 1;
 					END IF;
-	
 				ELSEIF ( `v_n_get_day` < 3 ) THEN			# Single Day anilizing end
-		### Before agenda timetable deletion.
-					EXECUTE del_busy_items_stmt2 USING @s_ag_d_t_start;
+					EXECUTE del_busy_items_stmt2 USING @pv_ag_d_t_start;
 					SET `v_n_get_day`	= `v_n_get_day` + 1;
 				END IF;
 	
-				IF `v_n_dates` < `v_n_month_days` THEN
-					SET `v_cur_date`	= `v_nxt_date`;
-				ELSE
-					SET `v_cur_date`	= `v_last_date` + INTERVAL 1 DAY;
+				IF NOT( `v_n_dates` < `v_n_month_days` )THEN
 					SET done	= 1;
 				END IF;
 
-				
-			UNTIL `v_cur_date` > `v_last_date` END REPEAT;	### All Days analizing loop end
-	
+				SET `v_cur_date`	= `v_nxt_date`;
+			END WHILE;						### All Days analizing loop end
 		ELSE
 			SET done	= 1;
 		END IF;
 	UNTIL done END REPEAT;
-
 
 	SET @busy_items	= CONCAT( 'DROP TABLE IF EXISTS ', `v_busy_items_tbl_name` );
 	PREPARE drop_stmt FROM @busy_items;
@@ -447,21 +459,32 @@ FROM (
 
 ### Absent Days analizing loop
 	SET `v_cur_date`	= `v_first_date`;
-	REPEAT
+
+-- 	REPEAT
+-- 		IF ( LOCATE(`v_cur_date`, `v_result`, 1 ) = 0 ) THEN
+-- 			SET `v_result`	= CONCAT( `v_result`, '"', `v_cur_date`, '":0,');
+-- 			SET `v_n_dates`	= `v_n_dates` + 1;
+-- 		END IF;
+-- 
+-- 		SET `v_cur_date`	= `v_cur_date` + INTERVAL 1 DAY;
+-- 	UNTIL `v_n_dates` >= `v_n_month_days`  END REPEAT;	### Absent Days analizing loop end
+  
+	WHILE( `v_n_dates` < `v_n_month_days` )DO
 		IF ( LOCATE(`v_cur_date`, `v_result`, 1 ) = 0 ) THEN
 			SET `v_result`	= CONCAT( `v_result`, '"', `v_cur_date`, '":0,');
+			SET `v_n_dates`	= `v_n_dates` + 1;
 		END IF;
 
 		SET `v_cur_date`	= `v_cur_date` + INTERVAL 1 DAY;
-	UNTIL `v_cur_date` > `v_last_date` END REPEAT;	### Absent Days analizing loop end
+	END WHILE;
 
-  
-  
+
+
+
 	SET `v_result`	= SUBSTRING( `v_result`, 1, ( LENGTH( `v_result` ) - 1 ) );
 	SET `v_result`	= CONCAT( '{', `v_result`, '}' );
 
-SELECT `v_result` AS `res`;
-
+	SELECT `v_result` AS `res`;
 
 END//
 
