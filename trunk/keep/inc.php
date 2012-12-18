@@ -22,3 +22,4 @@ global $gl_CompsPath; $gl_CompsPath	= $gl_Path.'components/';
 require_once( $gl_CompsPath."inc_comps.php" );
 
 require_once( $gl_Path."libs/xajax/xajax.inc.php" );
+
