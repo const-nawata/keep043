@@ -52,7 +52,7 @@ if( $stmt = $gl_MysqliObj->prepare( $sql ) ){
 
 }
 
-?>
 
-</body>
-</html>
+echo
+'</body>
+</html>';
