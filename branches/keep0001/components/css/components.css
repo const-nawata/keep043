@@ -1,0 +1,460 @@
+@CHARSET "UTF-8";
+
+/* Controls image*/
+.selectedTabLeftSect,.selectedTabRightSect,.notSelectedTabLeftSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabRightSect,.Scrollbar-Down,.Scrollbar-Up
+	{
+	background: url("../../img/elements.gif") left top;
+	background-repeat: no-repeat;
+	margin: 0px auto;
+}
+
+td.promptTD {
+	padding: 3px 10px 3px 5px;
+	text-align: left;
+	font-size: 14px;
+}
+
+td.inputField {
+	padding-top: 3px;
+	padding-bottom: 3px;
+	text-align: left;
+}
+
+/*Tab Styles  ######################################################*/
+.selectedTabLeftSect,.selectedTabCenterSect,.selectedTabRightSect,.notSelectedTabLeftSect,.notSelectedTabCenterSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabCenterSect,.overTabRightSect
+	{
+	height: 40px;
+}
+
+.selectedTabLeftSect,.selectedTabRightSect,.notSelectedTabLeftSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabRightSect
+	{
+	font-size: 1px;
+	width: 7px;
+}
+
+.selectedTabCenterSect,.notSelectedTabCenterSect,.overTabCenterSect {
+	color: #7D8746;
+	font-size: 22px;
+	width: 140px;
+	text-align: center;
+	line-height: 40px;
+}
+
+.notSelectedTabLeftSect,.notSelectedTabCenterSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabCenterSect,.overTabRightSect
+	{
+	cursor: pointer;
+}
+
+.selectedTabLeftSect {
+	background-position: 0px -26px;
+}
+
+.selectedTabRightSect {
+	background-position: -7px -26px;
+}
+
+.notSelectedTabLeftSect {
+	background-position: -14px -26px;
+}
+
+.notSelectedTabRightSect {
+	background-position: -21px -26px;
+}
+
+.overTabLeftSect {
+	background-position: -28px -26px;
+}
+
+.overTabRightSect {
+	background-position: -35px -26px;
+}
+
+.selectedTabCenterSect {
+	color: #996D2B;
+	background: url("../../img/tab_center_sel.gif") repeat;
+}
+
+.overTabCenterSect {
+	background: url("../../img/tab_center_ovr.gif") repeat;
+}
+
+.notSelectedTabCenterSect {
+	background: url("../../img/tab_center_pss.gif") repeat;
+}
+
+/*Tab Styles (end) ######################################################*/
+td.tabContainerTd {
+	padding-right: 5px;
+}
+
+/*Scrolling  ########################################################*/
+.Scrollbar-Down {
+	background-position: 0 0;
+}
+
+.Scrollbar-Up {
+	background-position: -26px 0px;
+}
+
+.Scrollbar-Up,.Scrollbar-Down,.Scrollbar-Track,.Scrollbar-Handle {
+	position: relative;
+	width: 26px;
+	height: 26px;
+	background-color: #99E5A1;
+	font-size: 0px;
+}
+
+.Scrollbar-Track {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background-color: #C7F9CC;
+}
+
+.Scrollbar-Handle {
+	height: 50px;
+}
+
+.scrollerOuter {
+	position: relative;
+	overflow: hidden;
+}
+
+.Scroller-Container {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.scrlTrackTd {
+	padding-right: 10px;
+}
+
+/*Scrolling  (end) ####################################################*/
+	/*Home page content  ###############################################*/
+.outerBlockTitle {
+	text-align: center;
+	font-size: 27px;
+	color: #969B66;
+}
+
+td.newsBlockTD,td.slidesBlockTD {
+	
+}
+
+td.newsBlockTD {
+	
+}
+
+td.newsDateTD {
+	font-size: 20px;
+	font-weight: bold;
+	color: #000;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+td.newsContentTD {
+	font-size: 18px;
+	color: #6600BA;
+	vertical-align: top;
+	padding-left: 10px;
+	padding-bottom: 20px;
+}
+
+td.slidesBlockTD {
+	padding-left: 20px;
+}
+
+div.slidesDiv {
+	padding-left: 16px;
+}
+
+td.wlcmTD {
+	padding-top: 13px;
+}
+
+div.wlcmTxt {
+	color: #DC6E27;
+	font-size: 24px;
+	font-style: italic;
+}
+
+/*Home page content  (end)############################################*/
+
+/*Login page content  ###############################################*/
+.LoginPane1_innerBlockTitle {
+	color: #969B66;
+	font-size: 20px;
+	padding: 0px 0px 10px 0px;
+}
+
+#loginForm {
+	padding-left: 25px;
+}
+
+td.btnLoginTD {
+	text-align: left;
+}
+
+.errorContainer {
+	padding-top: 10px;
+	color: #ff0000;
+	text-align: center;
+}
+
+/*Login page content  (end)###############################################*/
+input.welcomeLine {
+	width: 535px;
+}
+
+/*Settings page content  ###############################################*/
+/*Settings page content  (end) ###############################################*/
+	
+.table_tool_pane {
+	padding: 0;
+	border: 0;
+}
+
+.table_tool_pane .PPSK_sell_after_btns_td {
+	width: 1px;
+	font-size: 1px;
+}
+
+/*Manager list  ------------------------------------------*/
+.Page_Managers_SearchSellTd, .Page_Managers_ToolSellTd, .Page_Multi_Tables_ToolSellTd{
+	padding-bottom: 10px;
+}
+
+.Page_Managers_SearchSellTd{
+	width: 1022px;
+}
+
+/*Manager list (end)  ------------------------------------------*/
+
+/*Tables columns  ------------------------------------------ (All tables on all pages.)*/
+	/*All columns. Only title.*/
+.managersTblEmailTtlTd, .managersTblSurnameTtlTd, .managersTblFirstNameTtlTd, .managersTblInfoTtlTd, .managersTblCityCountryTtlTd,
+.cities_viewTblCityTtlTd, .cities_viewTblCountryTtlTd,
+.countriesTblCountryTtlTd,
+.unitsTblFullTtlTd, .unitsTblBreifTtlTd, .unitsTblUpperSellTtlTd,
+.departmentsTblNameTtlTd, .departmentsTblInfoTtlTd{
+	height: 30px;
+	border-bottom: 1px solid;
+	border-top: 1px solid;
+	background-color: #AABBFF;
+	text-align: center;
+	font-weight: bold;
+}
+
+	/*All columns. Only info.*/
+.managersTblEmailClTd, .managersTblSurnameClTd, .managersTblFirstnameClTd, .managersTblInfoClTd, .managersTblCityCountryClTd,
+.cities_viewTblCityClTd, .cities_viewTblCountryClTd,
+.countriesTblCountryClTd,
+.unitsTblFullClTd, .unitsTblBreifClTd,
+.departmentsTblNameClTd, .departmentsTblInfoClTd{
+	height: 25px;
+	text-align: left;
+	overflow: hidden;
+	font-size: 16px;
+	white-space: nowrap;
+	line-height: 25px;
+}
+
+	/*Only left column. Title and info.*/
+.managersTblSurnameTtlTd, .managersTblSurnameClTd,
+.cities_viewTblCityTtlTd, .cities_viewTblCityClTd,
+.countriesTblCountryTtlTd, .countriesTblCountryClTd,
+.unitsTblFullTtlTd, .unitsTblFullClTd, .unitsTblUpperSellTtlTd,
+.departmentsTblNameTtlTd, .departmentsTblNameClTd{
+	border-left: 1px solid;
+}
+
+	/*All columns. Title and info.*/
+.managersTblEmailTtlTd, .managersTblEmailClTd,
+.managersTblSurnameTtlTd, .managersTblSurnameClTd,
+.managersTblFirstNameTtlTd, .managersTblFirstnameClTd,
+.managersTblCityCountryTtlTd, .managersTblCityCountryClTd,
+.managersTblInfoTtlTd, .managersTblInfoClTd,
+
+.cities_viewTblCityTtlTd, .cities_viewTblCityClTd,
+.cities_viewTblCountryTtlTd, .cities_viewTblCountryClTd,
+
+.countriesTblCountryTtlTd, .countriesTblCountryClTd,
+
+.unitsTblFullTtlTd, .unitsTblFullClTd,
+.unitsTblBreifTtlTd, .unitsTblBreifClTd,
+.unitsTblUpperSellTtlTd,
+
+.departmentsTblNameTtlTd, .departmentsTblNameClTd,
+.departmentsTblInfoTtlTd, .departmentsTblInfoClTd{   
+	border-right: 1px solid;
+	border-color: #0E00AF;
+	color: #6F24A5;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+/*Managers*/
+.managersTblEmailClTd, .managersTblInfoClTd, .managersTblCityCountryClTd{
+	font-size: 12px;
+}
+.managersTblEmailClTd{
+	width: 160px;
+}
+
+.managersTblSurnameClTd {
+	width: 135px;
+}
+
+.managersTblFirstnameClTd {
+	width: 135px;
+}
+
+.managersTblCityCountryClTd {
+	width: 170px;
+}
+
+.managersTblInfoClTd {
+	width: 465px;
+}
+
+/*Units*/
+.unitsTblFullTtlTd{
+	height: 28px;
+}
+
+.unitsTblBreifTtlTd{
+	height: 28px;
+}
+
+.unitsTblUpperSellTtlTd{
+	height: 27px;
+	border-bottom: none;
+}
+
+.unitsTblFullClTd{
+	width: 195px;
+}
+
+.unitsTblBreifClTd{
+	width: 97px;
+}
+
+/*Cities*/
+.cities_viewTblCityClTd, .cities_viewTblCountryClTd{
+	width: 190px;
+}
+
+/*Contries*/
+.countriesTblCountryClTd{
+	width: 304px;
+}
+
+/*Departments*/
+.departmentsTblNameClTd{
+	width: 230px;
+}
+.departmentsTblInfoClTd{
+	width: 670px;
+}
+
+/*Tables columns (end) ------------------------------------------*/
+
+.rowMBtn{
+	padding-left: 10px;
+	background-color: transparent;
+}
+.editPaneTbl {
+}
+
+.edit_pane_prmpt {
+	padding: 5px 10px 5px 20px; /*trbl*/
+	font-size: 16px;
+	white-space: nowrap;
+	vertical-align: top;
+}
+
+.edit_pane_content_td {
+	padding: 3px 0 3px 0; /*trbl*/
+	width: 250px;
+}
+
+.edit_pane_sel {
+	width: 99.5%;
+}
+
+.edit_pane_txt_ar {
+	width: 98%; *
+	width: 98.8%;
+}
+
+.edit_pane_input {
+	width: 96.55%;
+}
+
+/*Pane Titles*/
+.AddEditManagerPaneN_PaneTitle,.AddEditCountryPaneN_PaneTitle,.AddEditCityPaneN_PaneTitle,.AddEditUnitPaneN_PaneTitle,.AddEditClientPaneN_PaneTitle
+	{
+	font-size: 20px;
+	padding-bottom: 5px;
+	color: #996D2B;
+}
+
+/*Multi tables page  ###############################################*/
+.Page_Multi_Tables_Cities_SearchSellTd, .Page_Multi_Tables_Countries_SearchSellTd, .Page_Multi_Tables_Units_SearchSellTd,
+.Page_Multi_Tables_Departments_SearchSellTd{
+	padding-bottom: 10px;
+}
+.Page_Multi_Tables_Cities_SearchSellTd {
+	width: 309px;
+}
+.Page_Multi_Tables_Countries_SearchSellTd {
+	width: 220px;
+}
+.Page_Multi_Tables_Units_SearchSellTd {
+	width: 220px;
+}
+.mutiTablesPageTbl {
+	
+}
+.Page_Multi_Tables_Departments_SearchSellTd{
+	width: 825px;
+}
+
+.mutiTablesPageMenuSellTd,.mutiTablesPageMenuSelectedSellTd,.multiTablesPageMenuOverSellTd,.multiTablesPageMenuEmptySellTd
+	{
+	background-color: #68DDD6;
+	color: #6F24A5;
+	width: 140px;
+	font-size: 14px;
+	font-weight: bold;
+	border-bottom: 1px solid #63CCC3;
+	cursor: pointer;
+	padding: 5px 0 5px 10px; /*trbl*/
+	text-align: left;
+	vertical-align: middle;
+}
+
+.multiTablesPageMenuEmptySellTd {
+	
+}
+
+.multiTablesPageMenuOverSellTd {
+	background-color: #AFDBD8;
+	color: #996D2B;
+}
+
+.mutiTablesPageMenuSelectedSellTd {
+	background-color: #4CA0C4;
+	color: #D1D8FF;
+	cursor: default;
+}
+
+.multiTablesPageContainerSellTd {
+	width: 981px;
+	padding: 0 0 0 50px; /*trbl*/
+	vertical-align: top;
+}
+/*Multi tables page  (end) ###############################################*/

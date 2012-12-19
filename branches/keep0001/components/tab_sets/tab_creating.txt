@@ -1,0 +1,9 @@
+1. Create tab code constant in constants.php file.
+2. Create tab name constant in tab_prompts.php file.
+3. Create folder for page whrere page file will be situated.
+4. Create class php file with php class for page. File name and class name must have the structure:
+	`<tab code constant>_Page`. Example: `goods_Page`.
+5. Include class file in project.
+6. Register tab code constant in tabs set class constructor.
+7. Create handler in in tabs set class. Handler's name must have the structure:
+	`<tab code constant>_TabsHandler`. Example `lists_TabsHandler`.
