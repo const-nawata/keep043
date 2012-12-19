@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+.div_cont,.div_inner {
+	border: none;
+	font-size: 12px;
+}
+
+.div_cont {
+	width: 400px;
+	height: 400px;
+	padding-top: 50px;
+	vertical-align: bottom;
+}
+
+.div_inner {
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
+}

@@ -1,0 +1,9 @@
+@CHARSET "UTF-8";
+
+div.slides {
+	overflow: hidden;
+}
+
+.gSpace,.vSpace {
+	font-size: 1px;
+}
