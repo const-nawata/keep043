@@ -7,7 +7,7 @@ class RunApp extends Core{
 		parent::__construct( $this );
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function tabsSetClassSelector( $Owner ){
 		$class_name	= $_SESSION[ 'level' ].'_TabsSet';
