@@ -7,7 +7,6 @@ class LogAdmin{
 		$sql	= "INSERT INTO err_log ( level, user_id, tab_code, info ) VALUES ('".$_SESSION[ 'level' ]."', ".$_SESSION[ 'user_id' ].", '".$_SESSION[ 'tab_code' ]."', '$sql_mess' )";
 		$result = $gl_MysqliObj->query( $sql );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }
-?>

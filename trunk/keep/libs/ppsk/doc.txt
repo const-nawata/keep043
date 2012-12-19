@@ -20,9 +20,12 @@ registered once for all visual components.
 	6. File name and class name must be equal.
 	
 	7. IMPORTANT!!! Before PPSK classes using you must define $gl_MysqliObj global
-variable as mysqli object. Example: 
+variable as mysqli object.
+
+	Example: 
 	global $gl_MysqliObj;
 	$gl_MysqliObj = @new mysqli( $host, $user, $password, $db_name );
+	
 	
 	8. IMPORTANT!!! The first command of application must be `$auth_obj	= new PpskAuthentication();`.
 	9. You can activate ciphering for PPSK handlers data by redefining _PPSK_IS_CIPHER constant and
