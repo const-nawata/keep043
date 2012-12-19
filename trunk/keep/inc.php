@@ -1,5 +1,5 @@
 <?php
-require_once( "config.php" );
+require_once( 'config.php' );
 require_once( $gl_Path."prompts/russian.php" );
 
 global $gl_PpskPath; $gl_PpskPath = $gl_Path."libs/ppsk/";
@@ -23,3 +23,4 @@ require_once( $gl_CompsPath."inc_comps.php" );
 
 require_once( $gl_Path."libs/xajax/xajax.inc.php" );
 
+//Test commit.
