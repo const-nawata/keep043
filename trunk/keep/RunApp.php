@@ -10,18 +10,18 @@ class RunApp extends Core{
 //______________________________________________________________________________
 
 	private function tabsSetClassSelector( $Owner ){
-		$class_name	= $_SESSION[ 'level' ].'_TabsSet';
+		$class_name	= $_SESSION['level'].'_TabsSet';
 		$tabs_obj	= new $class_name( $Owner );
 		return $tabs_obj;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function pageClassSelector( $Owner ){
 		$class_name	= $_SESSION[ 'tab_code' ]._PAGE_POSTFIX;
 		$page_obj	= new $class_name( $Owner );
 		return $page_obj;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function buildScreenByAjax( &$objResponse ){
 		$html_view	= $this->getHtmlView();
@@ -32,7 +32,7 @@ class RunApp extends Core{
 		$objResponse->addScript( "current_tab_code='".$_SESSION[ 'tab_code' ]."'" );		//	This fackin script is necessary for Safari and Google Chrome
 		$objResponse->addScript( $html_view[ 'js_code' ] );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function initHtmlView(){
 		$tabs_obj	= $this->tabsSetClassSelector( $this );
@@ -46,12 +46,11 @@ class RunApp extends Core{
 		);
 		parent::initHtmlView( $view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>

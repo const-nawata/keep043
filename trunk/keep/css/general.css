@@ -11,8 +11,8 @@ div.headerDiv {
 	background: url("../img/grad_hat3.gif") repeat;
 }
 
-td.logoName {
-	font-size: 42px;
+td.logoName,td.logoNameCnt{
+	font-size: 53px;
 	font-weight: bolder;
 	color: #FF0066;
 	text-align: center;
@@ -20,14 +20,15 @@ td.logoName {
 	vertical-align: bottom;
 }
 
+td.logoNameCnt{
+	font-size: 25px;
+	color: #964646;
+}
+
 td.endSign {
 	font-size: 25px;
 }
 
-td.contName {
-	font-size: 25px;
-	padding-bottom: 5px;
-}
 
 td.headerInfoTd {
 	vertical-align: top;
