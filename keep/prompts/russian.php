@@ -1,11 +1,9 @@
 <?php
-define( '_COMPANY_TITLE', 'Нина и Саша');
+// define( '_COMPANY_TITLE', 'Контейнер 764');
+define( '_CONTAINER', 'Контейнер' );
+define( '_CONTAINER_N', '764' );
 
-define( '_AND_SIGN', '&' );
-define( '_CONT_NAME1', 'K.764' );
-define( '_CONT_NAME2', 'K.270' );
-define( '_NAME1', 'Нина' );
-define( '_NAME2', 'Саша' );
+define( '_OWNER_NAME', 'Нина' );
 
 define( '_BUSINESS_NAME', 'Комнатные тапочки' );
 define( '_BUSINESS_STATUS', 'Продажа оптом и в розницу.' );
@@ -80,8 +78,4 @@ define( '_TITLE_MANAGERS_EDIT', 'Редактирование' );
 @define( '_PPSK_DB_ERR_FOREIGN_KEY_CONSTRAINT', 'Невозможно удалить или изменить запись. Ее значения используются другими таблицами.' );
 
 
-
-
-
 define( '_SORRY', '<br><br><br><br><br><center><b>Извините. Страница  еще не реализована.</b></center><br>' );
-?>

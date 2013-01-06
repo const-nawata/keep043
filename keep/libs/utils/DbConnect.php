@@ -24,11 +24,10 @@ class DbConnect {
 		$this->mUser	= $User;
 		$this->mPass	= $Pass;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 /**
  * performs connetion process to DB
- * @access	public
  * @return	void
  */
 	public function doConnect(){
@@ -37,15 +36,14 @@ class DbConnect {
 		$gl_MysqliObj = new mysqli( $this->mHost, $this->mUser, $this->mPass, $this->mDbName );
 		if( $gl_MysqliObj->connect_errno ){
 			$this->mIsSuccess	= false;
-			throw new Exception( _EX.'DB Connection Error: '.$gl_MysqliObj->connect_errno.". ".$gl_MysqliObj->connect_error );
+			throw new Exception( _EX.'DB Connection Error: '.$gl_MysqliObj->connect_errno.'. '.$gl_MysqliObj->connect_error );
 		}else{
 			$this->mIsSuccess	= true;
 		}
 
-		$sql = "SET NAMES utf8";
+		$sql = 'SET NAMES utf8';
 		$result = $gl_MysqliObj->query( $sql );
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>
