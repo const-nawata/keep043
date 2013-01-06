@@ -29,7 +29,7 @@ class RunApp extends Core{
 		$objResponse->addAssign( 'wlcmUserLine', 'innerHTML', $html_view[ 'wlcm' ] );
 		$objResponse->addAssign( 'mainContent', 'innerHTML', $html_view[ 'page' ] );
 		$objResponse->addScript( _SET_JS_NULL );
-		$objResponse->addScript( "current_tab_code='".$_SESSION[ 'tab_code' ]."'" );		//	This fackin script is necessary for Safari and Google Chrome
+		$objResponse->addScript( "current_tab_code='".$_SESSION[ 'tab_code' ]."'" );		//	This fucking script is necessary for Safari and Google Chrome
 		$objResponse->addScript( $html_view[ 'js_code' ] );
 	}
 //______________________________________________________________________________
