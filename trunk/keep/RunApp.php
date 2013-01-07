@@ -25,12 +25,12 @@ class RunApp extends Core{
 
 	public function buildScreenByAjax( &$objResponse ){
 		$html_view	= $this->getHtmlView();
-		$objResponse->addAssign( 'tabs', 'innerHTML', $html_view[ 'tabs' ] );
-		$objResponse->addAssign( 'wlcmUserLine', 'innerHTML', $html_view[ 'wlcm' ] );
-		$objResponse->addAssign( 'mainContent', 'innerHTML', $html_view[ 'page' ] );
-		$objResponse->addScript( _SET_JS_NULL );
-		$objResponse->addScript( "current_tab_code='".$_SESSION[ 'tab_code' ]."'" );		//	This fucking script is necessary for Safari and Google Chrome
-		$objResponse->addScript( $html_view[ 'js_code' ] );
+		$objResponse->assign( 'tabs', 'innerHTML', $html_view[ 'tabs' ] );
+		$objResponse->assign( 'wlcmUserLine', 'innerHTML', $html_view[ 'wlcm' ] );
+		$objResponse->assign( 'mainContent', 'innerHTML', $html_view[ 'page' ] );
+		$objResponse->script( _SET_JS_NULL );
+		$objResponse->script( "current_tab_code='".$_SESSION[ 'tab_code' ]."'" );		//	This fucking script is necessary for Safari and Google Chrome
+		$objResponse->script( $html_view[ 'js_code' ] );
 	}
 //______________________________________________________________________________
 

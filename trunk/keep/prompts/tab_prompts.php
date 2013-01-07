@@ -1,7 +1,6 @@
 <?php
 // Tabs Prompts
 define( _TAB_PRMPT._PPSK_TAB_HOME_CODE,	'Главная' );
-
 define( _TAB_PRMPT._TAB_CATALOGUE_CODE, 'Каталог' );
 define( _TAB_PRMPT._TAB_CLIENTS_CODE,	'Клиенты' );
 define( _TAB_PRMPT._TAB_CONTACT_CODE,	'Контакты' );
