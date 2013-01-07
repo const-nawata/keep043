@@ -19,9 +19,13 @@ class PpskActions{
 
 //TODO: Think to present $handleResource and $value as syhpered JSON array. (or maybe as syhpered serialized  PHP array)
 
-	public function onHandler( $handleResource = NULL, $value = NULL ){
+	public function onHandler( $handleResource=NULL, $value=NULL ){
+
+Log::_log("SSS fff");
+
 		global $log_obj, $gl_PpskPath;
 		$objResponse = new xajaxResponse();
+
 
 		$err_access	= "location.href='".$gl_PpskPath."access.php'";
 
@@ -36,18 +40,19 @@ class PpskActions{
 		}
 
 		$res_arr	= explode( ':', $handleResource );
-		if( !( $res_arr && ( count( $res_arr ) == 4 ) ) ){
+		if( !( $res_arr && ( count( $res_arr ) == 4 ))){
 			$objResponse->script( $err_access );
 			return $objResponse;
 		}
 
 		list( $filler1, $hndlName, $className, $filler2 ) = $res_arr;
-		if( !( $filler1 == $filler2 && $className && class_exists( $className ) ) ){
+		if( !( $filler1 == $filler2 && $className && class_exists( $className ))){
 			$objResponse->script( $err_access );
 			return $objResponse;
 		}
 
 		$obj = new $className( NULL );	//	Value NULL is set becouse of presense of $Owner paramenter
+
 		if( !( $hndlName && method_exists( $obj, $hndlName ) ) ){
 			$objResponse->script( $err_access );
 			return $objResponse;
