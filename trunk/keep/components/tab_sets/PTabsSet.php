@@ -38,7 +38,7 @@ abstract class PTabsSet extends Core{
 		$TabIns->unsetAllHandlers();
 		if( $TabIns->mName != $_SESSION[ 'tab_code' ] ){
 			$hndl_res	= $this->getHandleResourceString( $onclick_handler, $owner_class );
-			$TabIns->setHandler( array( 'handler'=>"xajax_corePpskHandler(\"$hndl_res\");" ) );
+			$TabIns->setHandler( array( 'handler'=>"xajax_onHandler(\"$hndl_res\");" ) );
 			$this->setGeneralHandlers( $TabIns );
 		}
 	}

@@ -11,7 +11,7 @@ class LoginPane extends PRnd1Pane{
 
 		$this->mForm	= array(
     		'event'		=> 'onsubmit',
-    		'handler'	=> "xajax_corePpskHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\", xajax.getFormValues( this ) ); return false;"
+    		'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\", xajax.getFormValues( this ) ); return false;"
     		);
 
     		$this->mButtons	= array(
@@ -28,7 +28,7 @@ class LoginPane extends PRnd1Pane{
     		//    			'css_ovr'	=>'btn_over',
     		//    			'handlers'	=>array(
     		//    				'onclick'	=> array(
-    		//    					'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString('TestBtn1', 'LoginPane')."\", \"Button 1 was clicked.\");"
+    		//    					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString('TestBtn1', 'LoginPane')."\", \"Button 1 was clicked.\");"
     		//    				)/*,
     		//    				'onmouseover'=>array(
     		//    					'handler'=>"this.className=\"btn_over\""
@@ -45,7 +45,7 @@ class LoginPane extends PRnd1Pane{
     		//    			'css_ovr'	=> 'btn_over',
     		//    			'handlers'	=> array(
     		//    				'onclick'	=> array(
-    		//    					'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString('TestBtn2', 'LoginPane')."\", \"Button 2 was clicked.\");",
+    		//    					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString('TestBtn2', 'LoginPane')."\", \"Button 2 was clicked.\");",
     		//    				)
     		//    			)
     		//    		),

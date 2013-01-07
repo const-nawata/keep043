@@ -371,7 +371,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_ADD_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString( 'addRowHandler', get_class( $this ) )."\", null );"
+    					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'addRowHandler', get_class( $this ) )."\", null );"
     					)
     					)
     					),
@@ -379,7 +379,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_EDIT_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString( 'editRowHandler', get_class( $this ) )."\", null );"
+    					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'editRowHandler', get_class( $this ) )."\", null );"
     					)
     					)
     					),
@@ -389,7 +389,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_DELETE_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString( 'showConfirmHandler', get_class( $this ) )."\", ".
+    					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'showConfirmHandler', get_class( $this ) )."\", ".
     									"{ \"message\" : \""._MESSAGE_IS_DEL_RECORD."\", \"action\" : \"".self::encipherFilledValue( 'deleteRowHandler' )."\"} );"
     									)
     									)
@@ -399,7 +399,7 @@ abstract class PTable extends Core{
     									//				'hint'	=> _PPSK_HINT_DELETE_ROW,
     									//    			'handlers'	=> array(
     									//    				'onclick'	=> array(
-    									//    					'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString( 'deleteRowHandler', get_class( $this ) )."\", '1' );",
+    									//    					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'deleteRowHandler', get_class( $this ) )."\", '1' );",
     									//    					'ask'	=> _MESSAGE_IS_DEL_RECORD
     									//    				)
     									//    			)
@@ -440,12 +440,12 @@ abstract class PTable extends Core{
 		$search	= &$this->mSearchParams;
 		$search[ 'buttons' ][ 'search' ][ 'handlers' ]	= array(
     			'onclick'	=> array(
-    				'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString( 'searchByFilterHandler', get_class( $this ) )."\", document.getElementById(\"inp_".$class."_TableSearchField\").value );"
+    				'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'searchByFilterHandler', get_class( $this ) )."\", document.getElementById(\"inp_".$class."_TableSearchField\").value );"
     				)
     				);
         $search[ 'buttons' ][ 'clear' ][ 'handlers' ]	= array(
     			'onclick'	=> array(
-    				'handler'	=> "xajax_corePpskHandler(\"".$this->getHandleResourceString( 'searchByFilterHandler', get_class( $this ) )."\", \"\" ); "
+    				'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'searchByFilterHandler', get_class( $this ) )."\", \"\" ); "
     				)
     				);
 	}
@@ -646,7 +646,7 @@ abstract class PTable extends Core{
 		$class = get_class( $this );
 		$field		= self::encipherFilledValue( $field );
 		$resourse	= $this->getHandleResourceString( 'onClickSortHandler', $class );
-		return "xajax_corePpskHandler(\"".$resourse."\", \"".$field."\" );";
+		return "xajax_onHandler(\"".$resourse."\", \"".$field."\" );";
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -741,7 +741,7 @@ abstract class PTable extends Core{
 				$id_h	= " id='TrId_".$id_h."' ";
 
 				$resourse	= $this->getHandleResourceString( 'onClickSelLineHandler', $class );
-				$evt_onclick	= " onclick='xajax_corePpskHandler( \"".$resourse."\", this.id );' ";
+				$evt_onclick	= " onclick='xajax_onHandler( \"".$resourse."\", this.id );' ";
 			}
 			$view .= "<tr".$id_h.$evt_onclick.$evt_over.$evt_out.">".$this->buildLineSellsHtmlContent( $line )."</tr>";
 			$this->mGradFlg = !$this->mGradFlg;

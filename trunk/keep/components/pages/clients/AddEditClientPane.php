@@ -35,7 +35,7 @@ class AddEditClientPane extends PAddEditPane{
 
 		$onchange	=
 		self::_onchange.
-    		"xajax_corePpskHandler( \"".$this->getHandleResourceString( 'onChangeCountry', get_class( $this ) )."\", {\"country_id\":this.value,\"inst\":document.getElementById( \"inst\" ).value } );";
+    		"xajax_onHandler( \"".$this->getHandleResourceString( 'onChangeCountry', get_class( $this ) )."\", {\"country_id\":this.value,\"inst\":document.getElementById( \"inst\" ).value } );";
 
 		$this->mOptions	= $db_obj->getCountriesList();
 		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex, $onchange ); $tanindex++;
