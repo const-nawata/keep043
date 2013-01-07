@@ -17,7 +17,7 @@ class RunApp extends Core{
 //______________________________________________________________________________
 
 	private function pageClassSelector( $Owner ){
-		$class_name	= $_SESSION[ 'tab_code' ]._PAGE_POSTFIX;
+		$class_name	= $_SESSION['tab_code']._PAGE_POSTFIX;
 		$page_obj	= new $class_name( $Owner );
 		return $page_obj;
 	}
@@ -25,11 +25,11 @@ class RunApp extends Core{
 
 	public function buildScreenByAjax( &$objResponse ){
 		$html_view	= $this->getHtmlView();
-		$objResponse->assign( 'tabs', 'innerHTML', $html_view[ 'tabs' ] );
-		$objResponse->assign( 'wlcmUserLine', 'innerHTML', $html_view[ 'wlcm' ] );
-		$objResponse->assign( 'mainContent', 'innerHTML', $html_view[ 'page' ] );
+		$objResponse->assign( 'tabs', 'innerHTML', $html_view['tabs'] );
+		$objResponse->assign( 'wlcmUserLine', 'innerHTML', $html_view['wlcm'] );
+		$objResponse->assign( 'mainContent', 'innerHTML', $html_view['page'] );
 		$objResponse->script( _SET_JS_NULL );
-		$objResponse->script( "current_tab_code='".$_SESSION[ 'tab_code' ]."'" );		//	This fucking script is necessary for Safari and Google Chrome
+		$objResponse->script( "current_tab_code='".$_SESSION['tab_code']."'" );		//	This fucking script is necessary for Safari and Google Chrome
 		$objResponse->script( $html_view[ 'js_code' ] );
 	}
 //______________________________________________________________________________

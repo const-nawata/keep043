@@ -10,18 +10,18 @@ abstract class PTabsSet extends Core{
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function setGeneralHandlers( &$TabIns ){
 		$TabIns->setHandler( array( 'handler'=>"mouseOverOutTab(\"".$TabIns->mName."\", \"over\");" ), 'onmouseover' );
 		$TabIns->setHandler( array( 'handler'=>"mouseOverOutTab(\"".$TabIns->mName."\", \"notSelected\");" ), 'onmouseout' );
 	}
-	//-------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * sets tab params
@@ -42,7 +42,7 @@ abstract class PTabsSet extends Core{
 			$this->setGeneralHandlers( $TabIns );
 		}
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * builds view of set of tabs for page accoding to user's level and active tab.
@@ -65,7 +65,7 @@ abstract class PTabsSet extends Core{
 </table>";
 		return $string;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * sets HTML view
@@ -76,19 +76,18 @@ abstract class PTabsSet extends Core{
 		$view	= ( $view == NULL ) ? $this->buildTabsSetView() : $view;
 		parent::initHtmlView( $view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function execTabHandler( &$objResponse ){
 		$app	= new RunApp();
 		$app->buildScreenByAjax( $objResponse );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function logout_TabsHandler( &$objResponse, $TabCode ){
 		$auth_obj	= new Authentication( true );
 		$this->execTabHandler( $objResponse );
 	}
-	//---------------------------------------------------------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-}
-?>
+}//	Class end

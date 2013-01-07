@@ -1,8 +1,9 @@
 <?php
 class LoginPane extends PRnd1Pane{
 
-	public function __construct( /*$Owner*/ ){
-		//    	$this->mName		= 'loginPane';
+	public function __construct(){
+		$name_pref	=
+		$this->mName= 'loginPane';
 		$this->mTitle		= _TITLE_INPUT_LOGIN;
 		$this->mWidth	= 320;
 		$this->mHeigth	= 200;
@@ -11,10 +12,13 @@ class LoginPane extends PRnd1Pane{
 
 		$this->mForm	= array(
     		'event'		=> 'onsubmit',
-    		'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\", xajax.getFormValues( this ) ); return false;"
-    		);
+    		'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\",xajax.getFormValues(\"".$name_pref."Form\"));return false;"
+// 			'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\",xajax.getFormValues(this));return false;"
+// 			'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\", 10 );return false;"
+// 			'handler'	=> "alert(2);"
+    	);
 
-    		$this->mButtons	= array(
+		$this->mButtons	= array(
 
     		//###############################################################################
     		//	Example block for additional buttons	(Don't delete this block)
@@ -52,18 +56,19 @@ class LoginPane extends PRnd1Pane{
     		//	Example end
     		//###############################################################################
 
-    		array (	//	Button to accept login information
-    			'name'=>'btn3',
-    			'type'=>'submit',
-    			'prompt'=>constant (_TAB_PRMPT._TAB_LOGIN_CODE),
-    			'hint'=>constant (_TAB_PRMPT._TAB_LOGIN_CODE),
-    			'css_ovr'	=>'btn_over'
-    			)
-    			);
-    			$this->mContent	= $this->getLoginPaneHtmlContent();//	Individual content
+			array (	//	Button to accept login information
+				'name'=>'btn3',
+				'type'=>'submit',
+				'prompt'=>constant (_TAB_PRMPT._TAB_LOGIN_CODE),
+				'hint'=>constant (_TAB_PRMPT._TAB_LOGIN_CODE),
+				'css_ovr'	=>'btn_over'
+			)
+		);
 
-    			parent::__construct( $this );
-    			$this->initHtmlView();
+    	$this->mContent	= $this->getLoginPaneHtmlContent();//	Individual content
+
+    	parent::__construct( $this );
+    	$this->initHtmlView();
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -141,4 +146,3 @@ class LoginPane extends PRnd1Pane{
 	//--------------------------------------------------------------------------------------------------
 
 }//	Class end
-?>
