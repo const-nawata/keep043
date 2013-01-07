@@ -14,7 +14,6 @@ require_once( $gl_Path.'prompts/tab_prompts.php' );
 require_once( $gl_Path.'libs/utils/DbConnect.php' );
 require_once( $gl_Path.'libs/utils/funcs.php' );
 require_once( $gl_Path.'libs/utils/Dbl.php' );
-require_once( $gl_Path.'libs/JSON.php' );
 require_once( $gl_Path.'RunApp.php' );
 
 global $gl_CompsPath; $gl_CompsPath	= $gl_Path.'components/';
