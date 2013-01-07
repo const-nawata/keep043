@@ -2,8 +2,6 @@
 class LoginPane extends PRnd1Pane{
 
 	public function __construct(){
-		$name_pref	=
-		$this->mName= 'loginPane';
 		$this->mTitle		= _TITLE_INPUT_LOGIN;
 		$this->mWidth	= 320;
 		$this->mHeigth	= 200;
@@ -12,10 +10,7 @@ class LoginPane extends PRnd1Pane{
 
 		$this->mForm	= array(
     		'event'		=> 'onsubmit',
-    		'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\",xajax.getFormValues(\"".$name_pref."Form\"));return false;"
-// 			'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\",xajax.getFormValues(this));return false;"
-// 			'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\", 10 );return false;"
-// 			'handler'	=> "alert(2);"
+			'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'doLogin', 'LoginPane' )."\",xajax.getFormValues(this));return false;"
     	);
 
 		$this->mButtons	= array(
@@ -70,7 +65,7 @@ class LoginPane extends PRnd1Pane{
     	parent::__construct( $this );
     	$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * gets individual content of login pane. This method is called in constructor.
@@ -86,7 +81,7 @@ class LoginPane extends PRnd1Pane{
 </table>
 <div id='errLoginCont' class='errorContainer'></div>";
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * checks login and password
@@ -108,7 +103,7 @@ class LoginPane extends PRnd1Pane{
 		if( count( $user_info ) ){ return $user_info[ 0 ]; }
 		else{ return false; }
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function doLogin( &$objResponse, $formValues ){
 
@@ -132,17 +127,17 @@ class LoginPane extends PRnd1Pane{
 
 
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	//This block was left as example for buttons (see above)
 	public function TestBtn1( &$objResponse, $Value ){
 		$objResponse->assign('errLoginCont', 'innerHTML', $Value);
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function TestBtn2(&$objResponse, $Value){
 		$objResponse->assign('errLoginCont', 'innerHTML', $Value);
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end

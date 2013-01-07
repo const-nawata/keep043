@@ -5,13 +5,6 @@
  * @param strint $arrName name of array
  * @return string HTML content
  */
-function getArrContent( $array, $arrName = '' ){
-	$content	= '';
-	( $arrName != '' ) ? $content	.= $arrName."<br>":'';
-	$content = '<pre>'.print_r( $array, true ).'</pre>';
-	return $content;
-}
-//______________________________________________________________________________
 
 /**
  * gets welcome text due login info
@@ -43,15 +36,11 @@ function getWelcomeText(){
  * @return string
  * */
 function iniJsEnvironment(){
-	global $ifxAjaxError;
-	$ifxAjaxErrorJs	= ($ifxAjaxError) ? 'true' : 'false';
 	return
 '<script type="text/javascript">'.
 'var _TAB_LEFT_IMG_SFX="'._TAB_LEFT_IMG_SFX.'";'.
 'var _TAB_CENTER_IMG_SFX="'._TAB_CENTER_IMG_SFX.'";'.
 'var _TAB_RIGHT_IMG_SFX="'._TAB_RIGHT_IMG_SFX.'";'.
-
-'var ifxAjaxError='.$ifxAjaxErrorJs.';'.
 
 'var scroller=null;'.
 'var scrollbar=null;'.

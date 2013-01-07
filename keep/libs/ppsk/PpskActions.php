@@ -17,11 +17,9 @@ class PpskActions{
  */
 
 
-//TODO: Think to present $handleResource and $value as syhpered JSON array. (or maybe as syhpered serialized  PHP array)
+//TODO: Think to present $handleResource and $value as syhpered JSON array.
 
 	public function onHandler( $handleResource=NULL, $value=NULL ){
-
-Log::_log("SSS fff");
 
 		global $log_obj, $gl_PpskPath;
 		$objResponse = new xajaxResponse();
@@ -69,5 +67,3 @@ Log::_log("SSS fff");
 
 }//	Class end
 
-// Example to put array data to debug buffer:
-//$_SESSION[ 'debug_info' ]	= getArrContent( $dbg_data, 'dbg_data' );
