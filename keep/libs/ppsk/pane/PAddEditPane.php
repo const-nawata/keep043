@@ -220,7 +220,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 				}else{
 					$_SESSION[ 'tables' ][  $class ][ 'line_id' ] = $formValues[ 'id' ] = $result[ 'id' ];
 					$tabl_obj->initHtmlView( true );
-					$objResponse->addAssign( $class."_container", 'innerHTML', $tabl_obj->getHtmlView() );
+					$objResponse->assign( $class."_container", 'innerHTML', $tabl_obj->getHtmlView() );
 				 	$objResponse->addRemove( 'pane_container' );
 				 	$objResponse->addRemove( 'veil' );
 				}

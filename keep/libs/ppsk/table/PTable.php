@@ -793,9 +793,9 @@ abstract class PTable extends Core{
 			$objResponse->addPrepend( 'body_id', 'innerHTML', "<div id='pane_container' class='PPSK_pane_container_div'>".$info_pane_html."</div>" );
 
 			$class = get_class( $this );
-			$objResponse->addAssign(  'inp_'.$class."_TableSearchField", 'value', $_SESSION[ 'tables' ][ $class ][ 'filter' ] );	//	This necessary for Firefox!!!
+			$objResponse->assign(  'inp_'.$class."_TableSearchField", 'value', $_SESSION[ 'tables' ][ $class ][ 'filter' ] );	//	This necessary for Firefox!!!
 			if( _EMPTY != $info_pane_obj->mInitFocus ){
-				$objResponse->addScript( "setFocus( '".$info_pane_obj->mInitFocus."' );" );
+				$objResponse->script( "setFocus( '".$info_pane_obj->mInitFocus."' );" );
 			}
 
 		}else{
@@ -840,7 +840,7 @@ abstract class PTable extends Core{
 			$sort[ 'dir' ]	= ( $sort[ 'dir' ] == 'asc' ) ? 'desc' : 'asc';
 		}
 		$tbl_obj	= new $class( NULL, true );
-		$objResponse->addAssign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
+		$objResponse->assign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -850,7 +850,7 @@ abstract class PTable extends Core{
 		$class	= get_class( $this );
 		$_SESSION[ 'tables' ][ $class ][ 'line_id' ]	= $id;
 		$tbl_obj	= new $class( NULL, true );
-		$objResponse->addAssign(  $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
+		$objResponse->assign(  $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -858,7 +858,7 @@ abstract class PTable extends Core{
 		$class	= get_class( $this );
 		$_SESSION[ 'tables' ][ $class ][ 'page' ]	= $page;
 		$tbl_obj	= new $class( NULL, true );
-		$objResponse->addAssign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
+		$objResponse->assign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -872,8 +872,8 @@ abstract class PTable extends Core{
 
 		$tbl_obj	= new $class( NULL, true );
 
-		$objResponse->addAssign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
-		$objResponse->addAssign( 'inp_'.$class."_TableSearchField", 'value', $sess[ 'filter' ] );
+		$objResponse->assign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
+		$objResponse->assign( 'inp_'.$class."_TableSearchField", 'value', $sess[ 'filter' ] );
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -892,7 +892,7 @@ abstract class PTable extends Core{
 				$this->showAlertHandler( $objResponse, array( 'message' => $result[ 'description' ], 'focus' => $result[ 'focus_id' ] ) );
 			}else{
 				$tbl_obj	= new $class( NULL, true );
-				$objResponse->addAssign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
+				$objResponse->assign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
 			}
 		}else{
 			$objResponse = $this->doAccessDenied();

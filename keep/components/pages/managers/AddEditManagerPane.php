@@ -105,7 +105,7 @@ class AddEditManagerPane extends PAddEditPane{
 		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess() ) ){
 			$db_obj	= new Dbl( $this );
 			$this->mOptions	= $db_obj->getCitiesList( $ownerValues[ 'country_id' ] );
-			$objResponse->addAssign( "city_id_cnt_td", 'innerHTML', $this->getSelBoxContent( 'city_id', 0, 4, self::_onchange ) );
+			$objResponse->assign( "city_id_cnt_td", 'innerHTML', $this->getSelBoxContent( 'city_id', 0, 4, self::_onchange ) );
 		}else{
 			$objResponse = $this->doAccessDenied();
 		}

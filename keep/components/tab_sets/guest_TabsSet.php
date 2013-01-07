@@ -40,7 +40,7 @@ class guest_TabsSet extends PTabsSet{
 	public function login_TabsHandler( &$objResponse, $NULL ){//	_TAB_LOGIN_CODE
 		$_SESSION[ 'tab_code' ]	= _TAB_LOGIN_CODE;
 		$this->execTabHandler( $objResponse );
-		$objResponse->addScript( "setFocus( 'login' );" );
+		$objResponse->script( "setFocus( 'login' );" );
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------------
 
