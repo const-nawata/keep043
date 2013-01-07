@@ -40,9 +40,8 @@ class CataloguePane extends PRnd1Pane {
 
 	//This block was left as example for buttons (see above)
 	//    public function TstCatBtn1( &$objResponse, $Value ){
-	//		$objResponse->addAssign( 'errLoginCont', 'innerHTML', $Value );
+	//		$objResponse->assign( 'errLoginCont', 'innerHTML', $Value );
 	//    }
 	//--------------------------------------------------------------------------------------------------
 
 }//	Class end
-?>

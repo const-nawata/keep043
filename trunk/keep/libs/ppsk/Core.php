@@ -127,7 +127,7 @@ abstract class Core{
 		session_unset();
 		session_destroy();
 		$objResponse = new xajaxResponse();
-		$objResponse->addScript( "location.href =  '".$gl_PpskPath."access.php'" );
+		$objResponse->script( "location.href =  '".$gl_PpskPath."access.php'" );
 		return $objResponse;
 	}
 	//--------------------------------------------------------------------------------------------------
@@ -261,8 +261,8 @@ abstract class Core{
 		$params[ 'action' ]	= self::decipherFilledValue( $params[ 'action' ] );
 		$alert_obj	= new ConfirmPaneRnd1( $this, $params[ 'message' ], $params[ 'action' ] );
 		$alert_mess	= $alert_obj->getHtmlView();
-		$objResponse->addScript( "prependDiv( 'body_id', 'alert_veil', 'PPSK_alert_vail_div'); prependDiv( 'body_id', 'alert_container', 'PPSK_pane_alert_container_div');" );
-		$objResponse->addAssign( 'alert_container', 'innerHTML', $alert_mess );
+		$objResponse->script( "prependDiv( 'body_id', 'alert_veil', 'PPSK_alert_vail_div'); prependDiv( 'body_id', 'alert_container', 'PPSK_pane_alert_container_div');" );
+		$objResponse->assign( 'alert_container', 'innerHTML', $alert_mess );
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -278,8 +278,8 @@ abstract class Core{
 	public function showAlertHandler( &$objResponse, $info ){
 		$alert_obj	= new AlertPaneRnd1( $this, $info[ 'message' ], $info[ 'focus' ] );
 		$alert_mess	= $alert_obj->getHtmlView();
-		$objResponse->addScript( "prependDiv( 'body_id', 'alert_veil', 'PPSK_alert_vail_div'); prependDiv( 'body_id', 'alert_container', 'PPSK_pane_alert_container_div');" );
-		$objResponse->addAssign( 'alert_container', 'innerHTML', $alert_mess );
+		$objResponse->script( "prependDiv( 'body_id', 'alert_veil', 'PPSK_alert_vail_div'); prependDiv( 'body_id', 'alert_container', 'PPSK_pane_alert_container_div');" );
+		$objResponse->assign( 'alert_container', 'innerHTML', $alert_mess );
 	}
 	//--------------------------------------------------------------------------------------------------
 

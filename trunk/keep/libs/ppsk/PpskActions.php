@@ -24,14 +24,14 @@ class PpskActions{
 		$objResponse = new xajaxResponse();
 
 // 		if( !( $handleResource	!= NULL && $handleResource != _EMPTY ) ){
-// 			$objResponse->addScript( "location.href = '".$gl_PpskPath."access.php'" );
+// 			$objResponse->script( "location.href = '".$gl_PpskPath."access.php'" );
 // 			return $objResponse;
 // 		}
 
 		$err_access	= "location.href = '".$gl_PpskPath."access.php'";
 
 		if( !(bool)$handleResource ){
-			$objResponse->addScript( $err_access );
+			$objResponse->script( $err_access );
 			return $objResponse;
 		}
 
@@ -42,19 +42,19 @@ class PpskActions{
 
 		$res_arr	= explode( ":", $handleResource );
 		if( !( $res_arr && ( count( $res_arr ) == 4 ) ) ){
-			$objResponse->addScript( $err_access );
+			$objResponse->script( $err_access );
 			return $objResponse;
 		}
 
 		list( $filler1, $hndlName, $className, $filler2 ) = $res_arr;
 		if( !( $filler1 == $filler2 && $className && class_exists( $className ) ) ){
-			$objResponse->addScript( $err_access );
+			$objResponse->script( $err_access );
 			return $objResponse;
 		}
 
 		$obj = new $className( NULL );	//	Value NULL is set becouse of presense of $Owner paramenter
 		if( !( $hndlName && method_exists( $obj, $hndlName ) ) ){
-			$objResponse->addScript( $err_access );
+			$objResponse->script( $err_access );
 			return $objResponse;
 		}
 
@@ -62,10 +62,10 @@ class PpskActions{
 			$obj->$hndlName( $objResponse, $value );  //  Parameter $objResponse is mandatory in handler and must be a reference (starts with &)
 
 			if( _IS_SHOW_DBG_BUFF && isset( $_SESSION[ 'debug_info' ] ) ){
-				$objResponse->addAssign( 'debug_buffer', 'innerHTML', $_SESSION[ 'debug_info' ] );
+				$objResponse->assign( 'debug_buffer', 'innerHTML', $_SESSION[ 'debug_info' ] );
 				unset( $_SESSION[ 'debug_info' ] );
 			}else{
-				$objResponse->addAssign( 'debug_buffer', 'innerHTML', '' );
+				$objResponse->assign( 'debug_buffer', 'innerHTML', '' );
 			}
 
 		}catch( Exception $e ){

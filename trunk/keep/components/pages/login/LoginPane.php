@@ -119,7 +119,7 @@ class LoginPane extends PRnd1Pane{
 			$_SESSION[ 'tab_code' ]	= NULL;
 			PTabsSet::execTabHandler( $objResponse );
 		}else{
-			$objResponse->addAssign( 'errLoginCont', 'innerHTML', _MESSAGE_BAD_LOGIN );
+			$objResponse->assign( 'errLoginCont', 'innerHTML', _MESSAGE_BAD_LOGIN );
 		}
 
 
@@ -131,12 +131,12 @@ class LoginPane extends PRnd1Pane{
 
 	//This block was left as example for buttons (see above)
 	public function TestBtn1( &$objResponse, $Value ){
-		$objResponse->addAssign('errLoginCont', 'innerHTML', $Value);
+		$objResponse->assign('errLoginCont', 'innerHTML', $Value);
 	}
 	//--------------------------------------------------------------------------------------------------
 
 	public function TestBtn2(&$objResponse, $Value){
-		$objResponse->addAssign('errLoginCont', 'innerHTML', $Value);
+		$objResponse->assign('errLoginCont', 'innerHTML', $Value);
 	}
 	//--------------------------------------------------------------------------------------------------
 

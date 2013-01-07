@@ -9,15 +9,15 @@ class tableListController  extends Core{
 	//--------------------------------------------------------------------------------------------------
 
 	private function resetJsHandlers( &$objResponse, $info ){
-		$objResponse->addAssign( 'prev_sell_code', 'value', $info[ 'new_code' ] );
+		$objResponse->assign( 'prev_sell_code', 'value', $info[ 'new_code' ] );
 
 		$handlers	= settings_Page::getNotSelectedSellHanlders( $info[ 'old_code' ], $info[ 'old_prompt' ] );
 		$div_view	= settings_Page::getSellHtmlContent( $info[ 'old_code' ], $info[ 'old_prompt' ], $handlers, 'mutiTablesPageMenuSellTd' );
-		$objResponse->addAssign( 'td_sell_'. $info[ 'old_code' ], 'innerHTML', $div_view );
+		$objResponse->assign( 'td_sell_'. $info[ 'old_code' ], 'innerHTML', $div_view );
 
 		$handlers	= array();
 		$div_view	= settings_Page::getSellHtmlContent( $info[ 'new_code' ], $info[ 'new_prompt' ], $handlers, 'mutiTablesPageMenuSelectedSellTd' );
-		$objResponse->addAssign( 'td_sell_'. $info[ 'new_code' ], 'innerHTML', $div_view );
+		$objResponse->assign( 'td_sell_'. $info[ 'new_code' ], 'innerHTML', $div_view );
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ class tableListController  extends Core{
 	public function showTable( &$objResponse, $info ){
 		$this->resetJsHandlers( $objResponse, $info );
 		$table_view	= $this->buildSettingsTableHtmlContent( $info[ 'new_code' ] );
-		$objResponse->addAssign( 'multi_tables_page_container', 'innerHTML', $table_view );
+		$objResponse->assign( 'multi_tables_page_container', 'innerHTML', $table_view );
 	}
 	//--------------------------------------------------------------------------------------------------
 
@@ -56,4 +56,3 @@ class tableListController  extends Core{
 	}
 	//--------------------------------------------------------------------------------------------------
 }//	Class end
-?>
