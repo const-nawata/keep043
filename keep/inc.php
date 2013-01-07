@@ -21,6 +21,5 @@ require_once( $gl_Path."RunApp.php" );
 global $gl_CompsPath; $gl_CompsPath	= $gl_Path.'components/';
 require_once( $gl_CompsPath."inc_comps.php" );
 
-require_once( $gl_Path."libs/xajax/xajax.inc.php" );
-
-//Test commit.
+// require_once( $gl_Path."libs/xajax/xajax.inc.php" );
+require_once( $gl_Path."libs/xajax-0.5/xajax_core/xajax.inc.php");
