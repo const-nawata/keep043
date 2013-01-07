@@ -20,7 +20,7 @@ class ConfirmPaneRnd1 extends PRnd1Pane{
     				'onclick'	=> array(
     					'handler'	=>
     						"removeElement( \"alert_container\" );removeElement( \"alert_veil\" );".
-    						"xajax_corePpskHandler(\"".$this->getHandleResourceString( $action, get_class( $Owner ) )."\", \"\");"
+    						"xajax_onHandler(\"".$this->getHandleResourceString( $action, get_class( $Owner ) )."\", \"\");"
     						)
     						)
     						),

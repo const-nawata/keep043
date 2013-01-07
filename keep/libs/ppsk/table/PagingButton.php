@@ -47,7 +47,7 @@ class PagingButton extends PButton{
 
 	private function createPagingActions( $bntName, $page ){
 		$resourse	= $this->getHandleResourceString( 'onClickPgBtnHandler', get_class( $this->mOwner ) );
-		$this->setHandler( array( 'handler'=>"xajax_corePpskHandler(\"".$resourse."\", $page );" ), 'onclick' );
+		$this->setHandler( array( 'handler'=>"xajax_onHandler(\"".$resourse."\", $page );" ), 'onclick' );
 		$this->setHandler( array( 'handler'=>"mouseOverOut( this, \"".$this->getOverCssClass( $bntName )."\");" ), 'onmouseover' );
 		$this->setHandler( array( 'handler'=>"mouseOverOut( this, \"".$this->getOutCssClass( $bntName )."\");" ), 'onmouseout' );
 	}

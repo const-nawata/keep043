@@ -1,5 +1,5 @@
 <?php
-define('_IS_SHOW_DBG_BUFF', true);  //  true / false
+// define('_IS_SHOW_DBG_BUFF', true);  //  true / false
 
 /**
  *	Class for ajax actions (handlers) and utils to serve them.
@@ -19,16 +19,11 @@ class PpskActions{
 
 //TODO: Think to present $handleResource and $value as syhpered JSON array. (or maybe as syhpered serialized  PHP array)
 
-	public function corePpskHandler( $handleResource = NULL, $value = NULL ){
+	public function onHandler( $handleResource = NULL, $value = NULL ){
 		global $log_obj, $gl_PpskPath;
 		$objResponse = new xajaxResponse();
 
-// 		if( !( $handleResource	!= NULL && $handleResource != _EMPTY ) ){
-// 			$objResponse->script( "location.href = '".$gl_PpskPath."access.php'" );
-// 			return $objResponse;
-// 		}
-
-		$err_access	= "location.href = '".$gl_PpskPath."access.php'";
+		$err_access	= "location.href='".$gl_PpskPath."access.php'";
 
 		if( !(bool)$handleResource ){
 			$objResponse->script( $err_access );
@@ -36,11 +31,11 @@ class PpskActions{
 		}
 
 		if( _PPSK_IS_CIPHER ){
-			$cipher_obj	= new sipherManager( $_SESSION[ 'cipher_base' ], $_SESSION[ 'cipher_key' ] );
+			$cipher_obj	= new sipherManager( $_SESSION['cipher_base'], $_SESSION['cipher_key'] );
 			$handleResource	= $cipher_obj->decipherString( $handleResource );
 		}
 
-		$res_arr	= explode( ":", $handleResource );
+		$res_arr	= explode( ':', $handleResource );
 		if( !( $res_arr && ( count( $res_arr ) == 4 ) ) ){
 			$objResponse->script( $err_access );
 			return $objResponse;
@@ -60,14 +55,6 @@ class PpskActions{
 
 		try{
 			$obj->$hndlName( $objResponse, $value );  //  Parameter $objResponse is mandatory in handler and must be a reference (starts with &)
-
-			if( _IS_SHOW_DBG_BUFF && isset( $_SESSION[ 'debug_info' ] ) ){
-				$objResponse->assign( 'debug_buffer', 'innerHTML', $_SESSION[ 'debug_info' ] );
-				unset( $_SESSION[ 'debug_info' ] );
-			}else{
-				$objResponse->assign( 'debug_buffer', 'innerHTML', '' );
-			}
-
 		}catch( Exception $e ){
 			$log_obj->putLogInfo( $e->getMessage() );
 		}
