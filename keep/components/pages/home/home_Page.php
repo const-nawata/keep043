@@ -7,13 +7,12 @@ class home_Page extends PPage{
 		parent::__construct( $Owner );
 		$this->initHtmlView();
 	}
-	//---------------------------------------------------------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function getJsCode(){
 		$db_obj	= new Dbl( $this );
 		$slides = $db_obj->getSlides();
-		$json = new Services_JSON();
-		$files_js = $json->encode( $slides[ 'files' ] );
+		$files_js	= json_encode( $slides['files'] );
 
 		return
 "scroller  = new jsScroller(document.getElementById('News'), "._NEWS_SCRL_WIDTH.", "._NEWS_SCRL_HEIGHT.");".
@@ -22,7 +21,7 @@ class home_Page extends PPage{
 "r_txt_obj = new runningTextPx('r_txt_obj', 'scrlTxt', 1117, '".$db_obj->getRunningMessage()."', 20);".
 "vslides = new createSlideShow('vslides', sl_set, ".$files_js.");";
 	}
-	//---------------------------------------------------------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function initHtmlView(){
 		$news_pane		= new NewsPane1( $this );
@@ -35,12 +34,11 @@ class home_Page extends PPage{
 "</table>";
 		parent::initHtmlView( $view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct ();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>

@@ -35,7 +35,7 @@ class Log{
 	}
 //______________________________________________________________________________
 
-	public static function _log( $message, $type='info' ){
+	public static function _log( $message, $type='Info' ){
 		$log_obj	= new Log();
 
 		$message	=  "\n\nMessage type: ".$type.' *** '.self::getDateTime().$_SERVER['DOCUMENT_ROOT'].
