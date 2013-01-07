@@ -89,7 +89,7 @@ elWorkspace.innerHTML=sValue;var browserHTML=elWorkspace.innerHTML;elWorkspace.i
 xajax.tools.willChange=function(element,attribute,newData){if('string'==typeof element)
 element=xajax.$(element);if(element){var oldData;eval('oldData=element.'+attribute);return(newData!=oldData);}
 return false;}
-xajax.tools.getFormValues=function(parent){resetPlaceholder(parent);var submitDisabledElements=false;if(arguments.length > 1&&arguments[1]==true)
+xajax.tools.getFormValues=function(parent){var submitDisabledElements=false;if(arguments.length > 1&&arguments[1]==true)
 submitDisabledElements=true;var prefix='';if(arguments.length > 2)
 prefix=arguments[2];if('string'==typeof parent)
 parent=xajax.$(parent);var aFormValues={};if(parent)
