@@ -14,14 +14,6 @@ define('_ACCESS_DENIED', 'Access denied');
 define('_BRIGHTNESS_LEVEL', 140);
 
 /**
- * Session constants for type of users.
- * These constants are identical to values which are used in user DB table
- */
-define('_LEVEL_ADMIN',		'admin');
-define('_LEVEL_CLIENT',		'client');
-define('_LEVEL_MANAGER',	'manager');
-
-/**
  *  Session Tab code constants
  *  These contants are used as left part of name for classes of pages
  */
@@ -45,4 +37,3 @@ define('_TAB_RIGHT_IMG_SFX',	'TabRightSect');
  * Classes postfix constants
  */
 define('_PAGE_POSTFIX',			'_Page');	//	Right part of name for classes of pages
-?>

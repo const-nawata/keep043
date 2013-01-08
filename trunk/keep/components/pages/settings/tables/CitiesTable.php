@@ -15,7 +15,7 @@ class CitiesTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-		$this->mLevels			= array( _LEVEL_ADMIN );
+		$this->mLevels			= array( 'admin' );
 		$this->mName			= "CitiesTableN";
 		$this->mSourceDbTable	= 'cities_view';
 		$this->mTargetDbTable	= 'cities';

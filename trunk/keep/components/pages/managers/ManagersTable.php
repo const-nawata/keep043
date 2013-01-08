@@ -7,7 +7,7 @@ class ManagersTable extends PTable{
 		parent::__construct( $Owner );
 		if( $isInitView ){ $this->initHtmlView( $isHndl ); }
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * sets properties of table in constructor
@@ -15,7 +15,7 @@ class ManagersTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-		$this->mLevels			= array( _LEVEL_ADMIN );
+		$this->mLevels			= array( 'admin' );
 		$this->mSourceDbTable	= 'managers_view';
 		$this->mTargetDbTable	= 'managers';
 		$this->mSelectorColor	= '#EDD3EA';
@@ -45,7 +45,7 @@ class ManagersTable extends PTable{
 
 		array(
 	    		'field'		=> 'city_country',
-	    		'name'		=> _CITY.", "._COUNTRY,
+	    		'name'		=> _CITY.', '._COUNTRY,
     			'ttl_css'	=> 'managersTblCityCountryTtlTd',
     			'sll_css'	=> 'managersTblCityCountryClTd',
     			'bg_clr'	=> '#FFF7E2',
@@ -74,7 +74,7 @@ class ManagersTable extends PTable{
 		$this->setSearchFields( array( 'surname', 'firstname' ) );
 		$this->mPaneClassName	= 'AddEditManagerPane';
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function deleteRowHandler( &$objResponse, $nullValue ){
 		$auth_obj = new Authentication();
@@ -89,11 +89,11 @@ class ManagersTable extends PTable{
 			}
 		}
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end

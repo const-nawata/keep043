@@ -24,7 +24,7 @@ class UnitsTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-		$this->mLevels	= array( _LEVEL_ADMIN );
+		$this->mLevels	= array( 'admin' );
 		$this->mSourceDbTable	= 'units';
 		$this->mSelectorColor	= '#EDD3EA';
 		$this->mPgLen			= 16;

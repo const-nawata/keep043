@@ -16,7 +16,7 @@ class DepartmentsTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-		$this->mLevels	= array( _LEVEL_MANAGER );
+		$this->mLevels	= array( 'manager' );
 		$this->mSourceDbTable	= 'departments_'.$_SESSION[ 'user_id' ];
 		$this->mTargetDbTable	= 'departments';
 		$this->mSelectorColor	= '#EDD3EA';

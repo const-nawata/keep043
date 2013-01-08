@@ -15,7 +15,7 @@ class CountriesTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-		$this->mLevels	= array( _LEVEL_ADMIN );
+		$this->mLevels	= array( 'admin' );
 		//    	$this->mName			= "CountriesTableN";
 		$this->mSourceDbTable	= 'countries';
 		$this->mSelectorColor	= '#EDD3EA';
