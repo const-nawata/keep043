@@ -1,6 +1,4 @@
 <?php
-// define('_IS_SHOW_DBG_BUFF', true);  //  true / false
-
 /**
  *	Class for ajax actions (handlers) and utils to serve them.
  * @author Constantine Nawata (nawataster@gmail.com)
