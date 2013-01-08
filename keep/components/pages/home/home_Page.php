@@ -10,7 +10,7 @@ class home_Page extends PPage{
 //______________________________________________________________________________
 
 	public function getJsCode(){
-		$db_obj	= new Dbl( $this );
+		$db_obj	= new KeepDbl( $this );
 		$slides = $db_obj->getSlides();
 		$files_js	= json_encode( $slides['files'] );
 

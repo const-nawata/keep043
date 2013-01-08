@@ -22,7 +22,7 @@ class AddEditCityPane extends PAddEditPane{
 	//--------------------------------------------------------------------------------------------------
 
 	public function initHtmlView(){
-		$db_obj	= new Dbl( $this );
+		$db_obj	= new KeepDbl( $this );
 		$city_info	= $db_obj->getCityInfoById( $this->mRecId );
 
 		$tanindex	= 1;

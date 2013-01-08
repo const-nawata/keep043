@@ -136,60 +136,6 @@ class PDbl extends Core{ //
 	}
 	//--------------------------------------------------------------------------------------------------
 
-	function getUserInfoById( $userId, $dbTable = '' ){
-		if( $dbTable == '' ){
-			throw new Exception( _EX.'Table name is empty. Line: '.__LINE__.' in '.__FILE__.'.' );
-		}
-
-
-		$user_id	= ( !$userId ) ? 0 : $userId;
-		global $gl_MysqliObj;
-		$sql	=
-	"SELECT ".
-		"`".$dbTable."`.`id` as `id`, ".
-// 		'`level`, '.
-		"`firstname`,
-		`surname`,
-		`city_id`,
-		`cities`.`name` AS `city`,
-		`cities`.`country_id` AS `country_id`,
-		`countries`.`name` AS `country`,
-		`info`,
-		`password`,
-		`login`,
-		`email`
-	FROM `".$dbTable."`
-	LEFT JOIN `cities` ON `city_id` = `cities`.`id`
-	LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id`
-	WHERE `".$dbTable."`.`id`=".$user_id;
-
-
-		$result = $gl_MysqliObj->query( $sql );
-		if( $result ){
-			$row = $result->fetch_assoc();
-			$result->close();
-		}else{
-			throw new Exception( _EX.'Bad MySQL result. On line: '.__LINE__.' in '.__FILE__.".\nThe whole SQL query is: \n".$sql );
-		}
-
-		$row = ( !$row ) ? array(
-			'id'			=> NULL,
-//  			'level'			=> NULL,
-			'firstname'		=> NULL,
-			'surname'		=> NULL,
-			'city_id'		=> NULL,
-			'city'			=> NULL,
-			'country_id'	=> NULL,
-			'country'		=> NULL,
-			'info'			=> NULL,
-			'password'		=> NULL,
-			'login'			=> NULL,
-			'email'			=> NULL
-		) : $row ;
-		return $row;
-	}
-	//--------------------------------------------------------------------------------------------------
-
 	public function __destruct(){
 		parent::__destruct ();
 	}

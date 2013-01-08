@@ -23,7 +23,7 @@ class AddEditClientPane extends PAddEditPane{
 //--------------------------------------------------------------------------------------------------
 
 	public function initHtmlView(){
-		$db_obj	= new Dbl( $this );
+		$db_obj	= new KeepDbl( $this );
 		$user_info	= $db_obj->getUserInfoById( $this->mRecId, $this->mOwner->getTargetDbTable() );
 
 		$tanindex	= 1;
@@ -98,7 +98,7 @@ class AddEditClientPane extends PAddEditPane{
 
 		$auth_obj = new Authentication();
 		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess() ) ){
-			$db_obj	= new Dbl( $this );
+			$db_obj	= new KeepDbl( $this );
 			$this->mOptions	= $db_obj->getCitiesList( $ownerValues[ 'country_id' ] );
 			$objResponse->assign( "city_id_cnt_td", 'innerHTML', $this->getSelBoxContent( 'city_id', 0, 4, self::_onchange ) );
 		}else{

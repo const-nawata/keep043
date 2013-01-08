@@ -26,7 +26,7 @@ class AddEditCountryPane extends PAddEditPane{
 //--------------------------------------------------------------------------------------------------
 
 	public function initHtmlView(){
-		$db_obj			= new Dbl( $this );
+		$db_obj			= new KeepDbl( $this );
 		$country_info	= $db_obj->getCountryInfoById( $this->mRecId );
 
 		$tanindex	= 1;

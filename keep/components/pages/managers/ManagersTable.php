@@ -80,7 +80,7 @@ class ManagersTable extends PTable{
 		$auth_obj = new Authentication();
 		if( $auth_obj->isGrantAccess( $this->mLevels ) ){
 			$class	= get_class( $this );
-			$db_obj	= new Dbl( $this );
+			$db_obj	= new KeepDbl( $this );
 			$result	= $db_obj->deleteDbViewsForManager( $_SESSION[ 'tables' ][ $class ][ 'line_id' ] );
 			if( $result[ 'is_error' ] ){
 				$this->showAlertHandler( $objResponse, array( 'message' => $result[ 'description' ], 'focus' => $result[ 'focus_id' ] ) );
@@ -97,4 +97,3 @@ class ManagersTable extends PTable{
 	//--------------------------------------------------------------------------------------------------
 
 }//	Class end
-?>
