@@ -86,7 +86,7 @@ class AddEditManagerPane extends PAddEditPane{
     		array( 'firstname',	$formValues[ 'firstname' ],	'firstname' ),
     		array( 'surname',	$formValues[ 'surname' ],	'surname' ),
     		array( 'city_id',	$formValues[ 'city_id' ],	'city_id' ),
-    		array( 'level',		_LEVEL_MANAGER,				NULL ),
+    		array( 'level',		'manager',				NULL ),
     		array( 'info',		$formValues[ 'info' ],		'info' ),
     		array( 'login',		$formValues[ 'login' ],		'login', _LOGIN ),
     		array( 'email',		$formValues[ 'email' ],		'email' ),

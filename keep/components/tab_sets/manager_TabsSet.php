@@ -23,7 +23,7 @@ class manager_TabsSet extends PTabsSet {
 	public function goods_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
 
-		if ( $auth_obj->isGrantAccess( array( _LEVEL_MANAGER ) ) ){
+		if ( $auth_obj->isGrantAccess( array( 'manager' ) ) ){
 			$_SESSION[ 'tab_code' ]	= _TAB_GOODS_CODE;
 			$this->execTabHandler( $objResponse );
 		}else{
@@ -35,7 +35,7 @@ class manager_TabsSet extends PTabsSet {
 	public function clients_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
 
-		if ( $auth_obj->isGrantAccess( array( _LEVEL_MANAGER ) ) ){
+		if ( $auth_obj->isGrantAccess( array( 'manager' ) ) ){
 			$_SESSION[ 'tab_code' ]	= _TAB_CLIENTS_CODE;
 			$this->execTabHandler( $objResponse );
 		}else{
@@ -53,7 +53,7 @@ class manager_TabsSet extends PTabsSet {
 	public function lists_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
 
-		if ( $auth_obj->isGrantAccess( array( _LEVEL_MANAGER, _LEVEL_ADMIN ) ) ){
+		if ( $auth_obj->isGrantAccess( array( 'manager', 'admin' ) ) ){
 			$_SESSION[ 'tab_code' ]	= _TAB_LISTS_CODE;
 			$this->execTabHandler( $objResponse );
 		}else{

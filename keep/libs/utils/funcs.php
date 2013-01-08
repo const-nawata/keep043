@@ -17,8 +17,8 @@ function getWelcomeText(){
 	switch( $_SESSION[ 'level' ] ){
 		case _PPSK_LEVEL_GUEST: $user_name	= _GUEST; break;
 
-		case _LEVEL_ADMIN:
-		case _LEVEL_MANAGER:
+		case 'admin':
+		case 'manager':
 			$user_info	= $db_obj->getUserInfoById( $_SESSION[ 'user_id' ], 'managers' );
 			$user_name	= ( $user_info ) ? $user_info[ 'firstname' ]." ".$user_info[ 'surname' ] : '';
 			break;
