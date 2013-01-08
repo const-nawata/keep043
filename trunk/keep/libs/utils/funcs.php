@@ -13,7 +13,7 @@
 function getWelcomeText(){
 	$content = _WELCOME;
 
-	$db_obj	= new Dbl();
+	$db_obj	= new KeepDbl();
 	switch( $_SESSION[ 'level' ] ){
 		case _PPSK_LEVEL_GUEST: $user_name	= _GUEST; break;
 

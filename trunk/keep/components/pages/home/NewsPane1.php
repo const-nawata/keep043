@@ -18,7 +18,7 @@ class NewsPane1 extends PRnd1Pane{
 	//--------------------------------------------------------------------------------------------------
 
 	private function getNewsContent(){
-		$db_obj	= new Dbl( $this );
+		$db_obj	= new KeepDbl( $this );
 		$news = $db_obj->getNews();
 		$is_news_exist = false;
 		$news_content = "

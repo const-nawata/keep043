@@ -29,7 +29,7 @@ class AddEditManagerPane extends PAddEditPane{
 //--------------------------------------------------------------------------------------------------
 
     public function initHtmlView(){
-    	$db_obj	= new Dbl( $this );
+    	$db_obj	= new KeepDbl( $this );
     	$user_info	= $db_obj->getUserInfoById( $this->mRecId, $this->mOwner->getTargetDbTable() );
 
     	$tanindex	= 1;
@@ -103,7 +103,7 @@ class AddEditManagerPane extends PAddEditPane{
 
 		$auth_obj = new Authentication();
 		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess() ) ){
-			$db_obj	= new Dbl( $this );
+			$db_obj	= new KeepDbl( $this );
 			$this->mOptions	= $db_obj->getCitiesList( $ownerValues[ 'country_id' ] );
 			$objResponse->assign( "city_id_cnt_td", 'innerHTML', $this->getSelBoxContent( 'city_id', 0, 4, self::_onchange ) );
 		}else{
@@ -116,7 +116,7 @@ class AddEditManagerPane extends PAddEditPane{
     	$result = parent::saveInfo( $objResponse, $formValues );
 
     	if( !$result[ 'is_error' ] && $formValues[ 'action_type' ] == PAddEditPane::_add ){
-			$db_obj	= new Dbl( $this );
+			$db_obj	= new KeepDbl( $this );
 	    	$result	= $db_obj->createDbViewsForNewManager( $formValues[ 'id' ] );
 	    	if( $result[ 'is_error' ] ){
 				$this->showAlertHandler( $objResponse, array( 'message' => $result[ 'description' ], 'focus' => $result[ 'focus_id' ] ) );

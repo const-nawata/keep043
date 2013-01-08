@@ -22,7 +22,7 @@ class AddEditUnitPane extends PAddEditPane{
 	//--------------------------------------------------------------------------------------------------
 
 	public function initHtmlView(){
-		$db_obj	= new Dbl( $this );
+		$db_obj	= new KeepDbl( $this );
 		$unit_info	= $db_obj->getUnitInfoById( $this->mRecId );
 
 		$tanindex	= 1;

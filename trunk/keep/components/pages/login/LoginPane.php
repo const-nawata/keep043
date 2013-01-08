@@ -96,7 +96,7 @@ class LoginPane extends PRnd1Pane{
 	 * )
 	 */
 	private function checkLogin( $formValues ){
-		$db_obj	= new Dbl( $this );
+		$db_obj	= new KeepDbl( $this );
 		$sql = "SELECT `id`, `level` FROM `login_info` WHERE `login` = '".$formValues['login']."' AND `password`='".$formValues['password']."'";
 
 		$user_info = $db_obj->execSelectQuery( $sql, 'LoginPane::checkLogin' );

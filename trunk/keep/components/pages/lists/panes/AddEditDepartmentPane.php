@@ -24,7 +24,7 @@ class AddEditDepartmentPane extends PAddEditPane{
 //--------------------------------------------------------------------------------------------------
 
 	public function initHtmlView(){
-		$db_obj	= new Dbl( $this );
+		$db_obj	= new KeepDbl( $this );
 		$info	= $db_obj->getDepartmentInfoById( $this->mRecId );
 
 		$tanindex	= 1;

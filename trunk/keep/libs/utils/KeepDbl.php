@@ -1,5 +1,5 @@
 <?php
-class Dbl extends PDbl{
+class KeepDbl extends PDbl{
 
 	public function __construct( $Owner = NULL ){
 		parent::__construct( $Owner );
@@ -87,7 +87,7 @@ class Dbl extends PDbl{
 	function getCountriesList(){
 		global $gl_MysqliObj;
 		$sql	= "SELECT `id`, `name` FROM `countries` ORDER BY `name`";
-		return $this->execSelectQuery( $sql, 'getCountriesList in Dbl.php' );
+		return $this->execSelectQuery( $sql, 'getCountriesList in KeepDbl.php' );
 	}
 //--------------------------------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ class Dbl extends PDbl{
 	FROM `cities`
 	WHERE `country_id` = ".$countryId."
 	ORDER BY `cities`.`name`";
-		return $this->execSelectQuery( $sql, 'getCitiesList in Dbl.php' );
+		return $this->execSelectQuery( $sql, 'getCitiesList in KeepDbl.php' );
 	}
 //--------------------------------------------------------------------------------------------------
 
@@ -126,7 +126,7 @@ class Dbl extends PDbl{
 			$row = $result->fetch_assoc();
 			$result->close();
 		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getCityInfoById in Dbl.php. The whole SQL query is: ".$sql );
+			throw new Exception( _EX."Bad MySQL result. Resource: getCityInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
 		}
 
 		$row = ( !$row ) ? array(
@@ -156,7 +156,7 @@ class Dbl extends PDbl{
 			$row = $result->fetch_assoc();
 			$result->close();
 		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getDepartmentInfoById in Dbl.php. The whole SQL query is: ".$sql );
+			throw new Exception( _EX."Bad MySQL result. Resource: getDepartmentInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
 		}
 
 		$row = ( !$row ) ? array(
@@ -184,7 +184,7 @@ class Dbl extends PDbl{
 			$row = $result->fetch_assoc();
 			$result->close();
 		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getCountryInfoById in Dbl.php. The whole SQL query is: ".$sql );
+			throw new Exception( _EX."Bad MySQL result. Resource: getCountryInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
 		}
 
 		$row = ( !$row ) ? array(
@@ -211,7 +211,7 @@ class Dbl extends PDbl{
 			$row = $result->fetch_assoc();
 			$result->close();
 		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getUnitInfoById in Dbl.php. The whole SQL query is: ".$sql );
+			throw new Exception( _EX."Bad MySQL result. Resource: getUnitInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
 		}
 
 		$row = ( !$row ) ? array(
@@ -271,6 +271,60 @@ class Dbl extends PDbl{
 		return $result;
 	}
 //--------------------------------------------------------------------------------------------------
+
+	public function getUserInfoById( $userId, $dbTable = '' ){
+		if( $dbTable == '' ){
+			throw new Exception( _EX.'Table name is empty. Line: '.__LINE__.' in '.__FILE__.'.' );
+		}
+
+
+		$user_id	= ( !$userId ) ? 0 : $userId;
+		global $gl_MysqliObj;
+		$sql	=
+	"SELECT ".
+		"`".$dbTable."`.`id` as `id`, ".
+// 		'`level`, '.
+		"`firstname`,
+		`surname`,
+		`city_id`,
+		`cities`.`name` AS `city`,
+		`cities`.`country_id` AS `country_id`,
+		`countries`.`name` AS `country`,
+		`info`,
+		`password`,
+		`login`,
+		`email`
+	FROM `".$dbTable."`
+	LEFT JOIN `cities` ON `city_id` = `cities`.`id`
+	LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id`
+	WHERE `".$dbTable."`.`id`=".$user_id;
+
+
+		$result = $gl_MysqliObj->query( $sql );
+		if( $result ){
+			$row = $result->fetch_assoc();
+			$result->close();
+		}else{
+			throw new Exception( _EX.'Bad MySQL result. On line: '.__LINE__.' in '.__FILE__.".\nThe whole SQL query is: \n".$sql );
+		}
+
+		$row = ( !$row ) ? array(
+			'id'			=> NULL,
+//  			'level'			=> NULL,
+			'firstname'		=> NULL,
+			'surname'		=> NULL,
+			'city_id'		=> NULL,
+			'city'			=> NULL,
+			'country_id'	=> NULL,
+			'country'		=> NULL,
+			'info'			=> NULL,
+			'password'		=> NULL,
+			'login'			=> NULL,
+			'email'			=> NULL
+		) : $row ;
+		return $row;
+	}
+	//--------------------------------------------------------------------------------------------------
 
 	public function __destruct(){
 		parent::__destruct ();
