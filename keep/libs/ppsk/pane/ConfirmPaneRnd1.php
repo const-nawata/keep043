@@ -53,8 +53,8 @@ class ConfirmPaneRnd1 extends PRnd1Pane{
 	//--------------------------------------------------------------------------------------------------
 
 	public function cancelInfo( &$objResponse, $focus ){
-		$objResponse->addRemove( 'alert_container' );
-		$objResponse->addRemove( 'alert_veil' );
+		$objResponse->remove( 'alert_container' );
+		$objResponse->remove( 'alert_veil' );
 		if( _EMPTY != $focus){
 			$objResponse->script( "setFocus( '".$focus."' );" );
 		}

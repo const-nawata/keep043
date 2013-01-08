@@ -79,7 +79,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     	);
 		parent::__construct( $Owner );
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 /**
  * creates HTML content
@@ -95,12 +95,12 @@ abstract class PAddEditPane extends PRnd1Pane{
     	$this->mContent	= "<table class='editPaneTbl' cellpadding='0' cellspacing='0'>".$this->mLines."</table>";
     	parent::initHtmlView();
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     public function getTargetDbTable(){
 		return $this->mOwner->getTargetDbTable();
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     const _onchange = "setElementEnabled( \"btn_save\", \"\" );";
     const _edit	= 1;
@@ -117,7 +117,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 
 	    return $content;
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function getSelBoxLineContent( $htmlId, $prompt, $selOpt, $tabindex, $onchange = '' ){
     	return
@@ -126,7 +126,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'>".$this->getSelBoxContent( $htmlId, $selOpt, $tabindex, $onchange )."</td>
 </tr>";
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function getInputLineContent( $htmlId, $type, $prompt = '', $value = '', $tabindex = '', $onchange = '' ){
     	return
@@ -135,7 +135,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'><input type='".$type."' name='".$htmlId."' id='".$htmlId."' value='".$value."' class='".$this->mInpCss."' tabindex='".$tabindex."' onkeyup='".$onchange."' /></td>
 </tr>";
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function getTextareaLineContent( $htmlId, $prompt = '', $value = '', $tabindex = '', $onchange = '' ){
     	return
@@ -144,12 +144,12 @@ abstract class PAddEditPane extends PRnd1Pane{
 	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'><textarea name='".$htmlId."' id='".$htmlId."' class='".$this->mTarCss."' tabindex='".$tabindex."' onkeyup='".$onchange."'>".$value."</textarea></td>
 </tr>";
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     public function setRecId( $recId ){
 		$this->mRecId	= $recId;
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function getSessionParams( &$formValues ){
 		$formValues[ 'inst' ]	= $this->decipherFilledValue( $formValues[ 'inst' ] );
@@ -162,13 +162,13 @@ abstract class PAddEditPane extends PRnd1Pane{
 			case self::_add:	$formValues[ 'id' ]	= NULL; break;
 		}
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     private function saveData(){
     	if( count( $this->mSaveData ) ){
 	    	$db_obj	= new PDbl( $this );
 	    	foreach( $this->mSaveData as $items ){
-	    		if( $items[ 0 ] == 'id' ){ break; }
+	    		if( $items[0] == 'id' ){ break; }
 	    	}
 
 	        if( $items[ 1 ] ){
@@ -180,12 +180,12 @@ abstract class PAddEditPane extends PRnd1Pane{
 	    	}
     	}
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function isValidData( &$formValues ){
 		$formValues[ 'is_valid' ]	= true;
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function prepareData( &$formValues ){
     	foreach( $this->mSaveData as &$items ){
@@ -193,36 +193,36 @@ abstract class PAddEditPane extends PRnd1Pane{
     		if( !isset( $items[ 3 ] ) ){ $items[ 3 ] = _EMPTY; }
     	}
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-//	Handlers	<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
+//	Handlers	<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     public function saveInfo( &$objResponse, &$formValues ){
 		$this->getSessionParams( $formValues );
-		$class			= $formValues[ 'class' ];
-		$tabl_obj		= new $class( NULL, true, false );
+		$class			= $formValues['class'];
+		$tabl_obj		= new $class( NULL, TRUE, FALSE );
 		$this->mOwner	= $tabl_obj;
 		$auth_obj		= new Authentication();
 
 		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess() ) ){
 	    	$this->isValidData( $formValues );
-			if( !$formValues[ 'is_valid' ] ){
-				$this->showAlertHandler( $objResponse, array( 'message' => $formValues[ 'description' ], 'focus' => $formValues[ 'focus_id' ] ) );
+			if( !$formValues['is_valid'] ){
+				$this->showAlertHandler( $objResponse, array( 'message' => $formValues['description'], 'focus' => $formValues['focus_id'] ));
 				return array( 'is_error' => true );
 			}else{
 				$this->prepareData( $formValues );
 
 				$result	= $this->saveData();
 
-				if( $result[ 'is_error' ] ){
-					$this->showAlertHandler( $objResponse, array( 'message' => $result[ 'description' ], 'focus' => $result[ 'focus_id' ] ) );
+				if( $result['is_error'] ){
+					$this->showAlertHandler( $objResponse, array( 'message' => $result['description'], 'focus' => $result['focus_id'] ) );
 					return $result;
 				}else{
-					$_SESSION[ 'tables' ][  $class ][ 'line_id' ] = $formValues[ 'id' ] = $result[ 'id' ];
+					$_SESSION['tables'][$class]['line_id'] = $formValues['id'] = $result['id'];
 					$tabl_obj->initHtmlView( true );
-					$objResponse->assign( $class."_container", 'innerHTML', $tabl_obj->getHtmlView() );
-				 	$objResponse->addRemove( 'pane_container' );
-				 	$objResponse->addRemove( 'veil' );
+					$objResponse->assign( $class.'_container', 'innerHTML', $tabl_obj->getHtmlView() );
+				 	$objResponse->remove( 'pane_container' );
+				 	$objResponse->remove( 'veil' );
 				}
 			}
 		}else{
@@ -230,12 +230,11 @@ abstract class PAddEditPane extends PRnd1Pane{
 		}
 		return $result;
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     public function __destruct(){
     	parent::__destruct();
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>
