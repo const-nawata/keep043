@@ -9,8 +9,15 @@ class PDbl extends Core{ //
 		parent::__construct( $Owner );
 	}
 	//--------------------------------------------------------------------------------------------------
+	function getLogErrorMessage( $sqlString, $resource='Undefined' ){
+		global $gl_MysqliObj;
+		return
+			_EX.'MySQL error: '.$gl_MysqliObj->errno.' << '.$gl_MysqliObj->error.' >>. Resource: "'.$resource.'". '.
+			"\nThe whole SQL query is:\n".$sqlString;
+	}
+//--------------------------------------------------------------------------------------------------
 
-	public function execSelectQuery( $sql, $resource = 'Undefined' ){
+	public function execSelectQuery( $sql, $resource='Undefined' ){
 		global $gl_MysqliObj;
 
 		$result = $gl_MysqliObj->query( $sql );
@@ -36,7 +43,7 @@ class PDbl extends Core{ //
 	}
 	//--------------------------------------------------------------------------------------------------
 
-	private function parserError( $sql = _EMPTY ){	//	1064 Syncas error
+	private function parserError( $sql = '' ){	//	1064 Syncas error
 		global $gl_MysqliObj;
 		$data	= &$this->mOwner->mSaveData;
 
@@ -48,11 +55,11 @@ class PDbl extends Core{ //
 				$res	= self::getDuplicateEntryParams( $err_dscr );
 
 				foreach( $data as $items ){
-					if( $items[ 0 ] == trim( $res[ 'field' ] ) ){ break; }
+					if( $items[0] == trim( $res['field'] )){ break; }
 				}
 
-				$res[ 'description' ]	= sprintf( _PPSK_DB_ERR_DUBLICATE_ENTRY, $res[ 'value' ], $items[ 3 ] );
-				$res[ 'focus_id' ]		= $items[ 2 ];
+				$res['description']	= sprintf( _PPSK_DB_ERR_DUBLICATE_ENTRY, $res[ 'value' ], $items[ 3 ] );
+				$res['focus_id']	= $items[2];
 				break;
 
 			case  self::_cannotDelUpdate:
@@ -63,11 +70,11 @@ class PDbl extends Core{ //
 			default:
 				//				$res[ 'description' ]	= _MESSAGE_DB_ERROR;
 
-				$res[ 'description' ]	= "Err num: ".$err_no." //// Descr: ".$err_dscr."\nThe whole query is: ".$sql;
-				$res[ 'focus_id' ]		= _EMPTY;
+				$res['description']	= 'Err num: '.$err_no." //// Descr: ".$err_dscr."\nThe whole query is:\n".$sql;
+				$res['focus_id']		= '';
 		}
-		$res[ 'is_error' ]	= true;
-		$res[ 'id' ]		= NULL;
+		$res['is_error']= TRUE;
+		$res['id']		= NULL;
 		return $res;
 	}
 	//--------------------------------------------------------------------------------------------------
@@ -117,7 +124,7 @@ class PDbl extends Core{ //
 		if( !$res ){
 			$result	= $this->parserError( $sql );
 		}else{
-			$result	= array( 'is_error' => false, 'id' => $gl_MysqliObj->insert_id );
+			$result	= array( 'is_error' => FALSE, 'id' => $gl_MysqliObj->insert_id );
 		}
 		return $result;
 	}
@@ -129,19 +136,19 @@ class PDbl extends Core{ //
 	}
 	//--------------------------------------------------------------------------------------------------
 
-	function getUserInfoById( $userId, $dbTable = _EMPTY ){
-		if( $dbTable == _EMPTY ){
-			throw new Exception( _EX."Table name is empty. Line: ".__LINE__." in ".addslashes( __FILE__ )."." );
+	function getUserInfoById( $userId, $dbTable = '' ){
+		if( $dbTable == '' ){
+			throw new Exception( _EX.'Table name is empty. Line: '.__LINE__.' in '.__FILE__.'.' );
 		}
 
 
 		$user_id	= ( !$userId ) ? 0 : $userId;
 		global $gl_MysqliObj;
 		$sql	=
-	"SELECT
-		`".$dbTable."`.`id` as `id`,
-		`level`,
-		`firstname`,
+	"SELECT ".
+		"`".$dbTable."`.`id` as `id`, ".
+// 		'`level`, '.
+		"`firstname`,
 		`surname`,
 		`city_id`,
 		`cities`.`name` AS `city`,
@@ -162,12 +169,12 @@ class PDbl extends Core{ //
 			$row = $result->fetch_assoc();
 			$result->close();
 		}else{
-			throw new Exception( _EX."Bad MySQL result. On line: ".__LINE__." in ".addslashes( __FILE__ ).". The whole SQL query is: ".$sql );
+			throw new Exception( _EX.'Bad MySQL result. On line: '.__LINE__.' in '.__FILE__.".\nThe whole SQL query is: \n".$sql );
 		}
 
 		$row = ( !$row ) ? array(
 			'id'			=> NULL,
-			'level'			=> NULL,
+//  			'level'			=> NULL,
 			'firstname'		=> NULL,
 			'surname'		=> NULL,
 			'city_id'		=> NULL,
@@ -189,5 +196,3 @@ class PDbl extends Core{ //
 	//--------------------------------------------------------------------------------------------------
 
 }// Class end
-
-?>
