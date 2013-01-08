@@ -57,7 +57,7 @@ class PpskActions{
 		try{
 			$obj->$hndlName( $objResponse, $value );  //  Parameter $objResponse is mandatory in handler and must be a reference (starts with &)
 		}catch( Exception $e ){
-			$log_obj->putLogInfo( $e->getMessage() );
+			Log::_log( $e->getMessage(), 'Error' );
 		}
 		return $objResponse;
 	}

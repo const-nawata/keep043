@@ -12,11 +12,6 @@ class Dbl extends PDbl{
 	}
 //--------------------------------------------------------------------------------------------------
 
-	function getLogErrorMessage( $sqlString, $resource = 'Undefined' ){
-		global $gl_MysqliObj;
-		return _EX."MySQL error: ".$gl_MysqliObj->errno." << ".$gl_MysqliObj->error." >>. Resource: \"$resource\". The whole SQL query is: ".$sqlString;
-	}
-//--------------------------------------------------------------------------------------------------
 
 	function getNews(){
 		//    global $mIsMySqlConn;
@@ -283,4 +278,3 @@ class Dbl extends PDbl{
 //--------------------------------------------------------------------------------------------------
 
 }// Class end
-?>
