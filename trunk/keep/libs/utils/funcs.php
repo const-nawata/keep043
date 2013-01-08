@@ -19,7 +19,7 @@ function getWelcomeText(){
 
 		case 'admin':
 		case 'manager':
-			$user_info	= $db_obj->getUserInfoById( $_SESSION[ 'user_id' ], 'managers' );
+			$user_info	= $db_obj->getUserInfoById( $_SESSION['user_id'] );
 			$user_name	= ( $user_info ) ? $user_info[ 'firstname' ]." ".$user_info[ 'surname' ] : '';
 			break;
 

@@ -19,6 +19,9 @@ class PpskActions{
 
 	public function onHandler( $handleResource=NULL, $value=NULL ){
 
+
+
+
 		global $log_obj, $gl_PpskPath;
 		$objResponse = new xajaxResponse();
 
@@ -46,6 +49,9 @@ class PpskActions{
 			$objResponse->script( $err_access );
 			return $objResponse;
 		}
+
+
+// Log::_log("res: $className::$hndlName");		//	Don't delete
 
 		$obj = new $className( NULL );	//	Value NULL is set becouse of presense of $Owner paramenter
 

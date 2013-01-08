@@ -3,7 +3,6 @@ require_once( $gl_pagesPath."managers/ManagersTable.php" );
 class managers_Page extends PPage {
 
 	public function __construct( $Owner ){
-		//		$this->mName	= 'managers_PageN';
 		parent::__construct( $Owner );
 		$this->initHtmlView();
 	}
@@ -33,4 +32,3 @@ class managers_Page extends PPage {
 	//--------------------------------------------------------------------------------------------------
 
 }
-?>
