@@ -1,5 +1,6 @@
 <?php
-require_once( $gl_pagesPath."managers/AddEditManagerPane.php" );
+require_once( $gl_pagesPath.'managers/AddEditManagerPane.php' );
+
 class ManagersTable extends PTable{
 
 	public function __construct( $Owner = NULL, $isHndl = false, $isInitView = true ){
@@ -17,12 +18,12 @@ class ManagersTable extends PTable{
 	private function setProperties(){
 		$this->mLevels			= array( 'admin' );
 		$this->mSourceDbTable	= 'managers_view';
-		$this->mTargetDbTable	= 'managers';
+		$this->mTargetDbTable	= 'users';
 		$this->mSelectorColor	= '#EDD3EA';
 		$this->mPgLen			= 17;
 		$this->mMaxGrPg			= 10;
 
-		$this->mIsFixHeight		= true;
+		$this->mIsFixHeight		= TRUE;
 
 		$this->mColumns	= array(
 		array(
@@ -31,7 +32,7 @@ class ManagersTable extends PTable{
     			'ttl_css'	=> 'managersTblSurnameTtlTd',
     			'sll_css'	=> 'managersTblSurnameClTd',
     			'bg_clr'	=> '#FFF7E2',
-	    		'is_sort'	=> true
+	    		'is_sort'	=> TRUE
 		),
 
 		array(
@@ -40,7 +41,7 @@ class ManagersTable extends PTable{
     			'ttl_css'	=> 'managersTblFirstNameTtlTd',
     			'sll_css'	=> 'managersTblFirstnameClTd',
     			'bg_clr'	=> '#FFF7E2',
-	    		'is_sort'	=> true
+	    		'is_sort'	=> TRUE
 		),
 
 		array(
@@ -49,7 +50,7 @@ class ManagersTable extends PTable{
     			'ttl_css'	=> 'managersTblCityCountryTtlTd',
     			'sll_css'	=> 'managersTblCityCountryClTd',
     			'bg_clr'	=> '#FFF7E2',
-	    		'is_sort'	=> false
+	    		'is_sort'	=> FALSE
 		),
 
 		array(
@@ -58,7 +59,7 @@ class ManagersTable extends PTable{
     			'ttl_css'	=> 'managersTblEmailTtlTd',
     			'sll_css'	=> 'managersTblEmailClTd',
     			'bg_clr'	=> '#FFF7E2',
-	    		'is_sort'	=> false
+	    		'is_sort'	=> FALSE
 		),
 
 		array(
@@ -67,7 +68,7 @@ class ManagersTable extends PTable{
     			'ttl_css'	=> 'managersTblInfoTtlTd',
     			'sll_css'	=> 'managersTblInfoClTd',
     			'bg_clr'	=> '#FFF7E2',
-    			'is_sort'	=> false
+    			'is_sort'	=> FALSE
 		)
 		);
 

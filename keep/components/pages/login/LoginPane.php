@@ -97,35 +97,26 @@ class LoginPane extends PRnd1Pane{
 	 */
 	private function checkLogin( $formValues ){
 		$db_obj	= new KeepDbl( $this );
-		$sql = "SELECT `id`, `level` FROM `login_info` WHERE `login` = '".$formValues['login']."' AND `password`='".$formValues['password']."'";
+// 		$sql = "SELECT `id`, `level` FROM `login_info` WHERE `login`='".$formValues['login']."' AND `password`='".$formValues['password']."'";
+		$sql = "SELECT `id`, `level` FROM `users` WHERE `login`='".$formValues['login']."' AND `password`='".$formValues['password']."'";
 
 		$user_info = $db_obj->execSelectQuery( $sql, 'LoginPane::checkLogin' );
-		if( count( $user_info ) ){ return $user_info[ 0 ]; }
-		else{ return false; }
+		if( (bool)count( $user_info )){ return $user_info[0]; }
+		else{ return FALSE; }
 	}
 //______________________________________________________________________________
 
 	public function doLogin( &$objResponse, $formValues ){
-
-		//print_r( $formValues );
-
 		$login_info	= $this->checkLogin( $formValues );
 
-
-
 		if( $login_info ){
-			$_SESSION[ 'level' ]	= $login_info[ 'level' ];
-			$_SESSION[ 'user_id' ]	= $login_info[ 'id' ];
-			$_SESSION[ 'tab_code' ]	= NULL;
+			$_SESSION['level']		= $login_info['level'];
+			$_SESSION['user_id']	= $login_info['id'];
+			$_SESSION['tab_code']	= NULL;
 			PTabsSet::execTabHandler( $objResponse );
 		}else{
 			$objResponse->assign( 'errLoginCont', 'innerHTML', _MESSAGE_BAD_LOGIN );
 		}
-
-
-
-
-
 	}
 //______________________________________________________________________________
 

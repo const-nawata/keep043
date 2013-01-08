@@ -272,18 +272,16 @@ class KeepDbl extends PDbl{
 	}
 //--------------------------------------------------------------------------------------------------
 
-	public function getUserInfoById( $userId, $dbTable = '' ){
-		if( $dbTable == '' ){
-			throw new Exception( _EX.'Table name is empty. Line: '.__LINE__.' in '.__FILE__.'.' );
-		}
-
-
+	public function getUserInfoById( $userId ){
 		$user_id	= ( !$userId ) ? 0 : $userId;
+
 		global $gl_MysqliObj;
+
 		$sql	=
 	"SELECT ".
-		"`".$dbTable."`.`id` as `id`, ".
-// 		'`level`, '.
+// 		"`".$dbTable."`.`id` as `id`, ".
+		"`users`.`id` as `id`, ".
+		'`level`, '.
 		"`firstname`,
 		`surname`,
 		`city_id`,
@@ -294,10 +292,10 @@ class KeepDbl extends PDbl{
 		`password`,
 		`login`,
 		`email`
-	FROM `".$dbTable."`
+	FROM `users`
 	LEFT JOIN `cities` ON `city_id` = `cities`.`id`
 	LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id`
-	WHERE `".$dbTable."`.`id`=".$user_id;
+	WHERE `users`.`id`=".$user_id;
 
 
 		$result = $gl_MysqliObj->query( $sql );
@@ -310,7 +308,7 @@ class KeepDbl extends PDbl{
 
 		$row = ( !$row ) ? array(
 			'id'			=> NULL,
-//  			'level'			=> NULL,
+ 			'level'			=> NULL,
 			'firstname'		=> NULL,
 			'surname'		=> NULL,
 			'city_id'		=> NULL,

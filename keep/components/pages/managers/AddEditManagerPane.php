@@ -30,7 +30,7 @@ class AddEditManagerPane extends PAddEditPane{
 
     public function initHtmlView(){
     	$db_obj	= new KeepDbl( $this );
-    	$user_info	= $db_obj->getUserInfoById( $this->mRecId, $this->mOwner->getTargetDbTable() );
+    	$user_info	= $db_obj->getUserInfoById( $this->mRecId );
 
     	$tanindex	= 1;
     	$lines	= &$this->mLines;
