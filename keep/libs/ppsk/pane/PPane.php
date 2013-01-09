@@ -59,7 +59,7 @@ abstract class PPane extends Core{
  * HTML content
  * @property	string	$mContent
  */
-	protected $mContent		= _EMPTY;
+	protected $mContent		= '';
 	protected $mForm		= NULL;
 	protected $mTitle		= NULL;
 	protected $mButtons		= array();

@@ -32,8 +32,3 @@ define('_TAB_SETTINGS_CODE',	'settings');
 define('_TAB_LEFT_IMG_SFX',		'TabLeftSect');
 define('_TAB_CENTER_IMG_SFX',	'TabCenterSect');
 define('_TAB_RIGHT_IMG_SFX',	'TabRightSect');
-
-/**
- * Classes postfix constants
- */
-define('_PAGE_POSTFIX',			'_Page');	//	Right part of name for classes of pages

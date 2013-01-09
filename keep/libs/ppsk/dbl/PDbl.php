@@ -75,6 +75,7 @@ class PDbl extends Core{ //
 		}
 		$res['is_error']= TRUE;
 		$res['id']		= NULL;
+		$res['type']	= 'db_error';
 		return $res;
 	}
 	//--------------------------------------------------------------------------------------------------

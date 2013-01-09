@@ -5,6 +5,10 @@
  *
  */
 abstract class PAddEditPane extends PRnd1Pane{
+    const _onchange = 'setElementEnabled( "btn_save", "" );';
+    const _edit	= 1;
+    const _add	= 2;
+
 /**
  * record id
  * @access	protected
@@ -15,7 +19,6 @@ abstract class PAddEditPane extends PRnd1Pane{
 
 /**
  * HTML content of table lines.
- * @access	protected
  * @property	string  $mLines
  */
 	protected $mLines		= _EMPTY;
@@ -102,10 +105,6 @@ abstract class PAddEditPane extends PRnd1Pane{
     }
 //______________________________________________________________________________
 
-    const _onchange = "setElementEnabled( \"btn_save\", \"\" );";
-    const _edit	= 1;
-    const _add	= 2;
-
     protected function getSelBoxContent( $htmlId, $selOpt, $tabindex, $onchange = '' ){
     	$options	= &$this->mOptions;
     	$content	= "<select name='".$htmlId."' id='".$htmlId."' class='".$this->mSelCss."' tabindex='".$tabindex."' onchange='".$onchange."'>";
@@ -171,9 +170,9 @@ abstract class PAddEditPane extends PRnd1Pane{
 	    		if( $items[0] == 'id' ){ break; }
 	    	}
 
-	        if( $items[ 1 ] ){
+	        if( $items[1] ){
 	        	$result	= $db_obj->updateRow();
-	        	$result[ 'id' ]	= $items[ 1 ];
+	        	$result['id']	= $items[1];
 				return $result;
 	    	}else{
 	    		return $db_obj->addRow();
@@ -189,11 +188,11 @@ abstract class PAddEditPane extends PRnd1Pane{
 
     protected function prepareData( &$formValues ){
     	foreach( $this->mSaveData as &$items ){
-    		if( !isset( $items[ 2 ] ) ){ $items[ 2 ] = NULL; }
-    		if( !isset( $items[ 3 ] ) ){ $items[ 3 ] = _EMPTY; }
+    		if( !isset( $items[2] )){ $items[2] = NULL; }
+    		if( !isset( $items[3] )){ $items[3] = ''; }
     	}
     }
-//______________________________________________________________________________
+//______________________________________________________________________________ db_error
 
 //	Handlers	<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
@@ -204,18 +203,26 @@ abstract class PAddEditPane extends PRnd1Pane{
 		$this->mOwner	= $tabl_obj;
 		$auth_obj		= new Authentication();
 
-		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess() ) ){
+		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess())){
 	    	$this->isValidData( $formValues );
 			if( !$formValues['is_valid'] ){
 				$this->showAlertHandler( $objResponse, array( 'message' => $formValues['description'], 'focus' => $formValues['focus_id'] ));
-				return array( 'is_error' => true );
+				return array( 'is_error' => TRUE );
 			}else{
 				$this->prepareData( $formValues );
 
 				$result	= $this->saveData();
 
 				if( $result['is_error'] ){
-					$this->showAlertHandler( $objResponse, array( 'message' => $result['description'], 'focus' => $result['focus_id'] ) );
+					$descr	= $result['description'];
+
+					if( 'db_error' == $result['type']){
+						global $gl_PpskLogFile;
+						Log::_log( $descr, 'Error' );
+						$descr	= 'Error: DB operation faild. See `'.$gl_PpskLogFile.'` file.';
+					}
+					$this->showAlertHandler( $objResponse, array( 'message' => $descr, 'focus' => $result['focus_id'] ) );
+
 					return $result;
 				}else{
 					$_SESSION['tables'][$class]['line_id'] = $formValues['id'] = $result['id'];

@@ -26,7 +26,7 @@ class AddEditManagerPane extends PAddEditPane{
     	$this->mInitFocus	= 'login';
 
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     public function initHtmlView(){
     	$db_obj	= new KeepDbl( $this );
@@ -56,7 +56,7 @@ class AddEditManagerPane extends PAddEditPane{
     	$lines	.= $this->getInputLineContent( 'pass2', 'password', _CONF_PASSWORD, $user_info[ 'password' ], $tanindex, self::_onchange ); $tanindex++;
     	parent::initHtmlView();
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function isValidData( &$formValues ){
 	    if( _EMPTY == $formValues[ 'pass1' ] ){
@@ -78,7 +78,7 @@ class AddEditManagerPane extends PAddEditPane{
 	    $formValues[ 'is_valid' ]	= true;
 
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     protected function prepareData( &$formValues ){
     	$this->mSaveData	= array(
@@ -94,7 +94,7 @@ class AddEditManagerPane extends PAddEditPane{
     	);
     	parent::prepareData( $formValues );
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     public function onChangeCountry( &$objResponse, $ownerValues ){
     	$this->getSessionParams( $ownerValues );
@@ -105,30 +105,17 @@ class AddEditManagerPane extends PAddEditPane{
 		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess() ) ){
 			$db_obj	= new KeepDbl( $this );
 			$this->mOptions	= $db_obj->getCitiesList( $ownerValues[ 'country_id' ] );
-			$objResponse->assign( "city_id_cnt_td", 'innerHTML', $this->getSelBoxContent( 'city_id', 0, 4, self::_onchange ) );
+			$objResponse->assign( 'city_id_cnt_td', 'innerHTML', $this->getSelBoxContent( 'city_id', 0, 4, self::_onchange ) );
 		}else{
 			$objResponse = $this->doAccessDenied();
 		}
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-    public function saveInfo( &$objResponse, $formValues ){
-    	$result = parent::saveInfo( $objResponse, $formValues );
-
-    	if( !$result[ 'is_error' ] && $formValues[ 'action_type' ] == PAddEditPane::_add ){
-			$db_obj	= new KeepDbl( $this );
-	    	$result	= $db_obj->createDbViewsForNewManager( $formValues[ 'id' ] );
-	    	if( $result[ 'is_error' ] ){
-				$this->showAlertHandler( $objResponse, array( 'message' => $result[ 'description' ], 'focus' => $result[ 'focus_id' ] ) );
-	    	}
-    	}
-    }
-//--------------------------------------------------------------------------------------------------
 
     public function __destruct(){
     	parent::__destruct();
     }
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>
