@@ -17,7 +17,7 @@ class RunApp extends Core{
 //______________________________________________________________________________
 
 	private function pageClassSelector( $Owner ){
-		$class_name	= $_SESSION['tab_code']._PAGE_POSTFIX;
+		$class_name	= $_SESSION['tab_code'].'_Page';
 		$page_obj	= new $class_name( $Owner );
 		return $page_obj;
 	}
@@ -38,7 +38,7 @@ class RunApp extends Core{
 		$tabs_obj	= $this->tabsSetClassSelector( $this );
 		$page_obj	= $this->pageClassSelector( $this );
 		$view		= array(
-        	'is_access'	=> true,
+        	'is_access'	=> TRUE,
         	'tabs'		=> $tabs_obj->getHtmlView(),
         	'wlcm'		=> getWelcomeText(),
         	'page'		=> $page_obj->getHtmlView(),

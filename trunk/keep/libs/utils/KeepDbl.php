@@ -223,41 +223,6 @@ class KeepDbl extends PDbl{
 	}
 //--------------------------------------------------------------------------------------------------
 
-	function createDbViewsForNewManager( $managerId ){	//
-		global $gl_MysqliObj;
-
-		$sql	=
-"CREATE OR REPLACE VIEW `clients_".$managerId."` AS ".
-	"SELECT ".
-		"`clients`.`id` AS `id`, ".
-		"`clients`.`firstname` AS `firstname`, ".
-		"`clients`.`surname` AS `surname`, ".
-		"`clients`.`info` AS `info`, ".
-		"CONCAT( `cities`.`name`, ', ', `countries`.`name` ) AS `city_country`, ".
-		"`clients`.`email` AS `email` ".
-	"FROM `clients` ".
-	"LEFT JOIN `cities` ON `cities`.`id` = `clients`.`city_id` ".
-	"LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id` ".
-	"WHERE `clients`.`owner_id` = ".$managerId;
-		$result	= $this->execQuery( $sql );
-
-
-		if( !$result[ 'is_error' ] ){
-			$sql	=
-"CREATE OR REPLACE VIEW `departments_".$managerId."` AS ".
-	"SELECT ".
-		"`departments`.`id` AS `id`, ".
-		"`departments`.`name` AS `name`, ".
-		"`departments`.`info` AS `info` ".
-	"FROM `departments` ".
-	"WHERE `departments`.`manager_id` = ".$managerId;
-			$result	= $this->execQuery( $sql );
-
-		}
-		return $result;
-	}
-//--------------------------------------------------------------------------------------------------
-
 	function deleteDbViewsForManager( $managerId ){
 		$sql	=
 "DROP VIEW IF EXISTS `clients_".$managerId."`";
