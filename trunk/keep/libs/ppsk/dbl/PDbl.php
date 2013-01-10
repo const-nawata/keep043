@@ -43,7 +43,7 @@ class PDbl extends Core{ //
 	}
 	//--------------------------------------------------------------------------------------------------
 
-	private function parserError( $sql = '' ){	//	1064 Syncas error
+	protected function parserError( $sql = '' ){	//	1064 Syncas error
 		global $gl_MysqliObj;
 		$data	= &$this->mOwner->mSaveData;
 

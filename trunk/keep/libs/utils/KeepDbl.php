@@ -4,13 +4,13 @@ class KeepDbl extends PDbl{
 	public function __construct( $Owner = NULL ){
 		parent::__construct( $Owner );
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getDuplicateEntryParams( $errDescr ){
 		$string_pars	= explode( "'", $errDescr );
 		return array( 'field' => $string_pars[ 3 ], 'value' => $string_pars[ 1 ] );
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 
 	function getNews(){
@@ -30,7 +30,7 @@ class KeepDbl extends PDbl{
 		}
 		return $content;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getSlides(){
 		$files_default	= array(
@@ -67,7 +67,7 @@ class KeepDbl extends PDbl{
 
 		return $content;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getRunningMessage(){
 		if( 0 ){
@@ -82,14 +82,14 @@ class KeepDbl extends PDbl{
 		$content	= trim($content);
 		return $content;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getCountriesList(){
 		global $gl_MysqliObj;
 		$sql	= "SELECT `id`, `name` FROM `countries` ORDER BY `name`";
 		return $this->execSelectQuery( $sql, 'getCountriesList in KeepDbl.php' );
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getCitiesList( $countryId ){
 		global $gl_MysqliObj;
@@ -106,7 +106,7 @@ class KeepDbl extends PDbl{
 	ORDER BY `cities`.`name`";
 		return $this->execSelectQuery( $sql, 'getCitiesList in KeepDbl.php' );
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getCityInfoById( $cityId ){
 		$city_id	= ( !$cityId ) ? 0 : $cityId;
@@ -137,26 +137,26 @@ class KeepDbl extends PDbl{
 		) : $row ;
 		return $row;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-	function getDepartmentInfoById( $depId ){
+	function getDepartmentInfo( $depId ){
 		$dep_id	= ( !$depId ) ? 0 : $depId;
 		global $gl_MysqliObj;
 		$sql	=
-"SELECT ".
-	"`departments`.`id` AS `id`, ".
-	"`departments`.`name` AS `name`, ".
-	"`departments`.`manager_id` AS `manager_id`, ".
-	"`departments`.`info` AS `info` ".
-"FROM `departments` ".
-"WHERE `departments`.`id`=".$dep_id;
+'SELECT '.
+	'`departments`.`id` AS `id`,'.
+	'`departments`.`name` AS `name`,'.
+	'`departments`.`info` AS `info` '.
+'FROM `departments` '.
+'WHERE `departments`.`id`='.$dep_id;
 
 		$result = $gl_MysqliObj->query( $sql );
 		if( $result ){
 			$row = $result->fetch_assoc();
 			$result->close();
 		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getDepartmentInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
+			$res_err	= $this->parserError( $sql );
+			throw new Exception( _EX.$res_err['description'] );
 		}
 
 		$row = ( !$row ) ? array(
@@ -167,7 +167,7 @@ class KeepDbl extends PDbl{
 		) : $row ;
 		return $row;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getCountryInfoById( $countryId ){
 		$country_id	= ( !$countryId ) ? 0 : $countryId;
@@ -193,7 +193,7 @@ class KeepDbl extends PDbl{
 		) : $row ;
 		return $row;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function getUnitInfoById( $unitId ){
 		$unit_id	= ( !$unitId ) ? 0 : $unitId;
@@ -221,7 +221,7 @@ class KeepDbl extends PDbl{
 		) : $row ;
 		return $row;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	function deleteDbViewsForManager( $managerId ){
 		$sql	=
@@ -235,7 +235,7 @@ class KeepDbl extends PDbl{
 		}
 		return $result;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function getUserInfoById( $userId ){
 		$user_id	= ( !$userId ) ? 0 : $userId;
@@ -287,11 +287,11 @@ class KeepDbl extends PDbl{
 		) : $row ;
 		return $row;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct ();
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }// Class end

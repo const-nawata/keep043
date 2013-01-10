@@ -15,13 +15,13 @@ abstract class multiTablesPage extends PPage{
 
 	private $mRowSpan	= 0;
 
-	//----------------------//-----------------------//-----------------------//----------------------//
+//----------------------//-----------------------//-----------------------//----------------------//
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 		//    	$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function getNotSelectedSellHanlders( $sellCode, $prompt ){
 		return array(
@@ -36,7 +36,7 @@ abstract class multiTablesPage extends PPage{
 								"xajax_onHandler( \"".$this->getHandleResourceString( 'showTable', 'tableListController' )."\", info );"
 								);
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function getSellHtmlContent( $sellCode, $prompt, $handlers, $css ){
 
@@ -51,7 +51,7 @@ abstract class multiTablesPage extends PPage{
 		$view	.= ">".$prompt."</div>";
 		return $view;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function getTableNameSellHtmlContent( $prompt, $sellCode ){
 		$tbl_list	= &$this->mTablesList;
@@ -67,7 +67,7 @@ abstract class multiTablesPage extends PPage{
 		return
 "<td id='td_sell_".$sellCode."'>".self::getSellHtmlContent( $sellCode, $prompt, $handlers, $css_class )."</td>";
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function getEmptySellHeight(){
 		switch( $this->mRowSpan ){
@@ -77,45 +77,45 @@ abstract class multiTablesPage extends PPage{
 		}
 		return $height;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function getMultiTablesHtmlContent(){
 
 		$tbl_list	= &$this->mTablesList;
 
-		$rest_menu_items = "";
+		$rest_menu_items = '';
 		foreach( $tbl_list as $ind => &$tbl_params ){
-			if( $ind == 0 ){
-				$first_name_sell	= $this->getTableNameSellHtmlContent( $tbl_params[ 'menu_prompt' ], $tbl_params[ 'table_code' ] );
-			}else{
-				$rest_menu_items	.= "<tr>".$this->getTableNameSellHtmlContent( $tbl_params[ 'menu_prompt' ], $tbl_params[ 'table_code' ] )."</tr>";
-			}
+			$tbl_sell_name	= $this->getTableNameSellHtmlContent( $tbl_params['menu_prompt'], $tbl_params['table_code'] );
+
+
+			( $ind == 0 )
+				? $first_name_sell	= $tbl_sell_name
+				: $rest_menu_items	.= '<tr>'.$tbl_sell_name.'</tr>';
 		}
 
-//print_r( $tbl_list );
-
-		$tbl_view	= tableListController::buildSettingsTableHtmlContent( $tbl_list[ 0 ][ 'table_code' ] );
+		$tbl_view	= tableListController::buildSettingsTableHtmlContent( $tbl_list[0]['table_code'] );
 
 		return
-"<input id='prev_sell_code' name='prev_sell_code' type='hidden' value='".$tbl_list[ 0 ][ 'table_code' ]."' />
-<table class='mutiTablesPageTbl' cellpadding='0' cellspacing='0'>
-	<tr>
-		".$first_name_sell.
-		"<td id='multi_tables_page_container' rowspan='".( $this->mRowSpan + 1 )."' class='multiTablesPageContainerSellTd'>".$tbl_view."</td>".
-"	</tr>".$rest_menu_items.
-"	<tr><td class='multiTablesPageMenuEmptySellTd' style='height: ".$this->getEmptySellHeight()."px;'>&nbsp;</td></tr>
-</table>";
+'<input id="prev_sell_code" name="prev_sell_code" type="hidden" value="'.$tbl_list[0]['table_code'].'" />'.
+'<table class="mutiTablesPageTbl" cellpadding="0" cellspacing="0">'.
+	'<tr>'.
+		$first_name_sell.
+		"<td id='multi_tables_page_container' rowspan='".( $this->mRowSpan + 1 )."' class='multiTablesPageContainerSellTd'>".$tbl_view.'</td>'.
+	'</tr>'.$rest_menu_items.
+	'<tr><td class="multiTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.
+'</table>';
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function initHtmlView(){
 		$view	= $this->getMultiTablesHtmlContent();
 		parent::initHtmlView( $view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
+
 }//	Class end

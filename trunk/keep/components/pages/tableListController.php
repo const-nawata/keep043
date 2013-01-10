@@ -1,12 +1,10 @@
 <?php
 class tableListController  extends Core{
 
-	//	private $mNewCode;
-
 	public function __construct( $Owner = NULL ){
 		parent::__construct( $Owner );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function resetJsHandlers( &$objResponse, $info ){
 		$objResponse->assign( 'prev_sell_code', 'value', $info[ 'new_code' ] );
@@ -19,18 +17,12 @@ class tableListController  extends Core{
 		$div_view	= settings_Page::getSellHtmlContent( $info[ 'new_code' ], $info[ 'new_prompt' ], $handlers, 'mutiTablesPageMenuSelectedSellTd' );
 		$objResponse->assign( 'td_sell_'. $info[ 'new_code' ], 'innerHTML', $div_view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function buildSettingsTableHtmlContent( $codeName ){
 		$cls_name	= $codeName.'Table';
 
-
-//echo "cls_name: $cls_name\n";
-
 		$tbl_obj	= new $cls_name( NULL, false );
-
-
-//return "<div>HHHHHHHHHHHHHHHHHHHHHHHHHH</div>";
 
 		return
 "<table cellpadding='0' cellspacing='0'>
@@ -42,17 +34,18 @@ class tableListController  extends Core{
 	<tr><td colspan='2'>".$tbl_obj->getHtmlView()."</td></tr>
 </table>";
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function showTable( &$objResponse, $info ){
 		$this->resetJsHandlers( $objResponse, $info );
 		$table_view	= $this->buildSettingsTableHtmlContent( $info[ 'new_code' ] );
 		$objResponse->assign( 'multi_tables_page_container', 'innerHTML', $table_view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct ();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
+
 }//	Class end

@@ -21,11 +21,11 @@ class AddEditDepartmentPane extends PAddEditPane{
 		$this->mBkgClr		= _GEN_BKGRND_COLOR;
 		$this->mInitFocus	= 'name';
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function initHtmlView(){
 		$db_obj	= new KeepDbl( $this );
-		$info	= $db_obj->getDepartmentInfoById( $this->mRecId );
+		$info	= $db_obj->getDepartmentInfo( $this->mRecId );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
@@ -33,7 +33,7 @@ class AddEditDepartmentPane extends PAddEditPane{
 		$lines	.= $this->getTextareaLineContent( 'info', _INFO, $info[ 'info' ], $tanindex, self::_onchange ); $tanindex++;
 		parent::initHtmlView();
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
 		$formValues[ 'name' ]	= trim( $formValues[ 'name' ] );
@@ -45,23 +45,21 @@ class AddEditDepartmentPane extends PAddEditPane{
 		}
 		$formValues[ 'is_valid' ]	= true;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function prepareData( &$formValues ){
 		$this->mSaveData	= array(
-			array( 'id',			$formValues[ 'id' ],	NULL ),
-			array( 'name',			$formValues[ 'name' ],	'name', _PNAME1 ),
-			array( 'info',			$formValues[ 'info' ],	'info', _INFO ),
-			array( 'manager_id',	$_SESSION[ 'user_id' ] )
+			array( 'id',	$formValues['id'],	NULL ),
+			array( 'name',	$formValues['name'],'name', _PNAME1 ),
+			array( 'info',	$formValues['info'],'info', _INFO )
 		);
 		parent::prepareData( $formValues );
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>

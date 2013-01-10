@@ -55,8 +55,8 @@ class manager_TabsSet extends PTabsSet {
 	public function lists_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
 
-		if ( $auth_obj->isGrantAccess( array( 'manager', 'admin' ) ) ){
-			$_SESSION[ 'tab_code' ]	= _TAB_LISTS_CODE;
+		if ( $auth_obj->isGrantAccess( array( 'manager', 'admin' ))){
+			$_SESSION['tab_code']	= _TAB_LISTS_CODE;
 			$this->execTabHandler( $objResponse );
 		}else{
 			$objResponse = $this->doAccessDenied();
