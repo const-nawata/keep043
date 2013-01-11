@@ -1,5 +1,5 @@
 <?php
-require_once( $gl_pagesPath."tableListController.php" );
+require_once( $gl_pagesPath.'tableListController.php' );
 
 abstract class multiTablesPage extends PPage{
 

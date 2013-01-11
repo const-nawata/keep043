@@ -1,6 +1,4 @@
 <?php
-
-
 class PDbl extends Core{ //
 	const _duplicateEntry	= 1062;
 	const _cannotDelUpdate	= 1451;
@@ -70,7 +68,7 @@ class PDbl extends Core{ //
 			default:
 				//				$res[ 'description' ]	= _MESSAGE_DB_ERROR;
 
-				$res['description']	= 'Err num: '.$err_no." //// Descr: ".$err_dscr."\nThe whole query is:\n".$sql;
+				$res['description']	= 'DB Error. Number: '.$err_no.' / Description: '.$err_dscr." / The whole query is:\n".$sql;
 				$res['focus_id']		= '';
 		}
 		$res['is_error']= TRUE;

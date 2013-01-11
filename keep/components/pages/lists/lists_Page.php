@@ -6,9 +6,7 @@ class lists_Page extends multiTablesPage{
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 		$this->mTablesList	= array(
-			array(
-				'table_code'	=> 'Departments',
-				'menu_prompt'	=> _DEPARTMENTS
+			array( 'table_code' => 'Departments', 'menu_prompt' => _DEPARTMENTS
 			)
 		);
 		$this->initHtmlView();
