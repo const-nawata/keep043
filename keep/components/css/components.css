@@ -416,14 +416,14 @@ input.welcomeLine {
 .Page_Multi_Tables_Units_SearchSellTd {
 	width: 220px;
 }
-.mutiTablesPageTbl {
+.SeveralTablesPageTbl {
 	
 }
 .Page_Multi_Tables_Departments_SearchSellTd{
 	width: 825px;
 }
 
-.mutiTablesPageMenuSellTd,.mutiTablesPageMenuSelectedSellTd,.SeveralTablesPageMenuOverSellTd,.SeveralTablesPageMenuEmptySellTd
+.SeveralTablesPageMenuSellTd,.SeveralTablesPageMenuSelectedSellTd,.SeveralTablesPageMenuOverSellTd,.SeveralTablesPageMenuEmptySellTd
 	{
 	background-color: #68DDD6;
 	color: #6F24A5;
@@ -446,7 +446,7 @@ input.welcomeLine {
 	color: #996D2B;
 }
 
-.mutiTablesPageMenuSelectedSellTd {
+.SeveralTablesPageMenuSelectedSellTd {
 	background-color: #4CA0C4;
 	color: #D1D8FF;
 	cursor: default;
