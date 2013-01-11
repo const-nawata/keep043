@@ -1,7 +1,7 @@
 <?php
 require_once( $gl_pagesPath.'tableListController.php' );
 
-abstract class multiTablesPage extends PPage{
+abstract class SeveralTablesPage extends PPage{
 
 	/**
 	 * @property array $mTablesList => array(
@@ -25,7 +25,7 @@ abstract class multiTablesPage extends PPage{
 
 	public function getNotSelectedSellHanlders( $sellCode, $prompt ){
 		return array(
-			'onmouseover'	=> "setMouseOverCss( this, \"multiTablesPageMenuOverSellTd\" );",
+			'onmouseover'	=> "setMouseOverCss( this, \"SeveralTablesPageMenuOverSellTd\" );",
 			'onmouseout'	=> "setMouseOutCss( this );",
 			'onclick'		=>	"var old_code = document.getElementById( \"prev_sell_code\" ).value;".
 								"var old_div_id = \"div_sell_\" + old_code;".
@@ -100,9 +100,9 @@ abstract class multiTablesPage extends PPage{
 '<table class="mutiTablesPageTbl" cellpadding="0" cellspacing="0">'.
 	'<tr>'.
 		$first_name_sell.
-		"<td id='multi_tables_page_container' rowspan='".( $this->mRowSpan + 1 )."' class='multiTablesPageContainerSellTd'>".$tbl_view.'</td>'.
+		"<td id='multi_tables_page_container' rowspan='".( $this->mRowSpan + 1 )."' class='SeveralTablesPageContainerSellTd'>".$tbl_view.'</td>'.
 	'</tr>'.$rest_menu_items.
-	'<tr><td class="multiTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.
+	'<tr><td class="SeveralTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.
 '</table>';
 	}
 //______________________________________________________________________________

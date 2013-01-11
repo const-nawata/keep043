@@ -3,7 +3,7 @@ require_once( $gl_pagesPath.'settings/tables/CitiesTable.php' );
 require_once( $gl_pagesPath.'settings/tables/CountriesTable.php' );
 require_once( $gl_pagesPath.'settings/tables/UnitsTable.php' );
 
-class settings_Page extends multiTablesPage{
+class settings_Page extends SeveralTablesPage{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
