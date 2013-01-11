@@ -239,7 +239,8 @@ input.welcomeLine {
 .cities_viewTblCityTtlTd, .cities_viewTblCountryTtlTd,
 .countriesTblCountryTtlTd,
 .unitsTblFullTtlTd, .unitsTblBreifTtlTd, .unitsTblUpperSellTtlTd,
-.departmentsTblNameTtlTd, .departmentsTblInfoTtlTd{
+.departmentsTblNameTtlTd, .departmentsTblInfoTtlTd,
+.good_catsTblNameTtlTd{
 	height: 30px;
 	border-bottom: 1px solid;
 	border-top: 1px solid;
@@ -253,7 +254,8 @@ input.welcomeLine {
 .cities_viewTblCityClTd, .cities_viewTblCountryClTd,
 .countriesTblCountryClTd,
 .unitsTblFullClTd, .unitsTblBreifClTd,
-.departmentsTblNameClTd, .departmentsTblInfoClTd{
+.departmentsTblNameClTd, .departmentsTblInfoClTd,
+.good_catsTblNameClTd{
 	height: 25px;
 	text-align: left;
 	overflow: hidden;
@@ -267,7 +269,8 @@ input.welcomeLine {
 .cities_viewTblCityTtlTd, .cities_viewTblCityClTd,
 .countriesTblCountryTtlTd, .countriesTblCountryClTd,
 .unitsTblFullTtlTd, .unitsTblFullClTd, .unitsTblUpperSellTtlTd,
-.departmentsTblNameTtlTd, .departmentsTblNameClTd{
+.departmentsTblNameTtlTd, .departmentsTblNameClTd,
+.good_catsTblNameTtlTd,.good_catsTblNameClTd{
 	border-left: 1px solid;
 }
 
@@ -288,12 +291,18 @@ input.welcomeLine {
 .unitsTblUpperSellTtlTd,
 
 .departmentsTblNameTtlTd, .departmentsTblNameClTd,
-.departmentsTblInfoTtlTd, .departmentsTblInfoClTd{   
+.departmentsTblInfoTtlTd, .departmentsTblInfoClTd,
+
+.good_catsTblNameTtlTd,.good_catsTblNameClTd{   
 	border-right: 1px solid;
 	border-color: #0E00AF;
 	color: #6F24A5;
 	padding-top: 0;
 	padding-bottom: 0;
+}
+
+.good_catsTblNameClTd{
+	width: 360px;
 }
 
 /*Managers*/
@@ -404,7 +413,7 @@ input.welcomeLine {
 
 /*Multi tables page  ###############################################*/
 .Page_Multi_Tables_Cities_SearchSellTd, .Page_Multi_Tables_Countries_SearchSellTd, .Page_Multi_Tables_Units_SearchSellTd,
-.Page_Multi_Tables_Departments_SearchSellTd{
+.Page_Multi_Tables_Departments_SearchSellTd,.Page_Multi_Tables_GoodCats_SearchSellTd{
 	padding-bottom: 10px;
 }
 .Page_Multi_Tables_Cities_SearchSellTd {
@@ -421,6 +430,9 @@ input.welcomeLine {
 }
 .Page_Multi_Tables_Departments_SearchSellTd{
 	width: 825px;
+}
+.Page_Multi_Tables_GoodCats_SearchSellTd{
+	width: 277px;
 }
 
 .SeveralTablesPageMenuSellTd,.SeveralTablesPageMenuSelectedSellTd,.SeveralTablesPageMenuOverSellTd,.SeveralTablesPageMenuEmptySellTd
