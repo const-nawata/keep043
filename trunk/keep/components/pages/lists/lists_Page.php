@@ -1,7 +1,7 @@
 <?php
 require_once( $gl_pagesPath.'lists/tables/DepartmentsTable.php' );
 
-class lists_Page extends multiTablesPage{
+class lists_Page extends SeveralTablesPage{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );

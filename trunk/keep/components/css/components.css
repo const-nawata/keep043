@@ -423,7 +423,7 @@ input.welcomeLine {
 	width: 825px;
 }
 
-.mutiTablesPageMenuSellTd,.mutiTablesPageMenuSelectedSellTd,.multiTablesPageMenuOverSellTd,.multiTablesPageMenuEmptySellTd
+.mutiTablesPageMenuSellTd,.mutiTablesPageMenuSelectedSellTd,.SeveralTablesPageMenuOverSellTd,.SeveralTablesPageMenuEmptySellTd
 	{
 	background-color: #68DDD6;
 	color: #6F24A5;
@@ -437,11 +437,11 @@ input.welcomeLine {
 	vertical-align: middle;
 }
 
-.multiTablesPageMenuEmptySellTd {
+.SeveralTablesPageMenuEmptySellTd {
 	
 }
 
-.multiTablesPageMenuOverSellTd {
+.SeveralTablesPageMenuOverSellTd {
 	background-color: #AFDBD8;
 	color: #996D2B;
 }
@@ -452,7 +452,7 @@ input.welcomeLine {
 	cursor: default;
 }
 
-.multiTablesPageContainerSellTd {
+.SeveralTablesPageContainerSellTd {
 	width: 981px;
 	padding: 0 0 0 50px; /*trbl*/
 	vertical-align: top;
