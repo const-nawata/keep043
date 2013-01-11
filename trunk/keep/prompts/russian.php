@@ -42,6 +42,7 @@ define( '_COUNTRIES', 'Страны' );
 define( '_COUNTRY_NAME', 'Название страны' );
 define( '_DELETE', 'Удалить' );
 define( '_DEPARTMENTS', 'Отделы' );
+define( '_GOOD_CATS', 'Категории товара' );
 define( '_DEPARTMENT_ROD', 'отдела' );
 define( '_EDIT', 'Редактировать' );
 define( '_EDITING', 'Редактирование' );
