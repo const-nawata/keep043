@@ -10,11 +10,11 @@ class tableListController  extends Core{
 		$objResponse->assign( 'prev_sell_code', 'value', $info[ 'new_code' ] );
 
 		$handlers	= settings_Page::getNotSelectedSellHanlders( $info[ 'old_code' ], $info[ 'old_prompt' ] );
-		$div_view	= settings_Page::getSellHtmlContent( $info[ 'old_code' ], $info[ 'old_prompt' ], $handlers, 'mutiTablesPageMenuSellTd' );
+		$div_view	= settings_Page::getSellHtmlContent( $info[ 'old_code' ], $info[ 'old_prompt' ], $handlers, 'SeveralTablesPageMenuSellTd' );
 		$objResponse->assign( 'td_sell_'. $info[ 'old_code' ], 'innerHTML', $div_view );
 
 		$handlers	= array();
-		$div_view	= settings_Page::getSellHtmlContent( $info[ 'new_code' ], $info[ 'new_prompt' ], $handlers, 'mutiTablesPageMenuSelectedSellTd' );
+		$div_view	= settings_Page::getSellHtmlContent( $info[ 'new_code' ], $info[ 'new_prompt' ], $handlers, 'SeveralTablesPageMenuSelectedSellTd' );
 		$objResponse->assign( 'td_sell_'. $info[ 'new_code' ], 'innerHTML', $div_view );
 	}
 //______________________________________________________________________________

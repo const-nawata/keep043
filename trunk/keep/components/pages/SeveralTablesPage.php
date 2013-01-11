@@ -57,11 +57,11 @@ abstract class SeveralTablesPage extends PPage{
 		$tbl_list	= &$this->mTablesList;
 		$this->mRowSpan++;
 		if( $sellCode != $tbl_list[ 0 ][ 'table_code' ] ){
-			$css_class		= "mutiTablesPageMenuSellTd";
+			$css_class		= "SeveralTablesPageMenuSellTd";
 			$handlers	= self::getNotSelectedSellHanlders( $sellCode, $prompt );
 		}else{
 			$handlers	= array();
-			$css_class	= "mutiTablesPageMenuSelectedSellTd";
+			$css_class	= "SeveralTablesPageMenuSelectedSellTd";
 		}
 
 		return
@@ -97,7 +97,7 @@ abstract class SeveralTablesPage extends PPage{
 
 		return
 '<input id="prev_sell_code" name="prev_sell_code" type="hidden" value="'.$tbl_list[0]['table_code'].'" />'.
-'<table class="mutiTablesPageTbl" cellpadding="0" cellspacing="0">'.
+'<table class="SeveralTablesPageTbl" cellpadding="0" cellspacing="0">'.
 	'<tr>'.
 		$first_name_sell.
 		"<td id='multi_tables_page_container' rowspan='".( $this->mRowSpan + 1 )."' class='SeveralTablesPageContainerSellTd'>".$tbl_view.'</td>'.
