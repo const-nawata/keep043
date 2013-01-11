@@ -12,12 +12,12 @@ class admin_TabsSet extends PTabsSet {
 		parent::__construct( $this );
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function managers_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
@@ -28,19 +28,19 @@ class admin_TabsSet extends PTabsSet {
 			$objResponse = $this->doAccessDenied();
 		}
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function settings_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
 
-		if( $auth_obj->isGrantAccess( array( 'admin' ) ) ){
-			$_SESSION[ 'tab_code' ]	= _TAB_SETTINGS_CODE;
+		if( $auth_obj->isGrantAccess( array( 'admin' ))){
+			$_SESSION['tab_code']	= _TAB_SETTINGS_CODE;
 			$this->execTabHandler( $objResponse );
 		}else{
 			$objResponse = $this->doAccessDenied();
 		}
 	}
-	//---------------------------------------------------------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function news_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
@@ -51,7 +51,6 @@ class admin_TabsSet extends PTabsSet {
 			$objResponse = $this->doAccessDenied();
 		}
 	}
-	//---------------------------------------------------------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>
