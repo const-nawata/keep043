@@ -144,11 +144,11 @@ class KeepDbl extends PDbl{
 		global $gl_MysqliObj;
 		$sql	=
 'SELECT '.
-	'`departments`.`id` AS `id`,'.
-	'`departments`.`name` AS `name`,'.
-	'`departments`.`info` AS `info` '.
+	'`id`,'.
+	'`name`,'.
+	'`info` '.
 'FROM `departments` '.
-'WHERE `departments`.`id`='.$dep_id;
+'WHERE `id`='.$dep_id;
 
 		$result = $gl_MysqliObj->query( $sql );
 		if( $result ){
@@ -162,9 +162,36 @@ class KeepDbl extends PDbl{
 		$row = ( !$row ) ? array(
 			'id'			=> NULL,
 			'name'			=> NULL,
-			'manager_id'	=> NULL,
 			'info'			=> NULL
 		) : $row ;
+		return $row;
+	}
+//______________________________________________________________________________
+
+	function geCategoryInfo( $catId ){
+		$cat_id	= ( !$catId ) ? 0 : $catId;
+		global $gl_MysqliObj;
+
+		$sql	=
+'SELECT '.
+	'`id`,'.
+	'`name`'.
+'FROM `categories` '.
+'WHERE `id`='.$cat_id;
+
+		$result = $gl_MysqliObj->query( $sql );
+		if( $result ){
+			$row = $result->fetch_assoc();
+			$result->close();
+		}else{
+			$res_err	= $this->parserError( $sql );
+			throw new Exception( _EX.$res_err['description'] );
+		}
+
+// 		$row = ( !$row ) ? array(
+// 			'id'			=> NULL,
+// 			'name'			=> NULL
+// 		) : $row ;
 		return $row;
 	}
 //______________________________________________________________________________

@@ -1,7 +1,10 @@
 @CHARSET "UTF-8";
 
 /* Controls image*/
-.selectedTabLeftSect,.selectedTabRightSect,.notSelectedTabLeftSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabRightSect,.Scrollbar-Down,.Scrollbar-Up
+.selectedTabLeftSect,.selectedTabRightSect,
+.notSelectedTabLeftSect,.notSelectedTabRightSect,
+.overTabLeftSect,.overTabRightSect,
+.Scrollbar-Down,.Scrollbar-Up
 	{
 	background: url("../../img/elements.gif") left top;
 	background-repeat: no-repeat;
@@ -21,12 +24,16 @@ td.inputField {
 }
 
 /*Tab Styles  ######################################################*/
-.selectedTabLeftSect,.selectedTabCenterSect,.selectedTabRightSect,.notSelectedTabLeftSect,.notSelectedTabCenterSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabCenterSect,.overTabRightSect
+.selectedTabLeftSect,.selectedTabCenterSect,.selectedTabRightSect,
+.notSelectedTabLeftSect,.notSelectedTabCenterSect,.notSelectedTabRightSect,
+.overTabLeftSect,.overTabCenterSect,.overTabRightSect
 	{
 	height: 40px;
 }
 
-.selectedTabLeftSect,.selectedTabRightSect,.notSelectedTabLeftSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabRightSect
+.selectedTabLeftSect,.selectedTabRightSect,
+.notSelectedTabLeftSect,.notSelectedTabRightSect,
+.overTabLeftSect,.overTabRightSect
 	{
 	font-size: 1px;
 	width: 7px;
@@ -40,7 +47,8 @@ td.inputField {
 	line-height: 40px;
 }
 
-.notSelectedTabLeftSect,.notSelectedTabCenterSect,.notSelectedTabRightSect,.overTabLeftSect,.overTabCenterSect,.overTabRightSect
+.notSelectedTabLeftSect,.notSelectedTabCenterSect,.notSelectedTabRightSect,
+.overTabLeftSect,.overTabCenterSect,.overTabRightSect
 	{
 	cursor: pointer;
 }

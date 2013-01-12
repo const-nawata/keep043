@@ -44,6 +44,7 @@ define( '_DELETE', 'Удалить' );
 define( '_DEPARTMENTS', 'Отделы' );
 define( '_GOOD_CATS', 'Категории товара' );
 define( '_DEPARTMENT_ROD', 'отдела' );
+define( '_CATEGORY_ROD', 'категории' );
 define( '_EDIT', 'Редактировать' );
 define( '_EDITING', 'Редактирование' );
 define( '_EMAIL_ADDR', 'Адрес e-mail' );
