@@ -29,6 +29,10 @@ class AddEditManagerPane extends PAddEditPane{
 //______________________________________________________________________________
 
     public function initHtmlView(){
+
+//     	$owner	= $this->mOwner;
+// Log::_log(print_r( $owner, true));
+
     	$db_obj	= new KeepDbl( $this );
     	$user_info	= $db_obj->getUserInfoById( $this->mRecId );
 

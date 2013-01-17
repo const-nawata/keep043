@@ -1,5 +1,5 @@
 <?php
-require_once ($gl_tab_setsPath."TabImage.php");
+require_once ( $gl_tab_setsPath.'TabImage.php' );
 abstract class PTabsSet extends Core{
 	/**
 	 *

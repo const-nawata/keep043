@@ -72,7 +72,7 @@ class ManagersTable extends PTable{
 		)
 		);
 
-		$this->setSearchFields( array( 'surname', 'firstname' ) );
+		$this->setSearchFields( array( 'surname', 'firstname' ));
 		$this->mPaneClassName	= 'AddEditManagerPane';
 	}
 //______________________________________________________________________________
