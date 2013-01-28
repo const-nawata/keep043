@@ -54,8 +54,8 @@ class LoginPane extends PRnd1Pane{
 			array (	//	Button to accept login information
 				'name'=>'btn3',
 				'type'=>'submit',
-				'prompt'=>constant (_TAB_PRMPT._TAB_LOGIN_CODE),
-				'hint'=>constant (_TAB_PRMPT._TAB_LOGIN_CODE),
+				'prompt'=>constant ('_TAB_PRMPT_login'),
+				'hint'=>constant ('_TAB_PRMPT_login'),
 				'css_ovr'	=>'btn_over'
 			)
 		);

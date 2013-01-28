@@ -5,8 +5,8 @@ class manager_TabsSet extends PTabsSet {
 		$this->mTabCodes	= array(
 			_TAB_NEWS_CODE,
 			_TAB_CLIENTS_CODE,
-			_TAB_LISTS_CODE,
-			_TAB_GOODS_CODE,
+			'lists',
+			'stock',
 			_TAB_LOGOUT_CODE
 		);
 
@@ -22,11 +22,11 @@ class manager_TabsSet extends PTabsSet {
 	}
 //______________________________________________________________________________
 
-	public function goods_TabsHandler( &$objResponse, $NULL ){
+	public function stock_TabsHandler( &$objResponse, $NULL ){
 		$auth_obj = new Authentication();
 
 		if ( $auth_obj->isGrantAccess( array( 'manager' ))){
-			$_SESSION['tab_code']	= _TAB_GOODS_CODE;
+			$_SESSION['tab_code']	= 'stock';
 			$this->execTabHandler( $objResponse );
 		}else{
 			$objResponse = $this->doAccessDenied();
@@ -56,7 +56,7 @@ class manager_TabsSet extends PTabsSet {
 		$auth_obj = new Authentication();
 
 		if ( $auth_obj->isGrantAccess( array( 'manager', 'admin' ))){
-			$_SESSION['tab_code']	= _TAB_LISTS_CODE;
+			$_SESSION['tab_code']	= 'lists';
 			$this->execTabHandler( $objResponse );
 		}else{
 			$objResponse = $this->doAccessDenied();

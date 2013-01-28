@@ -30,13 +30,13 @@ abstract class PTabsSet extends Core{
 	 * @return void
 	 */
 	private function setTabParams( &$TabIns ){
-		$const_prmt	= _TAB_PRMPT.$TabIns->mName;
+		$const_prmt	= '_TAB_PRMPT_'.$TabIns->mName;
 		$tab_prompt	= constant( $const_prmt );
 		$TabIns->setPrompt( $tab_prompt );
 		$owner_class		= $this->getOwnerClassName();
-		$onclick_handler	= $TabIns->mName."_TabsHandler";
+		$onclick_handler	= $TabIns->mName.'_TabsHandler';
 		$TabIns->unsetAllHandlers();
-		if( $TabIns->mName != $_SESSION[ 'tab_code' ] ){
+		if( $TabIns->mName != $_SESSION['tab_code'] ){
 			$hndl_res	= $this->getHandleResourceString( $onclick_handler, $owner_class );
 			$TabIns->setHandler( array( 'handler'=>"xajax_onHandler(\"$hndl_res\");" ) );
 			$this->setGeneralHandlers( $TabIns );

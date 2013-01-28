@@ -6,7 +6,7 @@ require_once( $gl_pagesPath."SeveralTablesPage.php" );
 require_once( $gl_pagesPath."catalogue/catalogue_Page.php" );
 require_once( $gl_pagesPath."clients/clients_Page.php" );
 require_once( $gl_pagesPath."contact/contact_Page.php" );
-require_once( $gl_pagesPath."goods/goods_Page.php" );
+require_once( $gl_pagesPath."goods/stock_Page.php" );
 require_once( $gl_pagesPath."home/home_Page.php" );
 require_once( $gl_pagesPath."login/login_Page.php");
 require_once( $gl_pagesPath."lists/lists_Page.php");
