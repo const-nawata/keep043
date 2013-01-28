@@ -21,18 +21,17 @@ class tableListController  extends Core{
 
 	public function buildSettingsTableHtmlContent( $codeName ){
 		$cls_name	= $codeName.'Table';
-
-		$tbl_obj	= new $cls_name( NULL, false );
+		$tbl_obj	= new $cls_name( NULL, FALSE );
 
 		return
-"<table cellpadding='0' cellspacing='0'>
-	<tr>
-		<td class='Page_Multi_Tables_".$codeName."_SearchSellTd'>".$tbl_obj->mSearchInputObj->getHtmlView()."</td>
-		<td class='Page_Multi_Tables_ToolSellTd'>".$tbl_obj->mToolPaneObj->getHtmlView()."</td>
-	</tr>
+'<table cellpadding="0" cellspacing="0">'.
+	'<tr>'.
+		'<td class="Page_Multi_Tables_'.$codeName.'_SearchSellTd">'.$tbl_obj->mSearchInputObj->getHtmlView().'</td>'.
+		'<td class="Page_Multi_Tables_ToolSellTd">'.$tbl_obj->mToolPaneObj->getHtmlView().'</td>'.
+	'</tr>'.
 
-	<tr><td colspan='2'>".$tbl_obj->getHtmlView()."</td></tr>
-</table>";
+	'<tr><td colspan="2">'.$tbl_obj->getHtmlView().'</td></tr>'.
+'</table>';
 	}
 //______________________________________________________________________________
 

@@ -1,5 +1,5 @@
 <?php
-require_once( $gl_pagesPath.'managers/AddEditManagerPane.php' );
+// require_once( $gl_pagesPath.'managers/AddEditManagerPane.php' );
 
 class GoodsTable extends PTable{
 
@@ -16,7 +16,7 @@ class GoodsTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-		$this->mLevels			= array( 'admin' );
+		$this->mLevels			= array( 'manager' );
 		$this->mSourceDbTable	= 'goods';
 		$this->mTargetDbTable	= 'goods';
 		$this->mSelectorColor	= '#EDD3EA';
@@ -28,7 +28,7 @@ class GoodsTable extends PTable{
 		$this->mColumns	= array(
 			array(
 				'field'		=> 'name',
-				'name'		=> _GOOD_NAME,
+				'name'		=> _PNAME1,
 				'ttl_css'	=> 'goodsTblNameTtlTd',
 				'sll_css'	=> 'goodsTblNameClTd',
 				'bg_clr'	=> '#FFF7E2',
@@ -47,7 +47,7 @@ class GoodsTable extends PTable{
 		);
 
 		$this->setSearchFields( array( 'name' ));
-		$this->mPaneClassName	= 'AddEditGoodPane';
+		$this->mPaneClassName	= 'AddEditGoodCatsPane';
 	}
 //______________________________________________________________________________
 
