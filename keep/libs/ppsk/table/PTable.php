@@ -80,13 +80,13 @@ abstract class PTable extends Core{
 	 * @property string $mSourceDbTable -  Table name which is used for SQL query. Mandatory.
 	 * 		Must contain only one name of table.
 	 */
-	protected $mSourceDbTable	= _EMPTY;
+	protected $mSourceDbTable	= '';
 
 	/**
 	 * @property string $mSourceDbTable -  Table name which is used for SQL query. Mandatory.
 	 * 		Must contain only one name of table.
 	 */
-	protected $mTargetDbTable	= _EMPTY;
+	protected $mTargetDbTable	= '';
 
 	/**
 	 * @property array $mColumns[] => array(	-Columns properties. Mandatory.
@@ -150,7 +150,7 @@ abstract class PTable extends Core{
 	 * 		onclick event is perfomed. This property also defines if to show tool
 	 * 		bar for create, edit, delete records.
 	 */
-	protected $mSelectorColor	= _EMPTY;
+	protected $mSelectorColor	= '';
 
 	/**
 	 * @property array $mPaging  - CSS styles for paging.
@@ -304,6 +304,13 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
+	public function __get( $property ){
+		if( property_exists( $this, $property )){
+			return $this->$property;
+		}
+	}
+//______________________________________________________________________________
+
 	/**
 	 * sets HTML view
 	 * @access public
@@ -370,17 +377,18 @@ abstract class PTable extends Core{
     			'handlers'	=> array(
     				'onclick'	=> array(
     					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'addRowHandler', get_class( $this ) )."\", null );"
-    					)
-    					)
-    					),
+    				)
+    			)
+    		),
+
 			'edit'	=> array(
 				'hint'	=> _PPSK_HINT_EDIT_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
     					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'editRowHandler', get_class( $this ) )."\", null );"
-    					)
-    					)
-    					),
+    				)
+    			)
+    		),
 
 
 			'delete'	=> array(
@@ -389,25 +397,10 @@ abstract class PTable extends Core{
     				'onclick'	=> array(
     					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'showConfirmHandler', get_class( $this ) )."\", ".
     									"{ \"message\" : \""._MESSAGE_IS_DEL_RECORD."\", \"action\" : \"".self::encipherFilledValue( 'deleteRowHandler' )."\"} );"
-    									)
-    									)
-    									)
-
-    									//			'delete'	=> array(
-    									//				'hint'	=> _PPSK_HINT_DELETE_ROW,
-    									//    			'handlers'	=> array(
-    									//    				'onclick'	=> array(
-    									//    					'handler'	=> "xajax_onHandler(\"".$this->getHandleResourceString( 'deleteRowHandler', get_class( $this ) )."\", '1' );",
-    									//    					'ask'	=> _MESSAGE_IS_DEL_RECORD
-    									//    				)
-    									//    			)
-    									//    		)
-
-
-
-
-
-    									);
+    				)
+    			)
+    		)
+    	);
 	}
 //______________________________________________________________________________
 
@@ -825,7 +818,7 @@ abstract class PTable extends Core{
 
 	public function editRowHandler( &$objResponse, $nullValue ){
 		$class	= get_class( $this );
-		$this->setPAddEditPane( $objResponse, $_SESSION[ 'tables' ][ $class ][ 'line_id' ] );
+		$this->setPAddEditPane( $objResponse, $_SESSION['tables'][$class]['line_id'] );
 	}
 //______________________________________________________________________________
 
@@ -886,13 +879,19 @@ abstract class PTable extends Core{
 			$class		= get_class( $this );
 
 			$db_obj	= new PDbl( $this );
-			$result	= $db_obj->deleteRow( $table_name, $_SESSION[ 'tables' ][ $class ][ 'line_id' ] );
+// 			$result	= $db_obj->deleteRow( $table_name, $_SESSION[ 'tables' ][ $class ][ 'line_id' ] );
+			$result	= $db_obj->deleteRow( $_SESSION['tables'][$class]['line_id'] );
 
 			if( $result[ 'is_error' ] ){
-				$this->showAlertHandler( $objResponse, array( 'message' => $result[ 'description' ], 'focus' => $result[ 'focus_id' ] ) );
+				$this->showAlertHandler( $objResponse, array( 'message' => $result['description'], 'focus' => $result['focus_id'] ));
 			}else{
-				$tbl_obj	= new $class( NULL, true );
-				$objResponse->assign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
+// 				$tbl_obj	= new $class( NULL, TRUE );
+// 				$objResponse->assign( $class.'_container', 'innerHTML', $tbl_obj->getHtmlView() );
+
+				$this->initHtmlView( TRUE );
+				$objResponse->assign( $class.'_container', 'innerHTML', $this->getHtmlView());
+
+
 			}
 		}else{
 			$objResponse = $this->doAccessDenied();

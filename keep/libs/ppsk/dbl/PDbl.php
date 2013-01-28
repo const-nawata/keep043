@@ -6,40 +6,7 @@ class PDbl extends Core{ //
 	public function __construct( $Owner = NULL ){
 		parent::__construct( $Owner );
 	}
-	//--------------------------------------------------------------------------------------------------
-	function getLogErrorMessage( $sqlString, $resource='Undefined' ){
-		global $gl_MysqliObj;
-		return
-			_EX.'MySQL error: '.$gl_MysqliObj->errno.' << '.$gl_MysqliObj->error.' >>. Resource: "'.$resource.'". '.
-			"\nThe whole SQL query is:\n".$sqlString;
-	}
-//--------------------------------------------------------------------------------------------------
-
-	public function execSelectQuery( $sql, $resource='Undefined' ){
-		global $gl_MysqliObj;
-
-		$result = $gl_MysqliObj->query( $sql );
-
-		if( $result ){
-			$list	= array();
-			while( $row = $result->fetch_assoc() ){
-				$list[] = $row;
-			}
-			$result->close();
-
-		}else{
-			throw new Exception( $this->getLogErrorMessage( $sql, $resource ) );
-		}
-
-		return $list;
-	}
-	//--------------------------------------------------------------------------------------------------
-
-	private function getDuplicateEntryParams( $errDescr ){
-		$err_params	= explode( "'", $errDescr );
-		return array( 'field' => $err_params[ 3 ], 'value' => $err_params[ 1 ] );
-	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function parserError( $sql = '' ){	//	1064 Syncas error
 		global $gl_MysqliObj;
@@ -76,7 +43,35 @@ class PDbl extends Core{ //
 		$res['type']	= 'db_error';
 		return $res;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
+
+	public function execSelectQuery( $sql, $resource='Undefined' ){
+		global $gl_MysqliObj;
+
+		$result = $gl_MysqliObj->query( $sql );
+
+		if( $result ){
+			$list	= array();
+			while( $row = $result->fetch_assoc() ){
+				$list[] = $row;
+			}
+			$result->close();
+
+		}else{
+			$error	= $this->parserError( $sql );
+//TODO: If it is necessary Exception throwing. May be there is better solution.
+			throw new Exception( 'Resource: '.$resource.'. '.$error['description'] );
+		}
+
+		return $list;
+	}
+//______________________________________________________________________________
+
+	private function getDuplicateEntryParams( $errDescr ){
+		$err_params	= explode( "'", $errDescr );
+		return array( 'field' => $err_params[ 3 ], 'value' => $err_params[ 1 ] );
+	}
+//______________________________________________________________________________
 
 	public function updateRow(){
 		$data	= &$this->mOwner->mSaveData;
@@ -92,7 +87,7 @@ class PDbl extends Core{ //
 
 		return $this->execQuery( $sql );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function addRow(){
 		$data	= &$this->mOwner->mSaveData;
@@ -114,7 +109,11 @@ class PDbl extends Core{ //
 
 		return $this->execQuery( $sql );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
+
+	public function getRow(){
+	}
+//______________________________________________________________________________
 
 	public function execQuery( $sql ){
 		global $gl_MysqliObj;
@@ -127,17 +126,18 @@ class PDbl extends Core{ //
 		}
 		return $result;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-	public function deleteRow( $table, $recId ){
-		$sql	= "DELETE FROM `".$table."` WHERE `".$table."`.`id` = ".$recId;
+	public function deleteRow( $id ){
+		$table	= $this->mOwner->__get( 'mTargetDbTable' );
+		$sql	= 'DELETE FROM `'.$table.'` WHERE `'.$table.'`.`id`='.$id;
 		return $this->execQuery( $sql );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct ();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }// Class end
