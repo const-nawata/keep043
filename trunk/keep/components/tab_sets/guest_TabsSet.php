@@ -6,7 +6,7 @@ class guest_TabsSet extends PTabsSet{
 		_PPSK_TAB_HOME_CODE,
 		_TAB_CATALOGUE_CODE,
 		_TAB_CONTACT_CODE,
-		_TAB_LOGIN_CODE
+		'login'
 		);
 		( $_SESSION[ 'tab_code' ] == NULL ) ? $_SESSION[ 'tab_code' ] = _PPSK_TAB_HOME_CODE :'';
 		parent::__construct( $this );
@@ -37,8 +37,8 @@ class guest_TabsSet extends PTabsSet{
 	}
 //______________________________________________________________________________
 
-	public function login_TabsHandler( &$objResponse, $NULL ){//	_TAB_LOGIN_CODE
-		$_SESSION['tab_code']	= _TAB_LOGIN_CODE;
+	public function login_TabsHandler( &$objResponse, $NULL ){
+		$_SESSION['tab_code']	= 'login';
 		$this->execTabHandler( $objResponse );
 		$objResponse->script( "setFocus( 'login' );" );
 	}
