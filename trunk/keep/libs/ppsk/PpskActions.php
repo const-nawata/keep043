@@ -15,7 +15,7 @@ class PpskActions{
  */
 
 
-//TODO: Think to present $handleResource and $value as syhpered JSON array.
+//TODO: Try to present $handleResource and $value as syhpered JSON array.
 
 	public function onHandler( $handleResource=NULL, $value=NULL ){
 
