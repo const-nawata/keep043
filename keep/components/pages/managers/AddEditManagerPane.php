@@ -29,10 +29,6 @@ class AddEditManagerPane extends PAddEditPane{
 //______________________________________________________________________________
 
     public function initHtmlView(){
-
-//     	$owner	= $this->mOwner;
-// Log::_log(print_r( $owner, true));
-
     	$db_obj	= new KeepDbl( $this );
     	$user_info	= $db_obj->getUserInfoById( $this->mRecId );
 
@@ -47,7 +43,7 @@ class AddEditManagerPane extends PAddEditPane{
     		self::_onchange.
     		"xajax_onHandler( \"".$this->getHandleResourceString( 'onChangeCountry', get_class( $this ) )."\", {\"country_id\":this.value,\"inst\":document.getElementById( \"inst\" ).value } );";
 
-    	$this->mOptions	= $db_obj->getCountriesList();
+    	$this->mOptions	= $db_obj->getSelBoxList( 'countries' );
     	$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex, $onchange ); $tanindex++;
 
     	$country_id = ( !$this->mRecId ) ? $this->mOptions[ 0 ][ 'id' ] : $user_info[ 'country_id' ];

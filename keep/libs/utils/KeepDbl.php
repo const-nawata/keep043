@@ -84,13 +84,6 @@ class KeepDbl extends PDbl{
 	}
 //______________________________________________________________________________
 
-	function getCountriesList(){
-		global $gl_MysqliObj;
-		$sql	= "SELECT `id`, `name` FROM `countries` ORDER BY `name`";
-		return $this->execSelectQuery( $sql, 'getCountriesList in KeepDbl.php' );
-	}
-//______________________________________________________________________________
-
 	function getCitiesList( $countryId ){
 		global $gl_MysqliObj;
 
@@ -105,37 +98,6 @@ class KeepDbl extends PDbl{
 	WHERE `country_id` = ".$countryId."
 	ORDER BY `cities`.`name`";
 		return $this->execSelectQuery( $sql, 'getCitiesList in KeepDbl.php' );
-	}
-//______________________________________________________________________________
-
-	function getCityInfoById( $cityId ){
-		$city_id	= ( !$cityId ) ? 0 : $cityId;
-		global $gl_MysqliObj;
-		$sql	=
-	"SELECT
-		`cities`.`id` AS `id`,
-		`cities`.`name` AS `name`,
-		`cities`.`country_id` AS `country_id`,
-		`countries`.`name` AS `country`
-	FROM `cities`
-	LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id`
-	WHERE `cities`.`id`=".$city_id;
-
-		$result = $gl_MysqliObj->query( $sql );
-		if( $result ){
-			$row = $result->fetch_assoc();
-			$result->close();
-		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getCityInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
-		}
-
-		$row = ( !$row ) ? array(
-			'id'			=> NULL,
-			'name'			=> NULL,
-			'country_id'	=> NULL,
-			'country'		=> NULL
-		) : $row ;
-		return $row;
 	}
 //______________________________________________________________________________
 

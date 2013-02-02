@@ -60,6 +60,9 @@ class PDbl extends Core{ //
 		}else{
 			$error	= $this->parserError( $sql );
 //TODO: If it is necessary Exception throwing. May be there is better solution.
+
+			Log::_log( 'Resource: '.$resource.'. '.$error['description'] );
+
 			throw new Exception( 'Resource: '.$resource.'. '.$error['description'] );
 		}
 
@@ -111,7 +114,38 @@ class PDbl extends Core{ //
 	}
 //______________________________________________________________________________
 
-	public function getRow(){
+	public function getTblNullItem( $tbl, $isFillNull ){
+
+
+		if( $isFillNull ){
+			$sql = 'SHOW COLUMNS FROM '.$tbl;
+			$fields	= $this->execSelectQuery( $sql );
+
+			$item	= array();
+			foreach( $fields as $fld ){
+				$name	= $fld['Field'];
+				$item["$name"]	= NULL;
+			}
+		}else{
+			$item	= NULL;
+		}
+
+		return $item;
+	}
+//______________________________________________________________________________
+
+	public function getRow( $id, $isFillNull=FALSE ){
+		$tbl	= &$this->mOwner->getTargetDbTable();
+
+		if( !(bool)$id && $isFillNull ){
+			return $this->getTblNullItem( $tbl, $isFillNull );
+		}
+
+		$sql	=
+'SELECT * FROM `'.$tbl.'` WHERE `id`='.$id.' LIMIT 1';
+
+		$arr	= $this->execSelectQuery( $sql );
+		return $arr[0];
 	}
 //______________________________________________________________________________
 
@@ -137,6 +171,18 @@ class PDbl extends Core{ //
 
 	public function __destruct(){
 		parent::__destruct ();
+	}
+//______________________________________________________________________________
+
+/**
+ * gest list of select box items from DB table or view
+ * DB table must contain such a mandatory fields like id and name
+ * @param string $tbl - name of DB table of view
+ */
+	public function getSelBoxList( $tbl ){
+		global $gl_MysqliObj;
+		$sql	= 'SELECT `id`, `name` FROM `'.$tbl.'` ORDER BY `name`';
+		return $this->execSelectQuery( $sql, 'PDbl::getSelBoxList' );
 	}
 //______________________________________________________________________________
 

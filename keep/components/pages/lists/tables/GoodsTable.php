@@ -17,7 +17,7 @@ class GoodsTable extends PTable{
 	 */
 	private function setProperties(){
 		$this->mLevels			= array( 'manager' );
-		$this->mSourceDbTable	= 'goods';
+		$this->mSourceDbTable	= 'goods_view';
 		$this->mTargetDbTable	= 'goods';
 		$this->mSelectorColor	= '#EDD3EA';
 		$this->mPgLen			= 17;
@@ -42,12 +42,21 @@ class GoodsTable extends PTable{
 				'sll_css'	=> 'goodsTblArticleClTd',
 				'bg_clr'	=> '#FFF7E2',
 				'is_sort'	=> TRUE
+			),
+
+			array(
+				'field'		=> 'cats',
+				'name'		=> _GOOD_CATS,
+				'ttl_css'	=> 'goodsTblCatsTtlTd',
+				'sll_css'	=> 'goodsTblCatsClTd',
+				'bg_clr'	=> '#FFF7E2',
+				'is_sort'	=> FALSE
 			)
 
 		);
 
-		$this->setSearchFields( array( 'name' ));
-		$this->mPaneClassName	= 'AddEditGoodCatsPane';
+		$this->setSearchFields( array( 'name', 'cku' ));
+		$this->mPaneClassName	= 'AddEditGoodsPane';
 	}
 //______________________________________________________________________________
 
