@@ -141,32 +141,6 @@ class KeepDbl extends PDbl{
 	}
 //______________________________________________________________________________
 
-	function getCountryInfoById( $countryId ){
-		$country_id	= ( !$countryId ) ? 0 : $countryId;
-		global $gl_MysqliObj;
-		$sql	=
-	"SELECT
-		`countries`.`id` AS `id`,
-		`countries`.`name` AS `name`
-	FROM `countries`
-	WHERE `countries`.`id`=".$country_id;
-
-		$result = $gl_MysqliObj->query( $sql );
-		if( $result ){
-			$row = $result->fetch_assoc();
-			$result->close();
-		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getCountryInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
-		}
-
-		$row = ( !$row ) ? array(
-			'id'	=> NULL,
-			'name'	=> NULL
-		) : $row ;
-		return $row;
-	}
-//______________________________________________________________________________
-
 	function getUnitInfoById( $unitId ){
 		$unit_id	= ( !$unitId ) ? 0 : $unitId;
 		global $gl_MysqliObj;

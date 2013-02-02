@@ -145,6 +145,10 @@ class PDbl extends Core{ //
 'SELECT * FROM `'.$tbl.'` WHERE `id`='.$id.' LIMIT 1';
 
 		$arr	= $this->execSelectQuery( $sql );
+
+
+Log::_log(print_r( $arr, TRUE));
+
 		return $arr[0];
 	}
 //______________________________________________________________________________

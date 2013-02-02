@@ -23,20 +23,20 @@ class AddEditCountryPane extends PAddEditPane{
 		//    	$this->mTargetDbTable	= 'countries';
 
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function initHtmlView(){
-		$db_obj			= new KeepDbl( $this );
-		$country_info	= $db_obj->getCountryInfoById( $this->mRecId );
+		$db_obj			= new PDbl( $this );
+		$country_info	= $db_obj->getRow( $this->mRecId, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
 		$lines	= "";
 
-		$lines	.= $this->getInputLineContent( 'country', 'text', _PNAME1._PPSK_ASTERISK, $country_info[ 'name' ], $tanindex, self::_onchange ); $tanindex++;
+		$lines	.= $this->getInputLineContent( 'country', 'text', _PNAME1._PPSK_ASTERISK, $country_info['name'], $tanindex, self::_onchange ); $tanindex++;
 		parent::initHtmlView();
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
 		$formValues[ 'country' ]	= trim( $formValues[ 'country' ] );
@@ -47,7 +47,7 @@ class AddEditCountryPane extends PAddEditPane{
 		}
 		$formValues[ 'is_valid' ]	= true;
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function prepareData( &$formValues ){
 		$this->mSaveData	= array(
@@ -56,12 +56,11 @@ class AddEditCountryPane extends PAddEditPane{
 		);
 		parent::prepareData( $formValues );
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>
