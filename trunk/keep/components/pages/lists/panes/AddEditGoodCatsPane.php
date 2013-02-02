@@ -4,8 +4,6 @@ class AddEditGoodCatsPane extends PAddEditPane{
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 
-
-
 		$this->mTitle		= _EDITING.' '._CATEGORY_ROD;
 
 		$this->mName	= 'AddEditGoodCatsPaneN';
@@ -25,18 +23,16 @@ class AddEditGoodCatsPane extends PAddEditPane{
 
 	public function initHtmlView(){
 		$db_obj	= new KeepDbl( $this );
-		$info	= $db_obj->geCategoryInfo( $this->mRecId );
+		$old_info	= $db_obj->geCategoryInfo( $this->mRecId );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
-		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $info['name'], $tanindex++, self::_onchange );
-// 		$lines	.= $this->getTextareaLineContent( 'info', _INFO, $info['info'], $tanindex, self::_onchange ); $tanindex++;
+		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
 		parent::initHtmlView();
 	}
 //______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
-// 		$formValues['name']	= trim( $formValues['name'] );
 		$name	= trim( $formValues['name'] );
 
 		if( '' == $name ){

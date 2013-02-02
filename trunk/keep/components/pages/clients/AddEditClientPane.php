@@ -26,19 +26,15 @@ class AddEditClientPane extends PAddEditPane{
 		$rec_id	= $this->mRecId;
 
 		$db_obj	= new KeepDbl( $this );
-// 		$user_info	= $db_obj->getUserInfoById( $rec_id, $this->mOwner->getTargetDbTable() );
 
-
-// Log::_log("rec_id: $rec_id");
-
-		$user_info	= $db_obj->getRow( $rec_id, TRUE );
+		$old_info	= $db_obj->getRow( $rec_id, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
-		$lines	.= $this->getInputLineContent( 'login', 'text', _LOGIN, $user_info[ 'login' ], $tanindex++, self::_onchange );
-		$lines	.= $this->getInputLineContent( 'email', 'text', _EMAIL_ADDR, $user_info[ 'email' ], $tanindex++, self::_onchange );
-		$lines	.= $this->getInputLineContent( 'firstname', 'text', _USER_NAME, $user_info[ 'firstname' ], $tanindex++, self::_onchange );
-		$lines	.= $this->getInputLineContent( 'surname', 'text', _USER_SURNAME, $user_info[ 'surname' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'login', 'text', _LOGIN, $old_info[ 'login' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'email', 'text', _EMAIL_ADDR, $old_info[ 'email' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'firstname', 'text', _USER_NAME, $old_info[ 'firstname' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'surname', 'text', _USER_SURNAME, $old_info[ 'surname' ], $tanindex++, self::_onchange );
 
 		$onchange	=
 		self::_onchange.
@@ -46,16 +42,16 @@ class AddEditClientPane extends PAddEditPane{
 
 		$countries	=
 		$this->mOptions	= $db_obj->getSelBoxList( 'countries' );
-		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex++, $onchange );
+		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $old_info[ 'country_id' ], $tanindex++, $onchange );
 
-		$country_id = ( !$rec_id ) ? $countries[0]['id'] : $user_info['country_id'];
+		$country_id = ( !$rec_id ) ? $countries[0]['id'] : $old_info['country_id'];
 		$this->mOptions	= $db_obj->getSelBoxList( 'cities', '`country_id`='.$country_id );
-		$lines	.= $this->getSelBoxLineContent( 'city_id', _CITY, $user_info[ 'city_id' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getSelBoxLineContent( 'city_id', _CITY, $old_info[ 'city_id' ], $tanindex++, self::_onchange );
 
-		$lines	.= $this->getTextareaLineContent( 'info', _INFO, $user_info[ 'info' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getTextareaLineContent( 'info', _INFO, $old_info[ 'info' ], $tanindex++, self::_onchange );
 
-		$lines	.= $this->getInputLineContent( 'pass1', 'password', _NEW_PASSWORD, $user_info[ 'password' ], $tanindex++, self::_onchange );
-		$lines	.= $this->getInputLineContent( 'pass2', 'password', _CONF_PASSWORD, $user_info[ 'password' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'pass1', 'password', _NEW_PASSWORD, $old_info[ 'password' ], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'pass2', 'password', _CONF_PASSWORD, $old_info[ 'password' ], $tanindex++, self::_onchange );
 		parent::initHtmlView();
 	}
 //______________________________________________________________________________
