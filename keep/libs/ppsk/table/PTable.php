@@ -1,7 +1,7 @@
 <?php
-require_once($gl_PpskPath."table/PagingButton.php");
-require_once($gl_PpskPath."table/TableToolPane.php");
-require_once($gl_PpskPath."table/TableSearchField.php");
+require_once($gl_PpskPath.'table/PagingButton.php');
+require_once($gl_PpskPath.'table/TableToolPane.php');
+require_once($gl_PpskPath.'table/TableSearchField.php');
 
 /**
  * This class is used as inheritable class to create presentation of DB table as list of lines.
@@ -17,11 +17,12 @@ require_once($gl_PpskPath."table/TableSearchField.php");
  *  * Example to create presentation list component:
  ---------------------------------------------------------
 
- class newClassName extends tblListView{
+ class newClassName extends PTable{
 
 
  // General Properties
- $this->mDbTableName = 'tableName';  //  Mandatory
+ $this->mSourceDbTable = 'tableName';  //  Mandatory. DB table of view name from which data will be fetched.
+ $this->mTargetDbTable = 'tableName';  //  Optionlal. DB table name to which data will be stored. If not defined then assumed as mSourceDbTable.
  $this->mPgLength     = 7;                //  Optionlal. Default = 10
  $this->mMaxPgGroup     = 6;             //  Optionlal. Default = 5
 
@@ -30,19 +31,20 @@ require_once($gl_PpskPath."table/TableSearchField.php");
 
 
  // Columns Properties
- $this->mColumns[] = array('table'=>'users',                                       // Mandatory
- 'field'=>'surname',                                     // Mandatory
- 'name'=>_USER_SURNAME,                     //  Optional. Default as in 'field' item..
- 'ttl_css'=>'managersTblSurnameTtlTd',     //  Optional. Default = empty string.
- 'clm_css'=>'managersTblSurnameClTd',    //  Optional. Default = empty string.
- 'bg_color'=>'#CCFFCC');                          //  Optional. Default = '#FFFFFF'  (white)
+ $this->mColumns[] = array(
+	 'field'=>'surname',                                     // Mandatory
+	 'name'=>_USER_SURNAME,                     //  Optional. Default as in 'field' item..
+	 'ttl_css'=>'managersTblSurnameTtlTd',     //  Optional. Default = empty string.
+	 'clm_css'=>'managersTblSurnameClTd',    //  Optional. Default = empty string.
+	 'bg_color'=>'#CCFFCC'
+ );                          //  Optional. Default = '#FFFFFF'  (white)
  ...
  $this->mColumns[] ...
 
 
  public function __construct( $instName = NULL, $isHndl = false ){
- parent::__construct( $this );
- $this->initHtmlView( $isHndl );
+	 parent::__construct( $this );
+	 $this->initHtmlView( $isHndl );
  }
  }
 
@@ -447,7 +449,7 @@ abstract class PTable extends Core{
 		$this->adjustColumnsParams();
 		$this->adjustSearchParams();
 		$this->adjustToolPaneButtonsParams();
-		( _EMPTY == $this->mTargetDbTable ) ? $this->mTargetDbTable = $this->mSourceDbTable:'';
+		$this->mTargetDbTable	= ( '' == $this->mTargetDbTable ) ? $this->mSourceDbTable : $this->mTargetDbTable;
 	}
 //______________________________________________________________________________
 
