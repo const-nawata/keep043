@@ -47,7 +47,7 @@ class AddEditManagerPane extends PAddEditPane{
     	$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex, $onchange ); $tanindex++;
 
     	$country_id = ( !$this->mRecId ) ? $this->mOptions[ 0 ][ 'id' ] : $user_info[ 'country_id' ];
-    	$this->mOptions	= $db_obj->getCitiesList( $country_id );
+    	$this->mOptions	= $db_obj->getSelBoxList( 'cities', '`country_id`='.$country_id );
     	$lines	.= $this->getSelBoxLineContent( 'city_id', _CITY, $user_info[ 'city_id' ], $tanindex, self::_onchange ); $tanindex++;
 
     	$lines	.= $this->getTextareaLineContent( 'info', _INFO, $user_info[ 'info' ], $tanindex, self::_onchange ); $tanindex++;
@@ -98,13 +98,13 @@ class AddEditManagerPane extends PAddEditPane{
 
     public function onChangeCountry( &$objResponse, $ownerValues ){
     	$this->getSessionParams( $ownerValues );
-    	$class		= $ownerValues[ 'class' ];
-    	$tabl_obj	= new $class( NULL, true, false );
+    	$class		= $ownerValues['class'];
+    	$tabl_obj	= new $class( NULL, TRUE, FALSE );
 
 		$auth_obj = new Authentication();
 		if( $auth_obj->isGrantAccess( $tabl_obj->getAccess() ) ){
 			$db_obj	= new KeepDbl( $this );
-			$this->mOptions	= $db_obj->getCitiesList( $ownerValues[ 'country_id' ] );
+			$this->mOptions	= $db_obj->getSelBoxList( 'cities', '`country_id`='.$ownerValues['country_id'] );
 			$objResponse->assign( 'city_id_cnt_td', 'innerHTML', $this->getSelBoxContent( 'city_id', 0, 4, self::_onchange ) );
 		}else{
 			$objResponse = $this->doAccessDenied();

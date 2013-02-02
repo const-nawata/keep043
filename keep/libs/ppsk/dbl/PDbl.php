@@ -59,11 +59,12 @@ class PDbl extends Core{ //
 
 		}else{
 			$error	= $this->parserError( $sql );
-//TODO: If it is necessary Exception throwing. May be there is better solution.
+//TODO: Is it necessary Exception throwing? May be there is better solution.
 
 			Log::_log( 'Resource: '.$resource.'. '.$error['description'] );
 
-			throw new Exception( 'Resource: '.$resource.'. '.$error['description'] );
+			return FALSE;
+// 			throw new Exception( 'Resource: '.$resource.'. '.$error['description'] );
 		}
 
 		return $list;
@@ -177,11 +178,14 @@ class PDbl extends Core{ //
 /**
  * gest list of select box items from DB table or view
  * DB table must contain such a mandatory fields like id and name
- * @param string $tbl - name of DB table of view
+ * @param	string $tbl - name of DB table of view
+ * @param	string $cond - condition
+ * @return	array - list to create select box
  */
-	public function getSelBoxList( $tbl ){
+	public function getSelBoxList( $tbl, $cond='' ){
 		global $gl_MysqliObj;
-		$sql	= 'SELECT `id`, `name` FROM `'.$tbl.'` ORDER BY `name`';
+		$cond	= ( '' == $cond ) ? $cond : ' WHERE '.$cond;
+		$sql	= 'SELECT `id`, `name` FROM `'.$tbl.'`'.$cond.' ORDER BY `name`';
 		return $this->execSelectQuery( $sql, 'PDbl::getSelBoxList' );
 	}
 //______________________________________________________________________________

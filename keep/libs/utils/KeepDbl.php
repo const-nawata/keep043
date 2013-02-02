@@ -84,23 +84,6 @@ class KeepDbl extends PDbl{
 	}
 //______________________________________________________________________________
 
-	function getCitiesList( $countryId ){
-		global $gl_MysqliObj;
-
-//		$condition	= ( $countryId ) ? "" : '';
-
-		$sql	=
-	"SELECT
-		`id`,
-		`name`,
-		`country_id`
-	FROM `cities`
-	WHERE `country_id` = ".$countryId."
-	ORDER BY `cities`.`name`";
-		return $this->execSelectQuery( $sql, 'getCitiesList in KeepDbl.php' );
-	}
-//______________________________________________________________________________
-
 	function getDepartmentInfo( $depId ){
 		$dep_id	= ( !$depId ) ? 0 : $depId;
 		global $gl_MysqliObj;
@@ -233,7 +216,6 @@ class KeepDbl extends PDbl{
 
 		$sql	=
 	"SELECT ".
-// 		"`".$dbTable."`.`id` as `id`, ".
 		"`users`.`id` as `id`, ".
 		'`level`, '.
 		"`firstname`,
