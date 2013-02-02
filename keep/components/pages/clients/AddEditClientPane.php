@@ -43,7 +43,7 @@ class AddEditClientPane extends PAddEditPane{
 		$this->mOptions	= $db_obj->getSelBoxList( 'countries' );
 		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex++, $onchange );
 
-		$country_id = ( !$rec_id ) ? $countries['id'] : $user_info['country_id'];
+		$country_id = ( !$rec_id ) ? $countries[0]['id'] : $user_info['country_id'];
 		$this->mOptions	= $db_obj->getSelBoxList( 'cities', '`country_id`='.$country_id );
 		$lines	.= $this->getSelBoxLineContent( 'city_id', _CITY, $user_info[ 'city_id' ], $tanindex++, self::_onchange );
 
