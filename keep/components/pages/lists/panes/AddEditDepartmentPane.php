@@ -4,8 +4,6 @@ class AddEditDepartmentPane extends PAddEditPane{
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 
-
-
 		$this->mTitle		= _EDITING." "._DEPARTMENT_ROD;
 
 		$this->mName	= 'AddEditCountryPaneN';
@@ -25,25 +23,25 @@ class AddEditDepartmentPane extends PAddEditPane{
 
 	public function initHtmlView(){
 		$db_obj	= new KeepDbl( $this );
-		$info	= $db_obj->getDepartmentInfo( $this->mRecId );
+		$old_info	= $db_obj->getDepartmentInfo( $this->mRecId );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
-		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $info[ 'name' ], $tanindex, self::_onchange ); $tanindex++;
-		$lines	.= $this->getTextareaLineContent( 'info', _INFO, $info[ 'info' ], $tanindex, self::_onchange ); $tanindex++;
+		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
+		$lines	.= $this->getTextareaLineContent( 'info', _INFO, $old_info['info'], $tanindex++, self::_onchange );
 		parent::initHtmlView();
 	}
 //______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
-		$formValues[ 'name' ]	= trim( $formValues[ 'name' ] );
+		$formValues['name']	= trim( $formValues['name'] );
 
-		if( _EMPTY == $formValues[ 'name' ] ){
-			$message	= sprintf( _MESSAGE_EMPTY_NAME, "`"._PNAME1."`" );
-			$formValues	= array( 'focus_id' => 'name', 'description' => $message,  'is_valid' => false );
+		if( '' == $formValues['name'] ){
+			$message	= sprintf( _MESSAGE_EMPTY_NAME, '`'._PNAME1.'`' );
+			$formValues	= array( 'focus_id' => 'name', 'description' => $message,  'is_valid' => FALSE );
 			return;
 		}
-		$formValues[ 'is_valid' ]	= true;
+		$formValues['is_valid']	= TRUE;
 	}
 //______________________________________________________________________________
 
