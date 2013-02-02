@@ -34,26 +34,27 @@ class AddEditManagerPane extends PAddEditPane{
 
     	$tanindex	= 1;
     	$lines	= &$this->mLines;
-    	$lines	.= $this->getInputLineContent( 'login', 'text', _LOGIN, $user_info[ 'login' ], $tanindex, self::_onchange ); $tanindex++;
-    	$lines	.= $this->getInputLineContent( 'email', 'text', _EMAIL_ADDR, $user_info[ 'email' ], $tanindex, self::_onchange ); $tanindex++;
-    	$lines	.= $this->getInputLineContent( 'firstname', 'text', _USER_NAME, $user_info[ 'firstname' ], $tanindex, self::_onchange ); $tanindex++;
-    	$lines	.= $this->getInputLineContent( 'surname', 'text', _USER_SURNAME, $user_info[ 'surname' ], $tanindex, self::_onchange ); $tanindex++;
+    	$lines	.= $this->getInputLineContent( 'login', 'text', _LOGIN, $user_info[ 'login' ], $tanindex++, self::_onchange );
+    	$lines	.= $this->getInputLineContent( 'email', 'text', _EMAIL_ADDR, $user_info[ 'email' ], $tanindex++, self::_onchange );
+    	$lines	.= $this->getInputLineContent( 'firstname', 'text', _USER_NAME, $user_info[ 'firstname' ], $tanindex++, self::_onchange );
+    	$lines	.= $this->getInputLineContent( 'surname', 'text', _USER_SURNAME, $user_info[ 'surname' ], $tanindex++, self::_onchange );
 
     	$onchange	=
     		self::_onchange.
     		"xajax_onHandler( \"".$this->getHandleResourceString( 'onChangeCountry', get_class( $this ) )."\", {\"country_id\":this.value,\"inst\":document.getElementById( \"inst\" ).value } );";
 
+    	$countries	=
     	$this->mOptions	= $db_obj->getSelBoxList( 'countries' );
-    	$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex, $onchange ); $tanindex++;
+    	$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex++, $onchange );
 
-    	$country_id = ( !$this->mRecId ) ? $this->mOptions[ 0 ][ 'id' ] : $user_info[ 'country_id' ];
+    	$country_id = ( !$this->mRecId ) ? $countries[0]['id'] : $user_info['country_id'];
     	$this->mOptions	= $db_obj->getSelBoxList( 'cities', '`country_id`='.$country_id );
-    	$lines	.= $this->getSelBoxLineContent( 'city_id', _CITY, $user_info[ 'city_id' ], $tanindex, self::_onchange ); $tanindex++;
+    	$lines	.= $this->getSelBoxLineContent( 'city_id', _CITY, $user_info['city_id'], $tanindex++, self::_onchange );
 
-    	$lines	.= $this->getTextareaLineContent( 'info', _INFO, $user_info[ 'info' ], $tanindex, self::_onchange ); $tanindex++;
+    	$lines	.= $this->getTextareaLineContent( 'info', _INFO, $user_info['info'], $tanindex++, self::_onchange );
 
-    	$lines	.= $this->getInputLineContent( 'pass1', 'password', _NEW_PASSWORD, $user_info[ 'password' ], $tanindex, self::_onchange ); $tanindex++;
-    	$lines	.= $this->getInputLineContent( 'pass2', 'password', _CONF_PASSWORD, $user_info[ 'password' ], $tanindex, self::_onchange ); $tanindex++;
+    	$lines	.= $this->getInputLineContent( 'pass1', 'password', _NEW_PASSWORD, $user_info[ 'password' ], $tanindex++, self::_onchange );
+    	$lines	.= $this->getInputLineContent( 'pass2', 'password', _CONF_PASSWORD, $user_info[ 'password' ], $tanindex, self::_onchange );
     	parent::initHtmlView();
     }
 //______________________________________________________________________________
