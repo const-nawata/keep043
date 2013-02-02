@@ -23,8 +23,10 @@ class AddEditClientPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	public function initHtmlView(){
+		$rec_id	= $this->mRecId;
+
 		$db_obj	= new KeepDbl( $this );
-		$user_info	= $db_obj->getUserInfoById( $this->mRecId, $this->mOwner->getTargetDbTable() );
+		$user_info	= $db_obj->getUserInfoById( $rec_id, $this->mOwner->getTargetDbTable() );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
@@ -37,10 +39,11 @@ class AddEditClientPane extends PAddEditPane{
 		self::_onchange.
     		"xajax_onHandler(\"".$this->getHandleResourceString( 'onChangeCountry', get_class($this))."\",{\"country_id\":this.value,\"inst\":document.getElementById(\"inst\" ).value});";
 
+		$countries	=
 		$this->mOptions	= $db_obj->getSelBoxList( 'countries' );
 		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY, $user_info[ 'country_id' ], $tanindex++, $onchange );
 
-		$country_id = ( !$this->mRecId ) ? $this->mOptions[ 0 ][ 'id' ] : $user_info[ 'country_id' ];
+		$country_id = ( !$rec_id ) ? $countries['id'] : $user_info['country_id'];
 		$this->mOptions	= $db_obj->getSelBoxList( 'cities', '`country_id`='.$country_id );
 		$lines	.= $this->getSelBoxLineContent( 'city_id', _CITY, $user_info[ 'city_id' ], $tanindex++, self::_onchange );
 
