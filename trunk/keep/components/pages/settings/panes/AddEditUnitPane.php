@@ -19,54 +19,53 @@ class AddEditUnitPane extends PAddEditPane{
 		$this->mBkgClr		= _GEN_BKGRND_COLOR;
 		$this->mInitFocus	= 'full_name';
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function initHtmlView(){
-		$db_obj	= new KeepDbl( $this );
-		$unit_info	= $db_obj->getUnitInfoById( $this->mRecId );
+		$db_obj	= new PDbl( $this );
+		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
-		$lines	= "";
+		$lines	= '';
 
-		$lines	.= $this->getInputLineContent( 'full_name', 'text', _PFULL1._PPSK_ASTERISK, $unit_info[ 'full_name' ], $tanindex, self::_onchange ); $tanindex++;
-		$lines	.= $this->getInputLineContent( 'brief_name', 'text', _PBRIEF1._PPSK_ASTERISK, $unit_info[ 'brief_name' ], $tanindex, self::_onchange ); $tanindex++;
+		$lines	.= $this->getInputLineContent( 'full_name', 'text', _PFULL1._PPSK_ASTERISK, $old_info['full_name'], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'brief_name', 'text', _PBRIEF1._PPSK_ASTERISK, $old_info['brief_name'], $tanindex++, self::_onchange );
 		parent::initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
-		$formValues[ 'full_name' ]	= trim( $formValues[ 'full_name' ] );
-		if( _EMPTY == $formValues[ 'full_name' ] ){
-			$message	= sprintf( _MESSAGE_EMPTY_NAME, "`"._PFULL1."`" );
-			$formValues	= array( 'focus_id' => 'full_name', 'description' => $message,  'is_valid' => false );
+		$formValues['full_name']	= trim( $formValues['full_name'] );
+		if( '' == $formValues['full_name'] ){
+			$message	= sprintf( _MESSAGE_EMPTY_NAME, '`'._PFULL1.'`' );
+			$formValues	= array( 'focus_id' => 'full_name', 'description' => $message,  'is_valid' => FALSE );
 			return;
 		}
 
-		if( _EMPTY == $formValues[ 'brief_name' ] ){
-			$message	= sprintf( _MESSAGE_EMPTY_NAME, "`"._PBRIEF1."`" );
-			$formValues	= array( 'focus_id' => 'brief_name', 'description' => $message,  'is_valid' => false );
+		if( '' == $formValues['brief_name'] ){
+			$message	= sprintf( _MESSAGE_EMPTY_NAME, '`'._PBRIEF1.'`' );
+			$formValues	= array( 'focus_id' => 'brief_name', 'description' => $message,  'is_valid' => FALSE );
 			return;
 		}
 
-		$formValues[ 'is_valid' ]	= true;
+		$formValues['is_valid']	= TRUE;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function prepareData( &$formValues ){
 		$this->mSaveData	= array(
-		array( 'id',	$formValues[ 'id' ],		NULL ),
-		array( 'full_name',	$formValues[ 'full_name' ],	'full_name', _PFULL1 ),
-		array( 'brief_name',	$formValues[ 'brief_name' ],	'brief_name', _PBRIEF1 )
+		array( 'id',	$formValues['id'],		NULL ),
+		array( 'full_name',	$formValues['full_name'],	'full_name', _PFULL1 ),
+		array( 'brief_name',	$formValues['brief_name'],	'brief_name', _PBRIEF1 )
 		);
 		parent::prepareData( $formValues );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>

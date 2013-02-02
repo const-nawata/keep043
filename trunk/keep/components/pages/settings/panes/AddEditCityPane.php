@@ -23,15 +23,15 @@ class AddEditCityPane extends PAddEditPane{
 
 	public function initHtmlView(){
 		$db_obj	= new PDbl( $this );
-		$city_info	= $db_obj->getRow( $this->mRecId, TRUE );
+		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
 
 		$this->mOptions	= $db_obj->getSelBoxList( 'countries' );
-		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY._PPSK_ASTERISK, $city_info['country_id'], $tanindex++, self::_onchange );
+		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY._PPSK_ASTERISK, $old_info['country_id'], $tanindex++, self::_onchange );
 
-		$lines	.= $this->getInputLineContent( 'city', 'text', _CITY._PPSK_ASTERISK, $city_info['name'], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'city', 'text', _CITY._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
 		parent::initHtmlView();
 	}
 //______________________________________________________________________________
