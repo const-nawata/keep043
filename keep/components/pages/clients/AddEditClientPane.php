@@ -26,7 +26,12 @@ class AddEditClientPane extends PAddEditPane{
 		$rec_id	= $this->mRecId;
 
 		$db_obj	= new KeepDbl( $this );
-		$user_info	= $db_obj->getUserInfoById( $rec_id, $this->mOwner->getTargetDbTable() );
+// 		$user_info	= $db_obj->getUserInfoById( $rec_id, $this->mOwner->getTargetDbTable() );
+
+
+// Log::_log("rec_id: $rec_id");
+
+		$user_info	= $db_obj->getRow( $rec_id, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;

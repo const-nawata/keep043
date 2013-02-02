@@ -105,6 +105,11 @@ abstract class PAddEditPane extends PRnd1Pane{
     }
 //______________________________________________________________________________
 
+    public function getSourceDbTable(){
+		return $this->mOwner->getSourceDbTable();
+    }
+//______________________________________________________________________________
+
     protected function getSelBoxContent( $htmlId, $selOpt, $tabindex, $onchange = '' ){
     	$options	= &$this->mOptions;
     	$content	= "<select name='".$htmlId."' id='".$htmlId."' class='".$this->mSelCss."' tabindex='".$tabindex."' onchange='".$onchange."'>";

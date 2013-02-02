@@ -2,7 +2,7 @@
 require_once( $gl_pagesPath.'settings/panes/AddEditCityPane.php' );
 class CitiesTable extends PTable{
 
-	public function __construct( $Owner = NULL, $isHndl = false, $isInitView = true ){
+	public function __construct( $Owner = NULL, $isHndl=FALSE, $isInitView=TRUE ){
 		$this->setProperties();
 		parent::__construct( $Owner );
 		if( $isInitView ){ $this->initHtmlView( $isHndl ); }
@@ -23,7 +23,7 @@ class CitiesTable extends PTable{
 		$this->mPgLen			= 17;
 		$this->mMaxGrPg			= 5;
 
-		$this->mIsFixHeight		= true;
+		$this->mIsFixHeight		= TRUE;
 
 		$this->mColumns	= array(
 			array(
