@@ -19,56 +19,52 @@ class AddEditCityPane extends PAddEditPane{
 		$this->mBkgClr		= _GEN_BKGRND_COLOR;
 		$this->mInitFocus		= 'city';
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function initHtmlView(){
-		$db_obj	= new KeepDbl( $this );
-		$city_info	= $db_obj->getCityInfoById( $this->mRecId );
+		$db_obj	= new PDbl( $this );
+		$city_info	= $db_obj->getRow( $this->mRecId, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
 
-		$this->mOptions	= $db_obj->getCountriesList();
-		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY._PPSK_ASTERISK, $city_info[ 'country_id' ], $tanindex, self::_onchange ); $tanindex++;
+		$this->mOptions	= $db_obj->getSelBoxList( 'countries' );
+		$lines	.= $this->getSelBoxLineContent( 'country_id', _COUNTRY._PPSK_ASTERISK, $city_info['country_id'], $tanindex++, self::_onchange );
 
-		$lines	.= $this->getInputLineContent( 'city', 'text', _CITY._PPSK_ASTERISK, $city_info[ 'name' ], $tanindex, self::_onchange ); $tanindex++;
+		$lines	.= $this->getInputLineContent( 'city', 'text', _CITY._PPSK_ASTERISK, $city_info['name'], $tanindex++, self::_onchange );
 		parent::initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
-		$formValues[ 'city' ]	= trim( $formValues[ 'city' ] );
-		if( _EMPTY == $formValues[ 'city' ] ){
+		$formValues['city']	= trim( $formValues['city'] );
+		if( '' == $formValues['city'] ){
 			$message	= sprintf( _MESSAGE_EMPTY_NAME, "`"._CITY."`" );
-			$formValues	= array( 'focus_id' => 'city', 'description' => $message,  'is_valid' => false );
+			$formValues	= array( 'focus_id' => 'city', 'description' => $message,  'is_valid' => FALSE );
 			return;
 		}
-		$formValues[ 'is_valid' ]	= true;
+		$formValues['is_valid']	= TRUE;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	protected function prepareData( &$formValues ){
 		$this->mSaveData	= array(
-			'id'			=> $formValues[ 'id' ],
-			'name'			=> $formValues[ 'city' ],
-    		'country_id'	=> $formValues[ 'country_id' ]
+			'id'			=> $formValues['id'],
+			'name'			=> $formValues['city'],
+    		'country_id'	=> $formValues['country_id']
 		);
 
 		$this->mSaveData	= array(
-		array( 'id',			$formValues[ 'id' ],			NULL ),
-		array( 'name',			$formValues[ 'city' ],			'city' ),
-		array( 'country_id',	$formValues[ 'country_id' ],	'country_id' )
+			array( 'id',			$formValues['id'],			NULL ),
+			array( 'name',			$formValues['city'],		'city' ),
+			array( 'country_id',	$formValues['country_id'],	'country_id' )
 		);
-
-
-
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>
