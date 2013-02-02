@@ -62,7 +62,6 @@ class PDbl extends Core{ //
 //TODO: Is it necessary Exception throwing? May be there is better solution.
 
 			Log::_log( 'Resource: '.$resource.'. '.$error['description'] );
-
 			return FALSE;
 // 			throw new Exception( 'Resource: '.$resource.'. '.$error['description'] );
 		}
@@ -136,7 +135,7 @@ class PDbl extends Core{ //
 //______________________________________________________________________________
 
 	public function getRow( $id, $isFillNull=FALSE ){
-		$tbl	= &$this->mOwner->getTargetDbTable();
+		$tbl	= &$this->mOwner->getSourceDbTable();
 
 		if( !(bool)$id && $isFillNull ){
 			return $this->getTblNullItem( $tbl, $isFillNull );

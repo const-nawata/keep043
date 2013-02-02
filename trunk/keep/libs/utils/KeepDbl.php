@@ -233,6 +233,28 @@ class KeepDbl extends PDbl{
 	LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id`
 	WHERE `users`.`id`=".$user_id;
 
+/*
+
+CREATE OR REPLACE VIEW `clients_view` AS
+SELECT `users`.`id` AS `id`
+	, `users`.`level` AS `level`
+	 , `users`.`firstname` AS `firstname`
+	 , `users`.`surname` AS `surname`
+	 , `users`.`city_id` AS `city_id`
+	 ,`cities`.`name` AS `city`
+	 ,`cities`.`country_id` AS `country_id`
+	 ,`countries`.`name` AS `country`
+	 , `users`.`info` AS `info`
+	 , `users`.`password` AS `password`
+	 , `users`.`login` AS `login`
+	 , `users`.`email` AS `email`
+	 , concat(`cities`.`name`, ', ', `countries`.`name`) AS `city_country`
+FROM ((`users` LEFT JOIN `cities` ON ((`cities`.`id` = `users`.`city_id`)))
+LEFT JOIN `countries` ON ((`countries`.`id` = `cities`.`country_id`)))
+WHERE (`users`.`level` = 'client')//
+
+*/
+
 
 		$result = $gl_MysqliObj->query( $sql );
 		if( $result ){
