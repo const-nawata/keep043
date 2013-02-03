@@ -92,10 +92,10 @@ abstract class PAddEditPane extends PRnd1Pane{
     abstract protected function adjustForm( $formValues );
 //______________________________________________________________________________
 
-    protected function isValidData( &$formValues )
-    {
-		$formValues['is_valid']	= TRUE;
-    }
+    abstract protected function isValidData( &$formValues );
+//     {
+// 		$formValues['is_valid']	= TRUE;
+//     }
 //______________________________________________________________________________
 
 /**
