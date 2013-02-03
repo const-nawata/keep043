@@ -60,22 +60,6 @@ class GoodsTable extends PTable{
 	}
 //______________________________________________________________________________
 
-	public function deleteRowHandler( &$objResponse, $nullValue ){
-		$auth_obj = new Authentication();
-
-		if( $auth_obj->isGrantAccess( $this->mLevels ) ){
-			$class	= get_class( $this );
-			$db_obj	= new KeepDbl( $this );
-			$result	= $db_obj->deleteDbViewsForManager( $_SESSION[ 'tables' ][ $class ][ 'line_id' ] );
-			if( $result['is_error'] ){
-				$this->showAlertHandler( $objResponse, array( 'message' => $result[ 'description' ], 'focus' => $result[ 'focus_id' ] ) );
-			}else{
-				parent::deleteRowHandler( $objResponse, $nullValue );
-			}
-		}
-	}
-//______________________________________________________________________________
-
 	public function __destruct(){
 		parent::__destruct();
 	}

@@ -84,69 +84,14 @@ class KeepDbl extends PDbl{
 	}
 //______________________________________________________________________________
 
-	function deleteDbViewsForManager( $managerId ){
+	public  function getUserName( $id, $level ){
 		$sql	=
-"DROP VIEW IF EXISTS `clients_".$managerId."`";
-		$result	= $this->execQuery( $sql );
+"SELECT trim(concat_ws(' ',trim(`firstname`),trim(`surname`))) AS `user_name` ".
+"FROM `users` WHERE `id`=".$id." AND `level`='".$level."'";
 
-		if( !$result[ 'is_error' ] ){
-			$sql	=
-"DROP VIEW IF EXISTS `departments_".$managerId."`";
-			$result	= $this->execQuery( $sql );
-		}
-		return $result;
-	}
-//______________________________________________________________________________
+		$info	= $this->execSelectQuery( $sql, 'KeepDbl::getUserName' );
 
-	public function getUserInfoById( $userId ){
-		$user_id	= ( !$userId ) ? 0 : $userId;
-
-		global $gl_MysqliObj;
-
-		$sql	=
-	"SELECT ".
-		"`users`.`id` as `id`, ".
-		'`level`, '.
-		"`firstname`,
-		`surname`,
-		`city_id`,
-		`cities`.`name` AS `city`,
-		`cities`.`country_id` AS `country_id`,
-		`countries`.`name` AS `country`,
-		`info`,
-		`password`,
-		`login`,
-		`email`
-	FROM `users`
-	LEFT JOIN `cities` ON `city_id` = `cities`.`id`
-	LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id`
-	WHERE `users`.`id`=".$user_id;
-
-
-
-		$result = $gl_MysqliObj->query( $sql );
-		if( $result ){
-			$row = $result->fetch_assoc();
-			$result->close();
-		}else{
-			throw new Exception( _EX.'Bad MySQL result. On line: '.__LINE__.' in '.__FILE__.".\nThe whole SQL query is: \n".$sql );
-		}
-
-		$row = ( !$row ) ? array(
-			'id'			=> NULL,
- 			'level'			=> NULL,
-			'firstname'		=> NULL,
-			'surname'		=> NULL,
-			'city_id'		=> NULL,
-			'city'			=> NULL,
-			'country_id'	=> NULL,
-			'country'		=> NULL,
-			'info'			=> NULL,
-			'password'		=> NULL,
-			'login'			=> NULL,
-			'email'			=> NULL
-		) : $row ;
-		return $row;
+		return ( isset( $info[0] )) ? $info[0]['user_name'] : FALSE;
 	}
 //______________________________________________________________________________
 

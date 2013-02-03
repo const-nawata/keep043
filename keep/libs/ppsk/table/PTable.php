@@ -669,11 +669,11 @@ abstract class PTable extends Core{
 		$view	= "";
 		foreach ( $columns as &$column ){
 			$data	= $this->renderFieldName( $column );
-			$view .= "
-	<td class='".$column[ 'ttl_css' ]."'>
-		<table cellpadding='0' cellspacing='0' class='PPSK_tableColumnTitleCellTbl'>
-			<tr>
-				<td>".$data[ 'name' ]."</td>
+			$view .=
+	"<td class='".$column['ttl_css']."'>".
+		"<table cellpadding='0' cellspacing='0' class='PPSK_tableColumnTitleCellTbl'>".
+			"<tr>".
+				"<td>".$data[ 'name' ]."</td>
 				<td class='PPSK_sortMarkSell'><div class='".$data[ 'mark' ]."'>&nbsp;</div></td>
 			</tr>
 		</table>
@@ -881,19 +881,13 @@ abstract class PTable extends Core{
 			$class		= get_class( $this );
 
 			$db_obj	= new PDbl( $this );
-// 			$result	= $db_obj->deleteRow( $table_name, $_SESSION[ 'tables' ][ $class ][ 'line_id' ] );
 			$result	= $db_obj->deleteRow( $_SESSION['tables'][$class]['line_id'] );
 
 			if( $result[ 'is_error' ] ){
 				$this->showAlertHandler( $objResponse, array( 'message' => $result['description'], 'focus' => $result['focus_id'] ));
 			}else{
-// 				$tbl_obj	= new $class( NULL, TRUE );
-// 				$objResponse->assign( $class.'_container', 'innerHTML', $tbl_obj->getHtmlView() );
-
 				$this->initHtmlView( TRUE );
 				$objResponse->assign( $class.'_container', 'innerHTML', $this->getHtmlView());
-
-
 			}
 		}else{
 			$objResponse = $this->doAccessDenied();

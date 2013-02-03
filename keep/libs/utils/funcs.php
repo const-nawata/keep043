@@ -11,23 +11,23 @@
  * @return string
  * */
 function getWelcomeText(){
-	$content = _WELCOME;
+	$content	= _WELCOME;
+	$level		= $_SESSION['level'];
 
 	$db_obj	= new KeepDbl();
-	switch( $_SESSION['level'] ){
+	switch( $level ){
 		case _PPSK_LEVEL_GUEST: $user_name	= _GUEST; break;
 
 		case 'admin':
 		case 'manager':
-			$user_info	= $db_obj->getUserInfoById( $_SESSION['user_id'] );
-			$user_name	= ( $user_info ) ? $user_info['firstname'].' '.$user_info['surname'] : '';
+			$user_name	= $db_obj->getUserName( $_SESSION['user_id'], $level );
 			break;
 
 		default:
-			throw new Exception( _EX.'Undefind user level. On line: '.__LINE__.' in '.addslashes( __FILE__ ).'.' );
+			Log::_log( _EX.'Undefind user level. On line: '.__LINE__.' in '.addslashes( __FILE__ ).'.' );
 	}
 
-	return $content." ".$user_name;
+	return $content.' '.$user_name;
 }
 //______________________________________________________________________________
 
