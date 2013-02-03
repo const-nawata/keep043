@@ -37,11 +37,11 @@ abstract class PAddEditPane extends PRnd1Pane{
  * 					...
  * 		array( <db_field_name>, <value>, <html_id>, <prompt> )
  * )
- * <db_field_name>	value is mandatory.
- * <value> value is mandatory.
- * <html_id> is optional value and is made sense if duplicate values DB errors may accur. In this case it is MANDATORY!
+ * <db_field_name> is mandatory.
+ * <value> is mandatory.
+ * <html_id> is optional and is made sense if duplicate values DB errors may accur. In this case it is MANDATORY!
  * IMPORTANT!!! One of $mSaveData items must have <db_field_name> = 'id'
- * <prompt> value is optional. This value is used in validation messages.
+ * <prompt> is optional. This value is used in validation messages.
  */
 	public $mSaveData		= array();	//	Must be accessed from PDbl object
 
@@ -81,6 +81,20 @@ abstract class PAddEditPane extends PRnd1Pane{
     		)
     	);
 		parent::__construct( $Owner );
+    }
+//______________________________________________________________________________
+
+/**
+ * fills $mSaveData property.
+ * @param	array $formValues - see descrtiption for this property.
+ * @return	void
+ */
+    abstract protected function adjustForm( $formValues );
+//______________________________________________________________________________
+
+    protected function isValidData( &$formValues )
+    {
+		$formValues['is_valid']	= TRUE;
     }
 //______________________________________________________________________________
 
@@ -188,12 +202,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     }
 //______________________________________________________________________________
 
-    protected function isValidData( &$formValues ){
-		$formValues['is_valid']	= TRUE;
-    }
-//______________________________________________________________________________
-
-    protected function prepareData(  &$formValues  ){
+    private function prepareData(){
     	foreach( $this->mSaveData as &$items ){
     		if( !isset( $items[2] )){ $items[2] = NULL; }
     		if( !isset( $items[3] )){ $items[3] = ''; }
@@ -217,7 +226,8 @@ abstract class PAddEditPane extends PRnd1Pane{
 				$this->showAlertHandler( $objResponse, array( 'message' => $formValues['description'], 'focus' => $formValues['focus_id'] ));
 				return array( 'is_error' => TRUE );
 			}else{
-				$this->prepareData(  $formValues  );
+				$this->adjustForm( $formValues );
+				$this->prepareData();
 
 				$result	= $this->saveData();
 

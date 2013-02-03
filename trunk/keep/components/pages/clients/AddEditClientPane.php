@@ -83,7 +83,7 @@ class AddEditClientPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-	protected function prepareData( &$formValues ){
+	protected function adjustForm( $formValues ){
 		$this->mSaveData	= array(
 			array( 'id',		$formValues['id'],		NULL ),
 			array( 'firstname',	$formValues['firstname'],	'firstname' ),
@@ -95,7 +95,6 @@ class AddEditClientPane extends PAddEditPane{
 			array( 'email',		$formValues['email'],		'email' ),
 			array( 'password',	$formValues['pass1'],		'pass1' )
 		);
-		parent::prepareData( $formValues );
 	}
 //______________________________________________________________________________
 

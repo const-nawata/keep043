@@ -45,12 +45,11 @@ class AddEditGoodCatsPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-	protected function prepareData( &$formValues ){
+	protected function adjustForm( $formValues ){
 		$this->mSaveData	= array(
 			array( 'id',	$formValues['id'],	NULL ),
 			array( 'name',	$formValues['name'],'name', _PNAME1 )
 		);
-		parent::prepareData(  $formValues  );
 	}
 //______________________________________________________________________________
 

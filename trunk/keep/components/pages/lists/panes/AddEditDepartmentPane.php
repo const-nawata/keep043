@@ -45,13 +45,12 @@ class AddEditDepartmentPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-	protected function prepareData( &$formValues ){
+	protected function adjustForm( $formValues ){
 		$this->mSaveData	= array(
 			array( 'id',	$formValues['id'],	NULL ),
 			array( 'name',	$formValues['name'],'name', _PNAME1 ),
 			array( 'info',	$formValues['info'],'info', _INFO )
 		);
-		parent::prepareData( $formValues );
 	}
 //______________________________________________________________________________
 

@@ -53,13 +53,12 @@ class AddEditUnitPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-	protected function prepareData( &$formValues ){
+	protected function adjustForm( $formValues ){
 		$this->mSaveData	= array(
-		array( 'id',	$formValues['id'],		NULL ),
-		array( 'full_name',	$formValues['full_name'],	'full_name', _PFULL1 ),
-		array( 'brief_name',	$formValues['brief_name'],	'brief_name', _PBRIEF1 )
+			array( 'id',	$formValues['id'],		NULL ),
+			array( 'full_name',	$formValues['full_name'],	'full_name', _PFULL1 ),
+			array( 'brief_name',	$formValues['brief_name'],	'brief_name', _PBRIEF1 )
 		);
-		parent::prepareData( $formValues );
 	}
 //______________________________________________________________________________
 

@@ -47,13 +47,7 @@ class AddEditCityPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-	protected function prepareData( &$formValues ){
-		$this->mSaveData	= array(
-			'id'			=> $formValues['id'],
-			'name'			=> $formValues['city'],
-    		'country_id'	=> $formValues['country_id']
-		);
-
+	protected function adjustForm( $formValues ){
 		$this->mSaveData	= array(
 			array( 'id',			$formValues['id'],			NULL ),
 			array( 'name',			$formValues['city'],		'city' ),
