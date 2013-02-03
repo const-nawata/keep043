@@ -206,8 +206,6 @@ abstract class PAddEditPane extends PRnd1Pane{
     public function saveInfo( &$objResponse, &$formValues ){
 		$this->getSessionParams( $formValues );
 
-// Log::_log(print_r( $formValues, TRUE));
-
 		$class			= $formValues['class'];
 		$tabl_obj		= new $class( NULL, TRUE, FALSE );
 		$this->mOwner	= $tabl_obj;
