@@ -59,11 +59,8 @@ class PDbl extends Core{ //
 
 		}else{
 			$error	= $this->parserError( $sql );
-//TODO: Is it necessary Exception throwing? May be there is better solution.
-
 			Log::_log( 'Resource: '.$resource.'. '.$error['description'] );
 			return FALSE;
-// 			throw new Exception( 'Resource: '.$resource.'. '.$error['description'] );
 		}
 
 		return $list;
@@ -141,7 +138,8 @@ class PDbl extends Core{ //
 		$sql	= 'SELECT * FROM `'.$tbl.'` WHERE `id`='.$id.' LIMIT 1';
 
 		$recs	= $this->execSelectQuery( $sql );
-		return $recs[0];
+
+		return isset($recs[0]) ? $recs[0] : NULL;
 	}
 //______________________________________________________________________________
 
