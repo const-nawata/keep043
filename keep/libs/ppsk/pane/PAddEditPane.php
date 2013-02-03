@@ -156,21 +156,23 @@ abstract class PAddEditPane extends PRnd1Pane{
 //______________________________________________________________________________
 
     protected function getSessionParams( &$formValues ){
-		$formValues[ 'inst' ]	= $this->decipherFilledValue( $formValues[ 'inst' ] );
-//		list( $formValues[ 'class' ], $action_type )	= explode( '.', $formValues[ 'inst' ] );
-		list( $formValues[ 'class' ], $formValues[ 'action_type' ] )	= explode( '.', $formValues[ 'inst' ] );
+		$formValues['inst']	= $this->decipherFilledValue( $formValues['inst'] );
 
-//		switch( $action_type )
-		switch( $formValues[ 'action_type' ] ){
-			case self::_edit:	$formValues[ 'id' ]	= $_SESSION[ 'tables' ][  $formValues[ 'class' ] ][ 'line_id' ]; break;
-			case self::_add:	$formValues[ 'id' ]	= NULL; break;
+		list( $formValues['class'], $formValues['action_type'] )	= explode( '.', $formValues['inst'] );
+
+		switch( $formValues['action_type'] ){
+			case self::_edit:	$formValues['id'] = (int)$_SESSION['tables'][$formValues['class']]['line_id']; break;
+			case self::_add:	$formValues['id'] = NULL; break;
 		}
+		unset( $formValues['inst'] );
+		unset( $formValues['action_type'] );
     }
 //______________________________________________________________________________
 
     private function saveData(){
     	if( count( $this->mSaveData ) ){
 	    	$db_obj	= new PDbl( $this );
+
 	    	foreach( $this->mSaveData as $items ){
 	    		if( $items[0] == 'id' ){ break; }
 	    	}
@@ -187,22 +189,25 @@ abstract class PAddEditPane extends PRnd1Pane{
 //______________________________________________________________________________
 
     protected function isValidData( &$formValues ){
-		$formValues[ 'is_valid' ]	= true;
+		$formValues['is_valid']	= TRUE;
     }
 //______________________________________________________________________________
 
-    protected function prepareData( &$formValues ){
+    protected function prepareData(  &$formValues  ){
     	foreach( $this->mSaveData as &$items ){
     		if( !isset( $items[2] )){ $items[2] = NULL; }
     		if( !isset( $items[3] )){ $items[3] = ''; }
     	}
     }
-//______________________________________________________________________________ db_error
+//______________________________________________________________________________
 
 //	Handlers	<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
     public function saveInfo( &$objResponse, &$formValues ){
 		$this->getSessionParams( $formValues );
+
+// Log::_log(print_r( $formValues, TRUE));
+
 		$class			= $formValues['class'];
 		$tabl_obj		= new $class( NULL, TRUE, FALSE );
 		$this->mOwner	= $tabl_obj;
@@ -214,7 +219,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 				$this->showAlertHandler( $objResponse, array( 'message' => $formValues['description'], 'focus' => $formValues['focus_id'] ));
 				return array( 'is_error' => TRUE );
 			}else{
-				$this->prepareData( $formValues );
+				$this->prepareData(  $formValues  );
 
 				$result	= $this->saveData();
 
@@ -231,7 +236,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 					return $result;
 				}else{
 					$_SESSION['tables'][$class]['line_id'] = $formValues['id'] = $result['id'];
-					$tabl_obj->initHtmlView( true );
+					$tabl_obj->initHtmlView( TRUE );
 					$objResponse->assign( $class.'_container', 'innerHTML', $tabl_obj->getHtmlView() );
 				 	$objResponse->remove( 'pane_container' );
 				 	$objResponse->remove( 'veil' );
