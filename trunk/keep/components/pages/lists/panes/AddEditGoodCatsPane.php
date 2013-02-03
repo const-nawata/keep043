@@ -46,11 +46,14 @@ class AddEditGoodCatsPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	protected function prepareData( &$formValues ){
+
+Log::_log("Point 2");
+
 		$this->mSaveData	= array(
 			array( 'id',	$formValues['id'],	NULL ),
 			array( 'name',	$formValues['name'],'name', _PNAME1 )
 		);
-		parent::prepareData( $formValues );
+		parent::prepareData(  $formValues  );
 	}
 //______________________________________________________________________________
 
