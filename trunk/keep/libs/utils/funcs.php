@@ -14,7 +14,7 @@ function getWelcomeText(){
 	$content = _WELCOME;
 
 	$db_obj	= new KeepDbl();
-	switch( $_SESSION[ 'level' ] ){
+	switch( $_SESSION['level'] ){
 		case _PPSK_LEVEL_GUEST: $user_name	= _GUEST; break;
 
 		case 'admin':
@@ -24,7 +24,7 @@ function getWelcomeText(){
 			break;
 
 		default:
-			throw new Exception( _EX."Undefind user level. On line: ".__LINE__." in ".addslashes( __FILE__ )."." );
+			throw new Exception( _EX.'Undefind user level. On line: '.__LINE__.' in '.addslashes( __FILE__ ).'.' );
 	}
 
 	return $content." ".$user_name;

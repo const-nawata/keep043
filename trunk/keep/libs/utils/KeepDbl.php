@@ -84,91 +84,6 @@ class KeepDbl extends PDbl{
 	}
 //______________________________________________________________________________
 
-	function getDepartmentInfo( $depId ){
-		$dep_id	= ( !$depId ) ? 0 : $depId;
-		global $gl_MysqliObj;
-		$sql	=
-'SELECT '.
-	'`id`,'.
-	'`name`,'.
-	'`info` '.
-'FROM `departments` '.
-'WHERE `id`='.$dep_id;
-
-		$result = $gl_MysqliObj->query( $sql );
-		if( $result ){
-			$row = $result->fetch_assoc();
-			$result->close();
-		}else{
-			$res_err	= $this->parserError( $sql );
-			throw new Exception( _EX.$res_err['description'] );
-		}
-
-		$row = ( !$row ) ? array(
-			'id'			=> NULL,
-			'name'			=> NULL,
-			'info'			=> NULL
-		) : $row ;
-		return $row;
-	}
-//______________________________________________________________________________
-
-	function geCategoryInfo( $catId ){
-		$cat_id	= ( !$catId ) ? 0 : $catId;
-		global $gl_MysqliObj;
-
-		$sql	=
-'SELECT '.
-	'`id`,'.
-	'`name`'.
-'FROM `categories` '.
-'WHERE `id`='.$cat_id;
-
-		$result = $gl_MysqliObj->query( $sql );
-		if( $result ){
-			$row = $result->fetch_assoc();
-			$result->close();
-		}else{
-			$res_err	= $this->parserError( $sql );
-			throw new Exception( _EX.$res_err['description'] );
-		}
-
-// 		$row = ( !$row ) ? array(
-// 			'id'			=> NULL,
-// 			'name'			=> NULL
-// 		) : $row ;
-		return $row;
-	}
-//______________________________________________________________________________
-
-	function getUnitInfoById( $unitId ){
-		$unit_id	= ( !$unitId ) ? 0 : $unitId;
-		global $gl_MysqliObj;
-		$sql	=
-	"SELECT
-		`units`.`id` AS `id`,
-		`units`.`full_name` AS `full_name`,
-		`units`.`brief_name` AS `brief_name`
-	FROM `units`
-	WHERE `units`.`id`=".$unit_id;
-
-		$result = $gl_MysqliObj->query( $sql );
-		if( $result ){
-			$row = $result->fetch_assoc();
-			$result->close();
-		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: getUnitInfoById in KeepDbl.php. The whole SQL query is: ".$sql );
-		}
-
-		$row = ( !$row ) ? array(
-			'id'			=> NULL,
-			'full_name'		=> NULL,
-			'brief_name'	=> NULL
-		) : $row ;
-		return $row;
-	}
-//______________________________________________________________________________
-
 	function deleteDbViewsForManager( $managerId ){
 		$sql	=
 "DROP VIEW IF EXISTS `clients_".$managerId."`";
@@ -207,27 +122,6 @@ class KeepDbl extends PDbl{
 	LEFT JOIN `countries` ON `countries`.`id` = `cities`.`country_id`
 	WHERE `users`.`id`=".$user_id;
 
-/*
-
-CREATE OR REPLACE VIEW `clients_view` AS
-SELECT `users`.`id` AS `id`
-	, `users`.`level` AS `level`
-	 , `users`.`firstname` AS `firstname`
-	 , `users`.`surname` AS `surname`
-	 , `users`.`city_id` AS `city_id`
-	 ,`cities`.`name` AS `city`
-	 ,`cities`.`country_id` AS `country_id`
-	 ,`countries`.`name` AS `country`
-	 , `users`.`info` AS `info`
-	 , `users`.`password` AS `password`
-	 , `users`.`login` AS `login`
-	 , `users`.`email` AS `email`
-	 , concat(`cities`.`name`, ', ', `countries`.`name`) AS `city_country`
-FROM ((`users` LEFT JOIN `cities` ON ((`cities`.`id` = `users`.`city_id`)))
-LEFT JOIN `countries` ON ((`countries`.`id` = `cities`.`country_id`)))
-WHERE (`users`.`level` = 'client')//
-
-*/
 
 
 		$result = $gl_MysqliObj->query( $sql );

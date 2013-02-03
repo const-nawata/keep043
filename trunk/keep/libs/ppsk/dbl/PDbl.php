@@ -114,10 +114,8 @@ class PDbl extends Core{ //
 	}
 //______________________________________________________________________________
 
-	public function getTblNullItem( $tbl, $isFillNull ){
-
-
-		if( $isFillNull ){
+	public function getTblNullItem( $tbl, $isSetFields ){
+		if( $isSetFields ){
 			$sql = 'SHOW COLUMNS FROM '.$tbl;
 			$fields	= $this->execSelectQuery( $sql );
 
@@ -126,30 +124,24 @@ class PDbl extends Core{ //
 				$name	= $fld['Field'];
 				$item["$name"]	= NULL;
 			}
-		}else{
+		}else
 			$item	= NULL;
-		}
 
 		return $item;
 	}
 //______________________________________________________________________________
 
-	public function getRow( $id, $isFillNull=FALSE ){
+	public function getRow( $id, $isSetFields=FALSE ){
 		$tbl	= &$this->mOwner->getSourceDbTable();
 
-		if( !(bool)$id && $isFillNull ){
-			return $this->getTblNullItem( $tbl, $isFillNull );
+		if( !(bool)$id && $isSetFields ){
+			return $this->getTblNullItem( $tbl, $isSetFields );
 		}
 
-		$sql	=
-'SELECT * FROM `'.$tbl.'` WHERE `id`='.$id.' LIMIT 1';
+		$sql	= 'SELECT * FROM `'.$tbl.'` WHERE `id`='.$id.' LIMIT 1';
 
-		$arr	= $this->execSelectQuery( $sql );
-
-
-Log::_log(print_r( $arr, TRUE));
-
-		return $arr[0];
+		$recs	= $this->execSelectQuery( $sql );
+		return $recs[0];
 	}
 //______________________________________________________________________________
 

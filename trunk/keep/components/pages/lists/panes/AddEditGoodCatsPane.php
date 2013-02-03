@@ -22,8 +22,8 @@ class AddEditGoodCatsPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	public function initHtmlView(){
-		$db_obj	= new KeepDbl( $this );
-		$old_info	= $db_obj->geCategoryInfo( $this->mRecId );
+		$db_obj	= new PDbl( $this );
+		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
