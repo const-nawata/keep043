@@ -146,11 +146,11 @@ abstract class PAddEditPane extends PRnd1Pane{
     }
 //______________________________________________________________________________
 
-    protected function getInputLineContent( $htmlId, $type, $prompt = '', $value = '', $tabindex = '', $onchange = '' ){
+    protected function getInputLineContent( $htmlId, $type, $prompt='', $value='', $tabindex='', $onchange='', $css='' ){
     	return
 "<tr>
 	<td id='".$htmlId."_prmpt_td' class='edit_pane_prmpt ".$this->mPrmCss."'>".$prompt."</td>
-	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'><input type='".$type."' name='".$htmlId."' id='".$htmlId."' value='".$value."' class='".$this->mInpCss."' tabindex='".$tabindex."' onkeyup='".$onchange."' /></td>
+	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'><input type='".$type."' name='".$htmlId."' id='".$htmlId."' value='".$value."' class='".$this->mInpCss."' style='".$css."' tabindex='".$tabindex."' onkeyup='".$onchange."' /></td>
 </tr>";
     }
 //______________________________________________________________________________
