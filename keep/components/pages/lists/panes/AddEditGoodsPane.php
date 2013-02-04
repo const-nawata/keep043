@@ -32,26 +32,17 @@ class AddEditGoodsPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-// 	protected function isValidData( &$formValues ){
-// // 		$formValues['name']	= trim( $formValues['name'] );
-// 		$name	= trim( $formValues['name'] );
+	protected function isValidData( &$formValues ){
 
-// 		if( '' == $name ){
-// 			$message	= sprintf( _MESSAGE_EMPTY_NAME, '`'._PNAME1.'`' );
-// 			$formValues	= array( 'focus_id' => 'name', 'description' => $message, 'is_valid' => FALSE );
-// 			return;
-// 		}//
-
-// 		$formValues['is_valid']	= TRUE;
-// 	}
+		$formValues['is_valid']	= TRUE;
+	}
 //______________________________________________________________________________
 
-	protected function prepareData( &$formValues ){
+	protected function adjustForm( $formValues ){
 		$this->mSaveData	= array(
 			array( 'id',	$formValues['id'],	NULL ),
 			array( 'name',	$formValues['name'],'name', _PNAME1 )
 		);
-		parent::prepareData( $formValues );
 	}
 //______________________________________________________________________________
 
