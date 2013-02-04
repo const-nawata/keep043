@@ -10,7 +10,7 @@ set=>array(
               dir     - direction. 1 - from top to bottom or from left to right.
                                    0 - from bottom to top or from right to left.
               speed   - movie speed in pixels per second
-              space   - space beween images in pixels 
+              space   - space beween images in pixels
                 )
 
 
@@ -22,7 +22,7 @@ imgFiles=>array(
 */
 
 function createSlideShow(slfObj, set, imgFiles){
-    var n_test = 0;
+//    var n_test = 0;
 
     var self = this;
     this.isGoOn = true;
@@ -30,27 +30,27 @@ function createSlideShow(slfObj, set, imgFiles){
     this.qntImgs   = imgFiles.length;
     this.imgFiles;
     normArrays();
-    
-    
+
+
     this.cntSize   = getCntSize();
     this.firstImg  = 0;
     this.firstInd  = 0;
     this.builtSize = 0;
     this.snapShotSize = 0;
-    
-    this.max_rate	= 10;	//TODO:	Define max rate from computer performance. This value was set for my work computer.
-    						//		It is 20 for my home computer. This ussue must be investigated. And it effects the 
+
+    this.max_rate	= 10;	//IMPORTANT:	Define max rate from computer performance. This value was set for my work computer.
+    						//		It is 20 for my home computer. This ussue must be investigated. And it effects the
     						//		general behaviour of application.
     						//		Maybe it effects to Ctrl-F5 behavior of firefox.
-    
+
     this.rate = (set['speed'] > this.max_rate) ? this.max_rate : set['speed'];
     this.delay = Math.round(1000/this.rate);
     this.scrollAdd = set['speed']/this.rate;  //  This value is not integer
-    
+
     this.scrlPos   = 0;  //  This value is not integer
     this.itemInds;
     this.isNewSnapShot = true;
-    
+
     this.tmOut	= null;
 
 //  Private methods ********************************************
@@ -66,7 +66,7 @@ function createSlideShow(slfObj, set, imgFiles){
     function getSnapShot(){
         self.itemInds = getItemInds();
         setNewScrlPos();
-        
+
         var qnt_items = self.itemInds.length;
         var htmlStr = "";
         var item_num;
@@ -81,7 +81,7 @@ function createSlideShow(slfObj, set, imgFiles){
                     htmlStr += '<tr><td><div class="vSpace" style="height: '+set['space']+'px;">&nbsp;</div></td></tr>';
                 }
             break;
-            
+
             case 'h':
                 htmlStr += "<tr>";
                 for (item_num = 0; item_num < qnt_items; item_num++){
@@ -93,7 +93,7 @@ function createSlideShow(slfObj, set, imgFiles){
             break;
         }
         htmlStr += "</table>";
-        
+
         return htmlStr;
     }
 //-------------------------------------------------------------------------------------------------------------------------------
@@ -110,17 +110,17 @@ function createSlideShow(slfObj, set, imgFiles){
         self.snapShotSize = 0;
         var snap_shot_inds = new Array();
         var item_ind = 0;
-        
+
         while (newInd >= 0){
             snap_shot_inds[item_ind] = newInd;
             item_ind++;
             newInd = getNextImgInd(newInd);
         }
-        
+
         if (set['dir'] == 1){
             snap_shot_inds.reverse();
         }
-        
+
         return snap_shot_inds;
     }
 //-------------------------------------------------------------------------------------------------------------------------------
@@ -156,11 +156,11 @@ function createSlideShow(slfObj, set, imgFiles){
             case 'v':
                 item_size = self.imgFiles[ind]['height'];
             break;
-            
+
             case 'h':
                 item_size = self.imgFiles[ind]['width'];
             break;
-            
+
             default: item_size = 0;
         }
         item_size += set['space'];
@@ -173,11 +173,11 @@ function createSlideShow(slfObj, set, imgFiles){
             case 'v':
                 return set['height'];
             break;
-            
+
             case 'h':
                 return set['width'];
             break;
-            
+
             default: return 0;
         }
     }
@@ -191,31 +191,33 @@ function createSlideShow(slfObj, set, imgFiles){
 //-------------------------------------------------------------------------------------------------------------------------------
 
     this.showSlides = function(){
+    	var scroll_pos;
     	clearTimeout (this.tmOut);
 	    if (this.isGoOn){
-	        var scroll_pos;
+
 	        switch (set['dir']){
 	            case 0: scroll_pos = Math.round(this.scrlPos); break;
-	            case 1: scroll_pos = Math.round(this.snapShotSize - this.scrlPos - this.cntSize); break
+	            case 1: scroll_pos = Math.round(this.snapShotSize - this.scrlPos - this.cntSize); break;
+	            default: scroll_pos=0;
 	        }
-	
+
 	        switch (set['layout']){
 	            case 'v': this.cntObj.scrollTop = scroll_pos; break;
 	            case 'h': this.cntObj.scrollLeft = scroll_pos; break;
 	        }
-	
+
 	        if (this.isNewSnapShot)this.cntObj.innerHTML = getSnapShot();
 	        else getSnapShot();
-	        
-	        
-        	
+
+
+
 	        this.tmOut = setTimeout(slfObj+'.showSlides();', this.delay);
-	        
+
 	    }else{
 	    	this.showSlides = null;
 	    	self = null;
 	    }
-    }
+    };
 
 
 //Executive code ################################################
