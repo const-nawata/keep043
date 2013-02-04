@@ -6,7 +6,7 @@ class AddEditDepartmentPane extends PAddEditPane{
 
 		$this->mTitle		= _EDITING." "._DEPARTMENT_ROD;
 
-		$this->mName	= 'AddEditCountryPaneN';
+		$this->mName	= 'AddEditDepartmenPaneN';
 
 		$this->mTarCss		= 'edit_pane_txt_ar';
 		$this->mInpCss		= 'edit_pane_input';
