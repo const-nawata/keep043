@@ -42,7 +42,8 @@ class AddEditGoodsPane extends PAddEditPane{
 	protected function adjustForm( $formValues ){
 		$this->mSaveData	= array(
 			array( 'id',	$formValues['id'],	NULL ),
-			array( 'name',	$formValues['name'],'name', _PNAME1 )
+			array( 'name',	$formValues['name'],'name', _PNAME1 ),
+			array( 'cku',	$formValues['cku'],'cku', _GOOD_ARTICLE )
 		);
 	}
 //______________________________________________________________________________
