@@ -242,7 +242,7 @@ input.welcomeLine {
 /*Manager list (end)  ------------------------------------------*/
 
 /*Tables columns  ------------------------------------------ (All tables on all pages.)*/
-	/*All columns. Only title.*/
+	/*All columns. Only title sells.*/
 .managersTblEmailTtlTd, .managersTblSurnameTtlTd, .managersTblFirstNameTtlTd, .managersTblInfoTtlTd, .managersTblCityCountryTtlTd,
 .cities_viewTblCityTtlTd, .cities_viewTblCountryTtlTd,
 .countriesTblCountryTtlTd,
@@ -258,7 +258,7 @@ input.welcomeLine {
 	font-weight: bold;
 }
 
-	/*All columns. Only info.*/
+	/*All columns. Only info sells.*/
 .managersTblEmailClTd, .managersTblSurnameClTd, .managersTblFirstnameClTd, .managersTblInfoClTd, .managersTblCityCountryClTd,
 .cities_viewTblCityClTd, .cities_viewTblCountryClTd,
 .countriesTblCountryClTd,
@@ -274,7 +274,7 @@ input.welcomeLine {
 	line-height: 25px;
 }
 
-	/*Only left column. Title and info.*/
+	/*Only left column. Title and info sells.*/
 .managersTblSurnameTtlTd, .managersTblSurnameClTd,
 .cities_viewTblCityTtlTd, .cities_viewTblCityClTd,
 .countriesTblCountryTtlTd, .countriesTblCountryClTd,
@@ -285,7 +285,7 @@ input.welcomeLine {
 	border-left: 1px solid;
 }
 
-	/*All columns. Title and info.*/
+	/*All columns. Title and info sells.*/
 .managersTblEmailTtlTd, .managersTblEmailClTd,
 .managersTblSurnameTtlTd, .managersTblSurnameClTd,
 .managersTblFirstNameTtlTd, .managersTblFirstnameClTd,
@@ -312,7 +312,7 @@ input.welcomeLine {
 	padding-top: 0;
 	padding-bottom: 0;
 }
-
+						/* Colamns indivilual styles*/
 /*Goods*/
 .goodsTblNameClTd{
 	width: 300px;
