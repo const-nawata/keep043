@@ -40,7 +40,7 @@ class AddEditGoodsPane extends PAddEditPane{
 // 			$message	= sprintf( _MESSAGE_EMPTY_NAME, '`'._PNAME1.'`' );
 // 			$formValues	= array( 'focus_id' => 'name', 'description' => $message, 'is_valid' => FALSE );
 // 			return;
-// 		}
+// 		}//
 
 // 		$formValues['is_valid']	= TRUE;
 // 	}
