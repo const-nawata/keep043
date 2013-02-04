@@ -13,7 +13,8 @@ class AddEditGoodsPane extends PAddEditPane{
 		$this->mSelCss		= 'edit_pane_sel';
 
 		$this->mWidth		= 455;
-		$this->mHeigth		= 185;
+// 		$this->mHeigth		= 185;
+		$this->mHeigth		= 250;
 
 		$this->mBrdClr		= _PANE_BORDER_COLOR;
 		$this->mBkgClr		= _GEN_BKGRND_COLOR;
@@ -29,6 +30,10 @@ class AddEditGoodsPane extends PAddEditPane{
 		$lines	= &$this->mLines;
 		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
 		$lines	.= $this->getInputLineContent( 'cku', 'text', _GOOD_ARTICLE._PPSK_ASTERISK, $old_info['cku'], $tanindex++, self::_onchange );
+// 		$lines	.= $this->getInputLineContent( 'img_file', 'file', _GOOD_IMAGE._PPSK_ASTERISK, $old_info['img_file'], $tanindex++, self::_onchange, 'width:240px;height:28px;' );
+
+// 		$lines	.= "<input id='orgUploadField' type='file' name='file'>";
+
 		parent::initHtmlView();
 	}
 //______________________________________________________________________________
