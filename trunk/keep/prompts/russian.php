@@ -47,6 +47,7 @@ define( '_GOOD_CATS', 'Категории товара' );
 define( '_GOODS', 'Товары' );
 define( '_DEPARTMENT_ROD', 'отдела' );
 define( '_CATEGORY_ROD', 'категории' );
+define( '_GOOD_PARS_ROD', 'параметров товара' );
 define( '_EDIT', 'Редактировать' );
 define( '_EDITING', 'Редактирование' );
 define( '_EMAIL_ADDR', 'Адрес e-mail' );

@@ -248,7 +248,8 @@ input.welcomeLine {
 .countriesTblCountryTtlTd,
 .unitsTblFullTtlTd, .unitsTblBreifTtlTd, .unitsTblUpperSellTtlTd,
 .departmentsTblNameTtlTd, .departmentsTblInfoTtlTd,
-.good_catsTblNameTtlTd{
+.good_catsTblNameTtlTd
+,.goodsTblNameTtlTd, .goodsTblArticleTtlTd, .goodsTblCatsTtlTd{
 	height: 30px;
 	border-bottom: 1px solid;
 	border-top: 1px solid;
@@ -263,7 +264,8 @@ input.welcomeLine {
 .countriesTblCountryClTd,
 .unitsTblFullClTd, .unitsTblBreifClTd,
 .departmentsTblNameClTd, .departmentsTblInfoClTd,
-.good_catsTblNameClTd{
+.good_catsTblNameClTd
+,.goodsTblNameClTd, .goodsTblArticleClTd, .goodsTblCatsClTd{
 	height: 25px;
 	text-align: left;
 	overflow: hidden;
@@ -278,7 +280,8 @@ input.welcomeLine {
 .countriesTblCountryTtlTd, .countriesTblCountryClTd,
 .unitsTblFullTtlTd, .unitsTblFullClTd, .unitsTblUpperSellTtlTd,
 .departmentsTblNameTtlTd, .departmentsTblNameClTd,
-.good_catsTblNameTtlTd,.good_catsTblNameClTd{
+.good_catsTblNameTtlTd,.good_catsTblNameClTd
+,.goodsTblNameTtlTd,.goodsTblNameClTd{
 	border-left: 1px solid;
 }
 
@@ -301,7 +304,8 @@ input.welcomeLine {
 .departmentsTblNameTtlTd, .departmentsTblNameClTd,
 .departmentsTblInfoTtlTd, .departmentsTblInfoClTd,
 
-.good_catsTblNameTtlTd,.good_catsTblNameClTd{   
+.good_catsTblNameTtlTd,.good_catsTblNameClTd
+,.goodsTblNameTtlTd,.goodsTblArticleTtlTd,.goodsTblCatsTtlTd,	.goodsTblNameClTd,.goodsTblArticleClTd,.goodsTblCatsClTd{
 	border-right: 1px solid;
 	border-color: #0E00AF;
 	color: #6F24A5;
@@ -309,6 +313,18 @@ input.welcomeLine {
 	padding-bottom: 0;
 }
 
+/*Goods*/
+.goodsTblNameClTd{
+	width: 300px;
+}
+.goodsTblArticleClTd{
+	width: 150px;
+}
+.goodsTblCatsClTd{
+	width: 436px;
+}
+
+/*Goods Categories*/
 .good_catsTblNameClTd{
 	width: 360px;
 }
@@ -412,8 +428,14 @@ input.welcomeLine {
 }
 
 /*Pane Titles*/
-.AddEditManagerPaneN_PaneTitle,.AddEditCountryPaneN_PaneTitle,.AddEditCityPaneN_PaneTitle,.AddEditUnitPaneN_PaneTitle,.AddEditClientPaneN_PaneTitle
-	{
+.AddEditManagerPaneN_PaneTitle,
+.AddEditCountryPaneN_PaneTitle,
+.AddEditCityPaneN_PaneTitle,
+.AddEditUnitPaneN_PaneTitle,
+.AddEditClientPaneN_PaneTitle,
+.AddEditGoodsPaneN_PaneTitle,
+.AddEditDepartmenPaneN_PaneTitle,
+.AddEditGoodCatsPaneN_PaneTitle{
 	font-size: 20px;
 	padding-bottom: 5px;
 	color: #996D2B;
@@ -421,7 +443,7 @@ input.welcomeLine {
 
 /*Multi tables page  ###############################################*/
 .Page_Multi_Tables_Cities_SearchSellTd, .Page_Multi_Tables_Countries_SearchSellTd, .Page_Multi_Tables_Units_SearchSellTd,
-.Page_Multi_Tables_Departments_SearchSellTd,.Page_Multi_Tables_GoodCats_SearchSellTd{
+.Page_Multi_Tables_Departments_SearchSellTd,.Page_Multi_Tables_GoodCats_SearchSellTd,.Page_Multi_Tables_Goods_SearchSellTd{
 	padding-bottom: 10px;
 }
 .Page_Multi_Tables_Cities_SearchSellTd {
@@ -442,9 +464,11 @@ input.welcomeLine {
 .Page_Multi_Tables_GoodCats_SearchSellTd{
 	width: 277px;
 }
+.Page_Multi_Tables_Goods_SearchSellTd{
+	width: 822px;
+}
 
-.SeveralTablesPageMenuSellTd,.SeveralTablesPageMenuSelectedSellTd,.SeveralTablesPageMenuOverSellTd,.SeveralTablesPageMenuEmptySellTd
-	{
+.SeveralTablesPageMenuSellTd,.SeveralTablesPageMenuSelectedSellTd,.SeveralTablesPageMenuOverSellTd,.SeveralTablesPageMenuEmptySellTd{
 	background-color: #68DDD6;
 	color: #6F24A5;
 	width: 140px;
@@ -457,9 +481,7 @@ input.welcomeLine {
 	vertical-align: middle;
 }
 
-.SeveralTablesPageMenuEmptySellTd {
-	
-}
+.SeveralTablesPageMenuEmptySellTd{}
 
 .SeveralTablesPageMenuOverSellTd {
 	background-color: #AFDBD8;

@@ -4,7 +4,7 @@ class AddEditGoodsPane extends PAddEditPane{
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 
-		$this->mTitle		= _EDITING.' '._CATEGORY_ROD;
+		$this->mTitle		= _EDITING.' '._GOOD_PARS_ROD;
 
 		$this->mName	= 'AddEditGoodsPaneN';
 
@@ -28,6 +28,7 @@ class AddEditGoodsPane extends PAddEditPane{
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
 		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
+		$lines	.= $this->getInputLineContent( 'cku', 'text', _GOOD_ARTICLE._PPSK_ASTERISK, $old_info['cku'], $tanindex++, self::_onchange );
 		parent::initHtmlView();
 	}
 //______________________________________________________________________________
