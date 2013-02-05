@@ -1,6 +1,7 @@
 <?php
-require_once( $gl_pagesPath."home/NewsPane1.php" );
-require_once( $gl_pagesPath."home/SlidesPane1.php" );
+require_once( $gl_pagesPath.'home/NewsPane1.php' );
+require_once( $gl_pagesPath.'home/SlidesPane1.php' );
+
 class home_Page extends PPage{
 
 	public function __construct( $Owner ){
@@ -9,16 +10,62 @@ class home_Page extends PPage{
 	}
 //______________________________________________________________________________
 
+	private function getRunningMessage(){
+		if( 0 ){
+			$sql_string = "SELECT welcome FROM settings";
+			$result = mysql_query($sql_string);
+			$row = mysql_fetch_assoc($result);
+			$content = $row['welcome'];
+		}else{
+			$content = "Welcome test message which was created by program.";
+		}
+
+		$content	= trim($content);
+		return $content;
+	}
+//______________________________________________________________________________
+
+	private function getDefaultSlides(){
+		$width	= 200;
+		$height	= 110;
+
+		return array(
+			'path'	=> './img/assortment/default/',
+			'files' => array(
+				0=>		array( 'name' => 'as0000000001.png',	'width' => $width, 'height' => $height ),
+				1=>		array( 'name' => 'as0000000001_1.png',	'width' => $width, 'height' => $height ),
+				2=>		array( 'name' => 'as0000000001_2.png',	'width' => $width, 'height' => $height ),
+				3=>		array( 'name' => 'as0000000002.png',	'width' => $width, 'height' => $height ),
+				4=>		array( 'name' => 'as0000000002_1.png',	'width' => $width, 'height' => $height ),
+				5=>		array( 'name' => 'as0000000002_2.png',	'width' => $width, 'height' => $height ),
+				6=>		array( 'name' => 'as0000000003.png',	'width' => $width, 'height' => $height ),
+				7=>		array( 'name' => 'as0000000003_1.png',	'width' => $width, 'height' => $height ),
+				8=>		array( 'name' => 'as0000000003_2.png',	'width' => $width, 'height' => $height ),
+				9=>		array( 'name' => 'as0000000004.png',	'width' => $width, 'height' => $height ),
+				10=>	array( 'name' => 'as0000000004_1.png',	'width' => $width, 'height' => $height ),
+				11=>	array( 'name' => 'as0000000004_2.png',	'width' => $width, 'height' => $height )
+			)
+		);
+	}
+//______________________________________________________________________________
+
+	private function getSlides(){
+		$slides	= $this->getDefaultSlides();
+		return $slides;
+
+	}
+//______________________________________________________________________________
+
 	public function getJsCode(){
-		$db_obj	= new KeepDbl( $this );
-		$slides = $db_obj->getSlides();
+		$slides = $this->getSlides();
+
 		$files_js	= json_encode( $slides['files'] );
 
 		return
 "scroller  = new jsScroller(document.getElementById('News'), "._NEWS_SCRL_WIDTH.", "._NEWS_SCRL_HEIGHT.");".
 "scrollbar = new jsScrollbar (document.getElementById('Scrollbar-Container'), scroller, false);".
-"sl_set = {'id':'slides','width':200,'height':500,'layout':'v','dir':1,'speed':5,'space':10, 'path':'".$slides[ 'path' ]."'};".
-"r_txt_obj = new runningTextPx('r_txt_obj', 'scrlTxt', 1117, '".$db_obj->getRunningMessage()."', 20);".
+"sl_set = {'id':'slides','width':200,'height':500,'layout':'v','dir':1,'speed':5,'space':10,'path':'".$slides['path']."'};".
+"r_txt_obj = new runningTextPx('r_txt_obj', 'scrlTxt', 1117, '".$this->getRunningMessage()."', 20);".
 "vslides = new createSlideShow('vslides', sl_set, ".$files_js.");";
 	}
 //______________________________________________________________________________
