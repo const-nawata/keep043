@@ -33,7 +33,7 @@ abstract class SeveralTablesPage extends PPage{
 											"\"new_code\":\"".$sellCode."\",".
 											"\"old_prompt\":document.getElementById( old_div_id ).innerHTML,".
 											"\"new_prompt\":\"".$prompt."\"};".
-								"xajax_onHandler( \"".$this->getHandleResourceString( 'showTable', 'tableListController' )."\", info );"
+								"xajax_onHandler( \"".self::getHandleResourceString( 'showTable', 'tableListController' )."\", info );"
 								);
 	}
 //______________________________________________________________________________

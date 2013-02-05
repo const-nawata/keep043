@@ -55,7 +55,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 
     	$this->mForm	= array(
     		'event'		=> 'onsubmit',
-    		'handler'	=> "xajax_onHandler( \"".$this->getHandleResourceString( 'saveInfo', get_class( $this ) )."\", xajax.getFormValues( this ) ); return false;"
+    		'handler'	=> "xajax_onHandler( \"".self::getHandleResourceString( 'saveInfo', get_class( $this ) )."\", xajax.getFormValues( this ) ); return false;"
     	);
 
     	$this->mButtons	= array(

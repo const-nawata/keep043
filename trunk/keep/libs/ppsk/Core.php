@@ -169,7 +169,7 @@ abstract class Core{
 	 * @access	private
 	 * @return	string
 	 */
-	private function getFiller(){
+	private static function getFiller(){
 		$start	= rand( 1, 20 );
 		$end	= rand( ( $start + 1 ), ( $start + 10 ) );
 		$filler	= session_id();
@@ -177,8 +177,6 @@ abstract class Core{
 	}
 //______________________________________________________________________________
 
-
-//TODO: Create as static method
 	/**
 	 * forms resource string for ajax handler.
 	 * @access	protected
@@ -186,13 +184,13 @@ abstract class Core{
 	 * @param	string $className
 	 * @return	string
 	 */
-	protected function getHandleResourceString( $hndlName, $className ){
-		$str	= $hndlName.":".$className;
+	protected static function getHandleResourceString( $hndlName, $className ){
+		$str	= $hndlName.':'.$className;
 		$filler	= self::getFiller();
-		$str	= $filler.":".$str.":".$filler;
+		$str	= $filler.':'.$str.':'.$filler;
 
 		if( _PPSK_IS_CIPHER ){
-			$cipher_obj	= new sipherManager( $_SESSION[ 'cipher_base' ], $_SESSION[ 'cipher_key' ] );
+			$cipher_obj	= new sipherManager( $_SESSION['cipher_base'], $_SESSION['cipher_key'] );
 			$str		= $cipher_obj->encipherString( $str );
 		}
 		return $str;
@@ -210,7 +208,7 @@ abstract class Core{
 		$str	= $filler.":".$value;
 
 		if( _PPSK_IS_CIPHER ){
-			$cipher_obj	= new sipherManager( $_SESSION[ 'cipher_base' ], $_SESSION[ 'cipher_key' ] );
+			$cipher_obj	= new sipherManager( $_SESSION['cipher_base'], $_SESSION['cipher_key'] );
 			$str		= $cipher_obj->encipherString( $str );
 		}
 		return $str;
