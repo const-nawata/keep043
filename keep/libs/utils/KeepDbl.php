@@ -33,53 +33,16 @@ class KeepDbl extends PDbl{
 //______________________________________________________________________________
 
 	function getSlides(){
-		$files_default	= array(
-		0=>		array( 'name' => 'as0000000001.png',	'width' => 200, 'height' => 200 ),
-		1=>		array( 'name' => 'as0000000001_1.png',	'width' => 200, 'height' => 200 ),
-		2=>		array( 'name' => 'as0000000001_2.png',	'width' => 200, 'height' => 200 ),
-		3=>		array( 'name' => 'as0000000002.png',	'width' => 200, 'height' => 200 ),
-		4=>		array( 'name' => 'as0000000002_1.png',	'width' => 200, 'height' => 200 ),
-		5=>		array( 'name' => 'as0000000002_2.png',	'width' => 200, 'height' => 200 ),
-		6=>		array( 'name' => 'as0000000003.png',	'width' => 200, 'height' => 200 ),
-		7=>		array( 'name' => 'as0000000003_1.png',	'width' => 200, 'height' => 200 ),
-		8=>		array( 'name' => 'as0000000003_2.png',	'width' => 200, 'height' => 200 ),
-		9=>		array( 'name' => 'as0000000004.png',	'width' => 200, 'height' => 200 ),
-		10=>	array( 'name' => 'as0000000004_1.png',	'width' => 200, 'height' => 200 ),
-		11=>	array( 'name' => 'as0000000004_2.png',	'width' => 200, 'height' => 200 )
-		);
+
 
 		$files	= array();
 		$sql =
-"SELECT `img_name` as `name`, `img_width` as `width`, `img_height` as `height` ".
-"FROM `goods` WHERE `img_name` != '' ORDER BY RAND() LIMIT 15";
+'SELECT `img_file` as `file`, `img_width` as `width`, `img_height` as `height` '.
+"FROM `goods` WHERE `img_file`!='' ORDER BY RAND() LIMIT 15";
 
 		$files		= $this->execSelectQuery( $sql );
-		$n_elems	= count( $files );
 
-		if( $n_elems > 0 ){
-			$path	= "./img/assortment/";
-		}else{
-			$files	=  $files_default;
-			$path	= "./img/assortment/default/";
-		}
 
-		$content	= array( 'files' => $files, 'path' => $path );
-
-		return $content;
-	}
-//______________________________________________________________________________
-
-	function getRunningMessage(){
-		if( 0 ){
-			$sql_string = "SELECT welcome FROM settings";
-			$result = mysql_query($sql_string);
-			$row = mysql_fetch_assoc($result);
-			$content = $row['welcome'];
-		}else{
-			$content = "Welcome test message which was created by program.";
-		}
-
-		$content	= trim($content);
 		return $content;
 	}
 //______________________________________________________________________________
