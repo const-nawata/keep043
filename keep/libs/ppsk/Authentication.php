@@ -1,12 +1,12 @@
 <?php
-@define( '_PPSK_IS_CIPHER',		false );
+@define( '_PPSK_IS_CIPHER',		FALSE );
 @define('_PPSK_LEVEL_GUEST',	'guest');
 @define('_PPSK_TAB_HOME_CODE',	'home');
 
 
 class Authentication{
 
-	public function __construct( $isNewSess = false ){
+	public function __construct( $isNewSess=FALSE ){
 		$sess_id	= session_id();
 		if( $sess_id == _EMPTY ){
 			@session_start();
@@ -19,12 +19,12 @@ class Authentication{
 		}
 
 		if( !count( $_SESSION ) ){
-			$_SESSION[ 'level' ]		= _PPSK_LEVEL_GUEST;
-			$_SESSION[ 'user_id' ]		= 0;
-			$_SESSION[ 'tab_code' ]		= _PPSK_TAB_HOME_CODE;
+			$_SESSION['level']		= _PPSK_LEVEL_GUEST;
+			$_SESSION['user_id']		= 0;
+			$_SESSION['tab_code']		= _PPSK_TAB_HOME_CODE;
 			if( _PPSK_IS_CIPHER ){
-				$_SESSION[ 'cipher_key' ] 	= sipherManager::getSipherKey( session_id() );
-				$_SESSION[ 'cipher_base' ]	= sipherManager::getSipherBase();
+				$_SESSION['cipher_key'] 	= sipherManager::getSipherKey( session_id() );
+				$_SESSION['cipher_base']	= sipherManager::getSipherBase();
 			}
 		}
 

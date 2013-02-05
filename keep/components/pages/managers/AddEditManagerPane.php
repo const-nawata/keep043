@@ -42,7 +42,7 @@ class AddEditManagerPane extends PAddEditPane{
     	$onchange	=
     		self::_onchange.
     		"xajax_onHandler(".
-    			"\"".$this->getHandleResourceString( 'onChangeCountry', get_class( $this ))."\",".
+    			"\"".self::getHandleResourceString( 'onChangeCountry', get_class( $this ))."\",".
     			"{\"country_id\":this.value,\"inst\":document.getElementById(\"inst\").value}".
     		");";
 

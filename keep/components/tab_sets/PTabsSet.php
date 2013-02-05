@@ -37,7 +37,7 @@ abstract class PTabsSet extends Core{
 		$onclick_handler	= $TabIns->mName.'_TabsHandler';
 		$TabIns->unsetAllHandlers();
 		if( $TabIns->mName != $_SESSION['tab_code'] ){
-			$hndl_res	= $this->getHandleResourceString( $onclick_handler, $owner_class );
+			$hndl_res	= self::getHandleResourceString( $onclick_handler, $owner_class );
 			$TabIns->setHandler( array( 'handler'=>"xajax_onHandler(\"$hndl_res\");" ) );
 			$this->setGeneralHandlers( $TabIns );
 		}
@@ -50,19 +50,19 @@ abstract class PTabsSet extends Core{
 	 * @return string HTML content
 	 * */
 	private function buildTabsSetView(){
-		$string	= "
-<table cellspacing='0' cellpadding='0' border='0'>
-    <tr>";
-		$tab_image_obj	= new TabImage ($this);
+		$string	=
+'<table cellspacing="0" cellpadding="0" border="0">'.
+    '<tr>';
+		$tab_image_obj	= new TabImage( $this );
 		foreach ($this->mTabCodes as $tab_code) {
 			$tab_image_obj->mName	= $tab_code;
-			$this->setTabParams ($tab_image_obj);
-			$string	.= "<td class='tabContainerTd'>".$tab_image_obj->getTabImage()."</td>";
+			$this->setTabParams( $tab_image_obj );
+			$string	.= '<td class="tabContainerTd">'.$tab_image_obj->getTabImage().'</td>';
 		}
 		$tab_image_obj	= NULL;
-		$string	.= "
-</tr>
-</table>";
+		$string	.=
+'</tr>'.
+'</table>';
 		return $string;
 	}
 //______________________________________________________________________________
