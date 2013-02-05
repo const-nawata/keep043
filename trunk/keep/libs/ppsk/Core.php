@@ -223,7 +223,7 @@ abstract class Core{
 	 */
 	protected static function decipherFilledValue( $str ){
 		if( _PPSK_IS_CIPHER ){
-			$cipher_obj	= new sipherManager( $_SESSION[ 'cipher_base' ], $_SESSION[ 'cipher_key' ] );
+			$cipher_obj	= new sipherManager( $_SESSION['cipher_base'], $_SESSION['cipher_key'] );
 			$str		= $cipher_obj->decipherString( $str );
 		}
 		list( $filler, $value )	= explode( ':', $str );
@@ -239,10 +239,10 @@ abstract class Core{
 	 * @return string HTML content
 	 */
 	protected function getHandlersHtml(){
-		$string	= _EMPTY;
+		$string	= '';
 		foreach ( $this->mHandlers as $event => $handler ){
-			$cnf = ( isset( $handler[ 'ask' ] ) ) ? "var cond = confirm(\"".$handler[ 'ask' ]."\"); if(cond)" : _EMPTY;
-			( $handler[ 'handler' ] != _EMPTY ) ? $string	.= " ".$event."='".$cnf.$handler[ 'handler' ]."' ":'';
+			$cnf = ( isset( $handler['ask'] )) ? "var cond=confirm(\"".$handler['ask']."\");if(cond)" : '';
+			( $handler['handler'] != '' ) ? $string	.= ' '.$event."='".$cnf.$handler['handler']."' ":'';
 		}
 		return $string;
 	}
@@ -261,7 +261,7 @@ abstract class Core{
 		$params[ 'action' ]	= self::decipherFilledValue( $params[ 'action' ] );
 		$alert_obj	= new ConfirmPaneRnd1( $this, $params[ 'message' ], $params[ 'action' ] );
 		$alert_mess	= $alert_obj->getHtmlView();
-		$objResponse->script( "prependDiv( 'body_id', 'alert_veil', 'PPSK_alert_vail_div'); prependDiv( 'body_id', 'alert_container', 'PPSK_pane_alert_container_div');" );
+		$objResponse->script( "prependDiv('body_id','alert_veil','PPSK_alert_vail_div');prependDiv('body_id','alert_container','PPSK_pane_alert_container_div');" );
 		$objResponse->assign( 'alert_container', 'innerHTML', $alert_mess );
 	}
 //______________________________________________________________________________
@@ -276,9 +276,9 @@ abstract class Core{
 	 * @return unknown_type
 	 */
 	public function showAlertHandler( &$objResponse, $info ){
-		$alert_obj	= new AlertPaneRnd1( $this, $info[ 'message' ], $info[ 'focus' ] );
+		$alert_obj	= new AlertPaneRnd1( $this, $info['message'], $info['focus'] );
 		$alert_mess	= $alert_obj->getHtmlView();
-		$objResponse->script( "prependDiv( 'body_id', 'alert_veil', 'PPSK_alert_vail_div'); prependDiv( 'body_id', 'alert_container', 'PPSK_pane_alert_container_div');" );
+		$objResponse->script( "prependDiv('body_id','alert_veil','PPSK_alert_vail_div');prependDiv('body_id','alert_container','PPSK_pane_alert_container_div');" );
 		$objResponse->assign( 'alert_container', 'innerHTML', $alert_mess );
 	}
 //______________________________________________________________________________
