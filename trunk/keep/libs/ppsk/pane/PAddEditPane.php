@@ -170,7 +170,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 //______________________________________________________________________________
 
     protected function getSessionParams( &$formValues ){
-		$formValues['inst']	= $this->decipherFilledValue( $formValues['inst'] );
+		$formValues['inst']	= self::decipherFilledValue( $formValues['inst'] );
 
 		list( $formValues['class'], $formValues['action_type'] )	= explode( '.', $formValues['inst'] );
 

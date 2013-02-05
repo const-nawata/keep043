@@ -221,7 +221,7 @@ abstract class Core{
 	 * @param	string $str
 	 * @return	integer
 	 */
-	protected function decipherFilledValue( $str ){
+	protected static function decipherFilledValue( $str ){
 		if( _PPSK_IS_CIPHER ){
 			$cipher_obj	= new sipherManager( $_SESSION[ 'cipher_base' ], $_SESSION[ 'cipher_key' ] );
 			$str		= $cipher_obj->decipherString( $str );
