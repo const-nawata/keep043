@@ -203,7 +203,7 @@ abstract class Core{
 	 * @param	integer $id
 	 * @return	string
 	 */
-	protected function encipherFilledValue( $value ){
+	protected static function encipherFilledValue( $value ){
 		$filler	= self::getFiller();
 		$str	= $filler.":".$value;
 

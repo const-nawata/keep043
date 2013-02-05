@@ -106,7 +106,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     public function initHtmlView(){
     	$owner_class	= get_class( $this->mOwner );
 
-    	$this->setHiddenInput( 'inst', $this->encipherFilledValue( $owner_class.( ( $this->mRecId ) ? '.'.self::_edit : '.'.self::_add ) ) );
+    	$this->setHiddenInput( 'inst', self::encipherFilledValue( $owner_class.( ( $this->mRecId ) ? '.'.self::_edit : '.'.self::_add ) ) );
 
     	$this->mLines	.= "<tr><td colspan='2' style='height: 10px; font-size: 1px;'>&nbsp;</td></tr>";
     	$this->mContent	= "<table class='editPaneTbl' cellpadding='0' cellspacing='0'>".$this->mLines."</table>";
