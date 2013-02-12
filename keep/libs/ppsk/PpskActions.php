@@ -18,10 +18,6 @@ class PpskActions{
 //TODO: Try to present $handleResource and $value as syhpered JSON array.
 
 	public function onHandler( $handleResource=NULL, $value=NULL ){
-
-// Log::_log(print_r( $value, TRUE));
-
-
 		global $log_obj, $gl_PpskPath;
 		$objResponse = new xajaxResponse();
 

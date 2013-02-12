@@ -325,29 +325,18 @@ abstract class PTable extends Core{
 		$this->prepareData();
 		$class	= get_class( $this );
 
+		$paging	=
+'<tr><td colspan="'.count( $this->mColumns ).'" class="'.$paging['css_panel'].'">'.$this->buildPagingHtmlContent().'</td></tr>';
+
 		$view	=
-
-			(( !$isHndl ) ?
-			'<div id="'.$class.'_container">' : '' ).
-
-				'<table class="PPSK_tableTbl" cellpadding="0" cellspacing="0">'.
-		$this->mUpperLine.$this->buildColumnsHtmlContent().
+'<table class="PPSK_tableTbl" cellpadding="0" cellspacing="0">'.
+		$this->mUpperLine.
+		$this->buildColumnsHtmlContent().
 		$this->buildLinesHtmlContent().
-					'<tr>'.
-						'<td colspan="'.count( $this->mColumns ).'" class="'.$paging['css_panel'].'">'.
-		$this->buildPagingHtmlContent().
-						'</td>'.
-					'</tr>'.
-				'</table>'.
+		$paging.
+'</table>';
 
-				(( !$isHndl ) ?
-			'</div>':'').
-		'';
-
-
-
-
-
+		$view	= ( !$isHndl ) ? '<div id="'.$class.'_container">'.$view.'</div>' : $view;
 
 		parent::initHtmlView( $view );
 	}
