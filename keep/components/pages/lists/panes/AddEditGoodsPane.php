@@ -4,21 +4,20 @@ class AddEditGoodsPane extends PAddEditPane{
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 
-		$this->mTitle		= _EDITING.' '._GOOD_PARS_ROD;
+		$this->mTitle	= _EDITING.' '._GOOD_PARS_ROD;
 
 		$this->mName	= 'AddEditGoodsPaneN';
 
-		$this->mTarCss		= 'edit_pane_txt_ar';
-		$this->mInpCss		= 'edit_pane_input';
-		$this->mSelCss		= 'edit_pane_sel';
+		$this->mTarCss	= 'edit_pane_txt_ar';
+		$this->mInpCss	= 'edit_pane_input';
+		$this->mSelCss	= 'edit_pane_sel';
 
-		$this->mWidth		= 455;
-// 		$this->mHeigth		= 185;
-		$this->mHeigth		= 250;
+		$this->mWidth	= 455;
+		$this->mHeigth	= 250;
 
-		$this->mBrdClr		= _PANE_BORDER_COLOR;
-		$this->mBkgClr		= _GEN_BKGRND_COLOR;
-		$this->mInitFocus	= 'name';
+		$this->mBrdClr	= _PANE_BORDER_COLOR;
+		$this->mBkgClr	= _GEN_BKGRND_COLOR;
+		$this->mInitFocus= 'name';
 	}
 //______________________________________________________________________________
 

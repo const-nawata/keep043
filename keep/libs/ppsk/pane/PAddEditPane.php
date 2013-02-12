@@ -21,12 +21,12 @@ abstract class PAddEditPane extends PRnd1Pane{
  * HTML content of table lines.
  * @property	string  $mLines
  */
-	protected $mLines		= _EMPTY;
-	protected $mInpCss		= _EMPTY;
-	protected $mSelCss		= _EMPTY;
-	protected $mPrmCss		= _EMPTY;
-	protected $mTarCss		= _EMPTY;
-	public $mInitFocus		= _EMPTY;	//	Must be accessed from PTable object
+	protected $mLines		= '';
+	protected $mInpCss		= '';
+	protected $mSelCss		= '';
+	protected $mPrmCss		= '';
+	protected $mTarCss		= '';
+	public $mInitFocus		= '';	//	Must be accessed from PTable object
 
 /**
  * contains data to save; this property is used for PDbl insert / update methods.
@@ -92,24 +92,29 @@ abstract class PAddEditPane extends PRnd1Pane{
     abstract protected function adjustForm( $formValues );
 //______________________________________________________________________________
 
+/**
+ * performs data validation
+ * @param	array $formValues - data which were posted by HTML form
+ *
+ * Must include next code:
+ * $formValues['is_valid']	= <... code> (boolean value)
+ */
     abstract protected function isValidData( &$formValues );
-//     {
-// 		$formValues['is_valid']	= TRUE;
-//     }
 //______________________________________________________________________________
 
 /**
  * creates HTML content
- * @access	public
+ * @param	string $view - fictive parameter. This parameter is set for PHP strict compatibility
  * @return	void
  */
-    public function initHtmlView(){
+    public function initHtmlView( $view = '' ){
     	$owner_class	= get_class( $this->mOwner );
 
     	$this->setHiddenInput( 'inst', self::encipherFilledValue( $owner_class.( ( $this->mRecId ) ? '.'.self::_edit : '.'.self::_add ) ) );
 
     	$this->mLines	.= "<tr><td colspan='2' style='height: 10px; font-size: 1px;'>&nbsp;</td></tr>";
     	$this->mContent	= "<table class='editPaneTbl' cellpadding='0' cellspacing='0'>".$this->mLines."</table>";
+
     	parent::initHtmlView();
     }
 //______________________________________________________________________________

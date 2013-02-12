@@ -1,14 +1,14 @@
 <?php
 class AlertPaneRnd1 extends PRnd1Pane{
-	private $mMessage	= _EMPTY;
+	private $mMessage	= '';
 
-	public function __construct( $Owner = NULL, $message = _EMPTY, $focus = _EMPTY ){
+	public function __construct( $Owner = NULL, $message = '', $focus = '' ){
 		$this->mTitle	=  _PPSK_ERROR;
 		$this->mName	= 'AlertPaneRnd1';
 		$this->mWidth	= 550;
 		$this->mHeigth	= 200;
 
-		$fcjs	= ( $focus != _EMPTY ) ? "setFocus(\"".$focus."\");" : '';
+		$fcjs	= ( $focus != '' ) ? "setFocus(\"".$focus."\");" : '';
 
 		$this->mButtons	= array(
 		array(	//	Button to close pane
@@ -18,7 +18,7 @@ class AlertPaneRnd1 extends PRnd1Pane{
     			'css_ovr'	=> 'btn_over',
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "removeElement( \"alert_container\" );removeElement( \"alert_veil\" );".$fcjs
+    					'handler'	=> "removeElement(\"alert_container\");removeElement(\"alert_veil\");".$fcjs
 		)
 		)
 		)
@@ -30,23 +30,24 @@ class AlertPaneRnd1 extends PRnd1Pane{
 		parent::__construct( $Owner );
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-	public function initHtmlView(){
-		//		$this->mContent = $this->mMessage;
-
+/**
+ * creates HTML content
+ * @param	string $view - fictive parameter. This parameter is set for PHP strict compatibility
+ * @return	void
+ */
+	public function initHtmlView( $view = '' ){
 		$this->mContent =
-"<div class='PPSK_alert_div'>".$this->mMessage."</div>";
-
+'<div class="PPSK_alert_div">'.$this->mMessage.'</div>';
 
 		parent::initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>

@@ -61,7 +61,7 @@ abstract class PPane extends Core{
  */
 	protected $mContent		= '';
 	protected $mForm		= NULL;
-	protected $mTitle		= NULL;
+	protected $mTitle		= '';
 	protected $mButtons		= array();
 	private $mHiddens		= array();
 //----------------------//-----------------------//
@@ -98,9 +98,9 @@ abstract class PPane extends Core{
 	private function adjustProperties(){
 		foreach( $this->mButtons as &$button ){
 			self::adjustBtnProperties( $button );
-			$button[ 'is_last' ]	= false;
+			$button['is_last']	= FALSE;
 		}
-		$button[ 'is_last' ]	= true;
+		$button['is_last']	= TRUE;
 	}
 //--------------------------------------------------------------------------------------------------
 
@@ -131,12 +131,12 @@ abstract class PPane extends Core{
 	protected function getInnerHtmlContent(){
 		//TODO: Describe CSS aditional class to change title style in doc
 
-		$content	= ($this->mTitle != NULL) ? "<div  class='PPSK_innerBlockTitle ".$this->mName."_PaneTitle'>".$this->mTitle."</div>":'';
+		$content	= ($this->mTitle != '') ? "<div  class='PPSK_innerBlockTitle ".$this->mName."_PaneTitle'>".$this->mTitle."</div>":'';
 		$content	.= ($this->mForm != NULL)
 		? "<form id='".$this->mName."Form' name='".$this->mName."Form' ".$this->mForm['event']."='".$this->mForm['handler']."'>":'';
 
 		foreach( $this->mHiddens as $hdn_item ){
-			$content	.= "<input type='hidden' name='".$hdn_item[ 'id' ]."' id='".$hdn_item[ 'id' ]."' value='".$hdn_item[ 'value' ]."' />";
+			$content	.= "<input type='hidden' name='".$hdn_item['id']."' id='".$hdn_item['id']."' value='".$hdn_item['value']."' />";
 		}
 
 		$content	.= $this->mContent;
@@ -148,16 +148,24 @@ abstract class PPane extends Core{
 
 	/**
 	 * sets HTML view
-	 * @param uderfind $view
+	 * @param	string $view - HTML string. If empty then default view is created.
 	 * @return void
 	 */
-	public function initHtmlView( $view = NULL ){
-		$view	= ( $view == NULL )
-		?	"<div class='PPSK_simple_pane' style='width: ".$this->mWidth."px; height: ".$this->mHeigth."px; background-color:".$this->mBkgClr."; border-color: ".$this->mBrdClr.";'>".
-		$this->getInnerHtmlContent().
-    			"</div>"
-    			: $view;
-    			parent:: initHtmlView( $view );
+	public function initHtmlView( $view = '' ){
+		$pane_view	= ( $view == '' )
+			?
+'<div class="PPSK_simple_pane" '.
+	'style="'.
+		'width:'.$this->mWidth.'px;'.
+		'height:'.$this->mHeigth.'px;'.
+		'background-color:'.$this->mBkgClr.';'.
+		'border-color:'.$this->mBrdClr.';"'.
+'>'.
+	$this->getInnerHtmlContent().
+'</div>'
+			: $view;
+
+    	parent:: initHtmlView( $pane_view );
 	}
 //--------------------------------------------------------------------------------------------------
 

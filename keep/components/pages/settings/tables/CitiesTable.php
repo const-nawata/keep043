@@ -1,5 +1,6 @@
 <?php
 require_once( $gl_pagesPath.'settings/panes/AddEditCityPane.php' );
+
 class CitiesTable extends PTable{
 
 	public function __construct( $Owner = NULL, $isHndl=FALSE, $isInitView=TRUE ){

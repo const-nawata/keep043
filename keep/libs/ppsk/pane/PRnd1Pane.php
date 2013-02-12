@@ -9,7 +9,7 @@ require_once($gl_PpskPath."pane/PPane.php");
  This component was created and tested for  PHP version 5.2.11; Apache version 2.2.4.
  @author C.Nawata (nawataster@gmail.com)
  */
-abstract class PRnd1Pane extends PPane{
+class PRnd1Pane extends PPane{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
@@ -23,16 +23,14 @@ abstract class PRnd1Pane extends PPane{
 
 	/**
 	 * sets HTML view for rounded corners pane.
-	 * @access	public
-	 * @param	string $view
+	 * @param	string $view - fictive parameter. This parameter is set for PHP strict compatibility
 	 * @return	void
 	 */
-	public function initHtmlView( $view = NULL ){
-		if( $view == NULL ){
+	public function initHtmlView( $view = '' ){
 			$height_ins	= $this->mHeigth - 26;
 
-			$view = "
-<div style='width: ".$this->mWidth."px;'>
+			$pane_view =
+"<div style='width:".$this->mWidth."px;'>
 	<b class='PPSK_ugCnt1_'>
       <b class='PPSK_ugCnt1_01' style='background-color:".$this->mBrdClr."; border-color:".$this->mBrdClr.";'></b>
       <b class='PPSK_ugCnt1_02' style='background-color:".$this->mBrdClr."; border-color:".$this->mBrdClr.";'></b>
@@ -49,11 +47,11 @@ abstract class PRnd1Pane extends PPane{
       <b class='PPSK_ugCnt1_13' style='background-color:".$this->mBkgClr."; border-color:".$this->mBrdClr.";'></b>
 	</b>
 
-	<div class='PPSK_ugCnt1_fg' style='background-color:".$this->mBkgClr."; height: ".$height_ins."px; border-color:".$this->mBrdClr.";'>
-    ".$this->getInnerHtmlContent()."
-	</div>
+	<div class='PPSK_ugCnt1_fg' style='background-color:".$this->mBkgClr."; height: ".$height_ins."px; border-color:".$this->mBrdClr.";'>".
+    $this->getInnerHtmlContent().
+	"</div>
 
-	<b class='PPSK_ugCnt1_' style='width: ".$this->mWidth."px;'>
+	<b class='PPSK_ugCnt1_' style='width:".$this->mWidth."px;'>
       <b class='PPSK_ugCnt1_13' style='background-color:".$this->mBkgClr."; border-color:".$this->mBrdClr.";'></b>
       <b class='PPSK_ugCnt1_12' style='background-color:".$this->mBkgClr."; border-color:".$this->mBrdClr.";'></b>
       <b class='PPSK_ugCnt1_11' style='background-color:".$this->mBkgClr."; border-color:".$this->mBrdClr.";'></b>
@@ -69,9 +67,8 @@ abstract class PRnd1Pane extends PPane{
       <b class='PPSK_ugCnt1_01' style='background-color:".$this->mBrdClr."; border-color:".$this->mBrdClr.";'></b>
 	</b>
 </div>";
-		}
 
-		parent:: initHtmlView( $view );
+		parent:: initHtmlView( $pane_view );
 	}
 //______________________________________________________________________________
 

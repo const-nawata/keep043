@@ -1,8 +1,8 @@
 <?php
 class ConfirmPaneRnd1 extends PRnd1Pane{
-	private $mMessage	= _EMPTY;
+	private $mMessage	= '';
 
-	public function __construct( $Owner = NULL, $message = _EMPTY, $action = _EMPTY, $focus = _EMPTY ){
+	public function __construct( $Owner = NULL, $message = '', $action = '', $focus = '' ){
 		$this->mTitle		=  _PPSK_ATTENTION;
 
 		$this->mName	= 'AlertPaneRnd1';
@@ -43,14 +43,19 @@ class ConfirmPaneRnd1 extends PRnd1Pane{
     					parent::__construct( $Owner );
     					$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-	public function initHtmlView(){
-		$this->mContent =
-"<div class='PPSK_alert_div'>".$this->mMessage."</div>";
+/**
+ * creates HTML content
+ * @param	string $view - fictive parameter. This parameter is set for PHP strict compatibility
+ * @return	void
+ */
+    public function initHtmlView( $view = '' ){
+			$this->mContent =
+'<div class="PPSK_alert_div">'.$this->mMessage.'</div>';
 		parent::initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function cancelInfo( &$objResponse, $focus ){
 		$objResponse->remove( 'alert_container' );
@@ -59,12 +64,11 @@ class ConfirmPaneRnd1 extends PRnd1Pane{
 			$objResponse->script( "setFocus( '".$focus."' );" );
 		}
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>
