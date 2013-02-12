@@ -30,15 +30,15 @@ abstract class PButton extends Core{
 	//-----------------------//----------------------//----------------------//-----------------------//
 
 	protected	$mType		= 'button';
-	protected	$mCssAct	= _EMPTY;
-	protected	$mCssDis	= _EMPTY;
-	private		$isDisabled	= false;
+	protected	$mCssAct	= '';
+	protected	$mCssDis	= '';
+	private		$isDisabled	= FALSE;
 	//-----------------------//----------------------//----------------------//-----------------------//
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
 	}
-	//--------------------------------------------------------------------------------------------------  disabled=\"disabled\"
+//______________________________________________________________________________
 
 	/**
 	 * sets HTML view
@@ -48,7 +48,7 @@ abstract class PButton extends Core{
 	 */
 	public function initHtmlView( $view = NULL ){
 		$view = ( $view == NULL )
-		? "<button".$this->getHandlersHtml().
+		? '<button'.$this->getHandlersHtml().
 		( ( $this->isDisabled )
 		? " class='".$this->mCssDis."' disabled "
 		: " class='".$this->mCssAct."' " ).
@@ -57,7 +57,7 @@ abstract class PButton extends Core{
 	    			"</button>" : $view;
 		parent::initHtmlView( $view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * sets prompt
@@ -69,7 +69,7 @@ abstract class PButton extends Core{
 		parent::setPrompt( $prompt );
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * sets hint
@@ -81,7 +81,7 @@ abstract class PButton extends Core{
 		parent::setHint( $hint );
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * sets status disabled
@@ -89,12 +89,10 @@ abstract class PButton extends Core{
 	 * @return void
 	 */
 	public function setDisabled(){
-		$this->isDisabled	= true;
-		//		$this->unsetAllHandlers();
-		//		$this->setHint( _EMPTY );
+		$this->isDisabled	= TRUE;
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	/**
 	 * sets status disabled
@@ -102,16 +100,14 @@ abstract class PButton extends Core{
 	 * @return void
 	 */
 	public function setEnabled(){
-		$this->isDisabled	= false;
+		$this->isDisabled	= FALSE;
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-
-?>

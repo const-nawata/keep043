@@ -2,6 +2,8 @@
 class PagingButton extends PButton{
 	private $mPaging;
 	private $mPgInfo;
+	public $mNum	= NULL;
+	public $mBntName	= '';
 
 	/**
 	 * Constructor
@@ -15,7 +17,7 @@ class PagingButton extends PButton{
 		$this->mType	= 'button';
 		parent::__construct( $Owner );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function getOverCssClass( $bntName ){
 		$class_name	= '';
@@ -29,7 +31,7 @@ class PagingButton extends PButton{
 		}
 		return $class_name;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function getOutCssClass( $bntName ){
 		$class_name	= '';
@@ -43,7 +45,7 @@ class PagingButton extends PButton{
 		}
 		return $class_name;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function createPagingActions( $bntName, $page ){
 		$resourse	= self::getHandleResourceString( 'onClickPgBtnHandler', get_class( $this->mOwner ) );
@@ -51,7 +53,7 @@ class PagingButton extends PButton{
 		$this->setHandler( array( 'handler'=>"mouseOverOut( this, \"".$this->getOverCssClass( $bntName )."\");" ), 'onmouseover' );
 		$this->setHandler( array( 'handler'=>"mouseOverOut( this, \"".$this->getOutCssClass( $bntName )."\");" ), 'onmouseout' );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 	/**
 	 * defines if paging button is active
 	 * @param	string $bntName
@@ -86,41 +88,40 @@ class PagingButton extends PButton{
 				break;
 
 			default:
-				$is_act	= false;
+				$is_act	= FALSE;
 		}
 		$this->createPagingActions( $bntName, $toPage );
 		return $is_act;
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-	public function getHtmlView( $bntName, $num	= _EMPTY ){
-		$info			= &$this->mPgInfo;
+	public function getHtmlView(){
+		$num		= $this->mNum;
+		$bntName	= $this->mBntName;
+		$this->mName= $bntName.$num;
+
 		$paging_prms	= &$this->mPaging;
-
-		$this->mName	= $bntName.$num;
 
 		$this->mCssAct	= $paging_prms[ $bntName.'_img_act' ];
 		$this->mCssDis	= $paging_prms[ $bntName.'_img_dis' ];
 		$this->setPrompt( $num );
 
-		$to_page		= $num;
-		$is_to_page_act	= $this->isToPageAct( $bntName, $to_page );
+		$is_to_page_act	= $this->isToPageAct( $bntName, $num );
 		if( $is_to_page_act ){
 			$hint	= $paging_prms[ $bntName.'_hint' ];
 			$this->setEnabled();
 		}else{
-			$hint	= _EMPTY;
+			$hint	= '';
 			$this->setDisabled();
 		}
 		$this->setHint( $hint );
 		return parent::getHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 
 	public function __destruct(){
 		parent::__destruct ();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 }//	Class end
-?>

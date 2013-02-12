@@ -17,6 +17,7 @@ define( '_PPSK_BLACK_COLOR', '#000000' );
 @define( '_PPSK_HINT_NEXT_PAGE', 'Next page' );
 @define( '_PPSK_HINT_PREV_PAGES', 'Previous qroup of pages' );
 @define( '_PPSK_HINT_NEXT_PAGES', 'Next qroup of pages' );
+@define( '_TO_THIS_PAGE', 'To this page' );
 
 //	PROMPTS
 @define( '_PPSK_ASTERISK', "<span style='color: #FF0000;'>&nbsp;*</span>" );
@@ -33,5 +34,3 @@ define( '_PPSK_BLACK_COLOR', '#000000' );
 @define( '_PPSK_DB_ERR_DUBLICATE_ENTRY', 'Value `%1s` for field `%2s`has already been registered.<br>Try another value.' );
 @define( '_PPSK_DB_ERR_FOREIGN_KEY_CONSTRAINT', 'Cannot delete or update this row. Its values are used in other lists.' );
 
-
-?>
