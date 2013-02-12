@@ -283,7 +283,7 @@ abstract class PTable extends Core{
 	 * @access	public
 	 * @property string $mPaneClassName
 	 */
-	public $mPaneClassName	= _EMPTY;
+	public $mPaneClassName	= '';
 
 	//-----------------//----------------//----------------//-----------------//
 	private	$mInfo;
@@ -309,33 +309,45 @@ abstract class PTable extends Core{
 	public function __get( $property ){
 		if( property_exists( $this, $property )){
 			return $this->$property;
+		}else{
+			Log::_log("Undefind property was requested: $property");
 		}
 	}
 //______________________________________________________________________________
 
 	/**
 	 * sets HTML view
-	 * @access public
-	 * @param boolean $isHndl
+	 * @param boolean $isHndl - this parameter is set to define if it is necessary to create external container
 	 * @return void
 	 */
-	public function initHtmlView( $isHndl ){
+	public function initHtmlView( $isHndl = FALSE ){
 		$paging	= &$this->mPaging;
 		$this->prepareData();
 		$class	= get_class( $this );
 
-		$view	= ( ( !$isHndl ) ? "
-			<div id='".$class."_container'>" : "" ).
-				"<table class='PPSK_tableTbl' cellpadding='0' cellspacing='0'>".
+		$view	=
+
+			(( !$isHndl ) ?
+			'<div id="'.$class.'_container">' : '' ).
+
+				'<table class="PPSK_tableTbl" cellpadding="0" cellspacing="0">'.
 		$this->mUpperLine.$this->buildColumnsHtmlContent().
 		$this->buildLinesHtmlContent().
-					"<tr>
-						<td colspan='".count( $this->mColumns )."' class='".$paging[ 'css_panel' ]."'>".
+					'<tr>'.
+						'<td colspan="'.count( $this->mColumns ).'" class="'.$paging['css_panel'].'">'.
 		$this->buildPagingHtmlContent().
-						"</td>
-					</tr>
-				</table>".( ( !$isHndl ) ?
-			"</div>":'');
+						'</td>'.
+					'</tr>'.
+				'</table>'.
+
+				(( !$isHndl ) ?
+			'</div>':'').
+		'';
+
+
+
+
+
 
 		parent::initHtmlView( $view );
 	}
@@ -844,7 +856,7 @@ abstract class PTable extends Core{
 		$id	= self::decipherFilledValue( $id );
 		$class	= get_class( $this );
 		$_SESSION['tables'][$class]['line_id']	= $id;
-		$tbl_obj	= new $class( NULL, true );
+		$tbl_obj	= new $class( NULL, TRUE );
 		$objResponse->assign(  $class.'_container', 'innerHTML', $tbl_obj->getHtmlView() );
 	}
 //______________________________________________________________________________

@@ -73,8 +73,8 @@ class LoginPane extends PRnd1Pane{
 	 * @return string HTML content
 	 */
 	private function getLoginPaneHtmlContent(){
-		return "
-<table cellpadding='0' cellspacing='0'>
+		return
+"<table cellpadding='0' cellspacing='0'>
 	<tr><td class='promptTD'>"._LOGIN."</td><td class='inputField'><input tabindex='1' type='text' id='login' name='login' value='' /></td></tr>
 	<tr><td class='promptTD'>"._PASSWORD."</td><td class='inputField'><input tabindex='2' type='password' id='password' name='password' value='' /></td></tr>
 	<tr><td>&nbsp;</td><td class='inputField'><a>"._LOGIN_FOGOTTEN."</a></td></tr>

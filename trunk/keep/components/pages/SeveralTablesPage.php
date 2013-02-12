@@ -107,9 +107,9 @@ abstract class SeveralTablesPage extends PPage{
 	}
 //______________________________________________________________________________
 
-	public function initHtmlView(){
-		$view	= $this->getMultiTablesHtmlContent();
-		parent::initHtmlView( $view );
+	public function initHtmlView( $view = '' ){
+		$tview	= $this->getMultiTablesHtmlContent();
+		parent::initHtmlView( $tview );
 	}
 //______________________________________________________________________________
 

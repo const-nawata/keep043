@@ -138,7 +138,7 @@ abstract class Core{
 	 * @param uderfind $view
 	 * @return void
 	 */
-	public function initHtmlView( $view ){
+	public function initHtmlView( $view = '' ){
 		$this->mHtmlView	= $view;
 	}
 //______________________________________________________________________________
