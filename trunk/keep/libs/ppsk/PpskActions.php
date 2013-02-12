@@ -21,6 +21,8 @@ class PpskActions{
 		global $log_obj, $gl_PpskPath;
 		$objResponse = new xajaxResponse();
 
+		$arr	= json_decode( $value, TRUE );
+		$value	= is_array($arr) ? $arr : $value;
 
 		$err_access	= "location.href='".$gl_PpskPath."access.php'";
 
