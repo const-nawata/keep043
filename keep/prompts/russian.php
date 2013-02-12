@@ -21,6 +21,7 @@ define( '_PPSK_HINT_PREV_PAGE', 'Предыдущая страница' );
 define( '_PPSK_HINT_NEXT_PAGE', 'Следующая страница' );
 define( '_PPSK_HINT_PREV_PAGES', 'Предыдущая группа страниц' );
 define( '_PPSK_HINT_NEXT_PAGES', 'Следующая  группа страниц' );
+define( '_TO_THIS_PAGE', 'Эта страница' );
 
 // Messages
 define( '_MESSAGE_BAD_LOGIN', 'Ошибка. Логин не найден или неверный пароль.' );

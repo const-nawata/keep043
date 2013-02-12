@@ -190,14 +190,14 @@ abstract class PTable extends Core{
 
 		*/
 	protected $mPaging		= array(
-		'css_panel'			=> _EMPTY,
-		'css_info'			=> _EMPTY,
-		'css_btn'			=> _EMPTY,
+		'css_panel'			=> '',
+		'css_info'			=> '',
+		'css_btn'			=> '',
 
-		'num_pg_img_act'	=> _EMPTY,
-		'num_pg_img_dis'	=> _EMPTY,
-		'num_pg_img_ovr'	=> _EMPTY,
-		'num_pg_hint'		=> _EMPTY,
+		'num_pg_img_act'	=> '',
+		'num_pg_img_dis'	=> '',
+		'num_pg_img_ovr'	=> '',
+		'num_pg_hint'		=> _TO_THIS_PAGE,
 
 		'prv_pg_img_act'	=>'PPSK_tablePrevPageAct',
 		'prv_pg_img_dis'	=>'PPSK_tablePrevPageDis',
@@ -222,12 +222,14 @@ abstract class PTable extends Core{
 		'emp_pg_img_act'	=>_EMPTY,
 		'emp_pg_img_dis'	=>_EMPTY,
 		'emp_pg_img_ovr'	=>_EMPTY,
-		'emp_pg_hint'		=>_EMPTY/*,
+		'emp_pg_hint'		=>_EMPTY
 
-	'emp_gr_img_act'	=>_EMPTY,
-	'emp_gr_img_dis'	=>_EMPTY,
-	'emp_gr_img_ovr'	=>_EMPTY,
-	'emp_gr_hint'		=>_EMPTY*/
+
+
+// 	,'emp_gr_img_act'	=>_EMPTY,
+// 	,'emp_gr_img_dis'	=>_EMPTY,
+// 	,'emp_gr_img_ovr'	=>_EMPTY,
+// 	,'emp_gr_hint'		=>_EMPTY
 	);
 
 	/**
@@ -409,7 +411,7 @@ abstract class PTable extends Core{
 
 	private function adjustColumnsParams(){
 		$columns	= &$this->mColumns;
-		//    	$inst_name	= &$this->mName;
+
 		$class = get_class( $this );
 
 		if( count( $columns ) == 0 ){
@@ -483,38 +485,51 @@ abstract class PTable extends Core{
 		$paging	= &$this->mPaging;
 		$info	= &$this->mInfo;
 
-		$string = "
-<table class='PPSK_tablePagingTbl' cellpadding='0' cellspacing='0'>
-	<tr>
-		<td class='".$paging['css_info']."'>"._FOUND.": ".$info['n_all']."</td>";
+		$string =
+'<table class="PPSK_tablePagingTbl" cellpadding="0" cellspacing="0">'.
+	'<tr>'.
+		"<td class='".$paging['css_info']."'>"._FOUND.": ".$info['n_all']."</td>";
 
-		if( $info[ 'n_all' ] > $this->mPgLen ){
+		if( $info['n_all'] > $this->mPgLen ){
 			$pg_obj	= new PagingButton( $this );
 
-			$string .= "
-		<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'prv_gr' )."</td>
-		<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'prv_pg' )."</td>";
+			$pg_obj->mBntName	= 'prv_gr';
+			$string .=
+		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView('prv_gr')."</td>";
 
-			$max_grp_pg	= $max_grp_pg_valid = $info[ 'grp_start' ] + $this->mMaxGrPg;
+			$pg_obj->mBntName	= 'prv_pg';
+			$string .=
+		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView('prv_pg')."</td>";
 
-			$max_page	= $this->mInfo[ 'max_page' ] + 1;
+			$max_grp_pg	= $max_grp_pg_valid = $info['grp_start'] + $this->mMaxGrPg;
+
+			$max_page	= $this->mInfo['max_page'] + 1;
 			$max_grp_pg	= ( $max_grp_pg > $max_page ) ?  $max_page : $max_grp_pg;
 
-			for( $n_page = $info[ 'grp_start' ]; $n_page < $max_grp_pg; $n_page++ ){
-				$string .= "<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'num_pg', $n_page )."</td>";
+
+			for( $n_page = $info['grp_start']; $n_page < $max_grp_pg; $n_page++ ){
+				$pg_obj->mBntName	= 'num_pg';
+				$pg_obj->mNum	= $n_page;
+				$string .= "<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView().'</td>';
 			}
+			$pg_obj->mNum	= NULL;
 
 			for( $n_page; $n_page < $max_grp_pg_valid; $n_page++ ){
 				$string .= "<td class='".$paging['css_btn']."'>&nbsp;</td>";
 			}
 
-			$string .= "
-		<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'nxt_pg' )."</td>
-		<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'nxt_gr' )."</td>";
+			$pg_obj->mBntName	= 'nxt_pg';
+			$string .=
+		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'nxt_pg' )."</td>";
+
+			$pg_obj->mBntName	= 'nxt_gr';
+			$string .=
+		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'nxt_gr' )."</td>";
+
 		}
-		$string .= "
-	</tr>
-</table>";
+		$string .=
+	'</tr>'.
+'</table>';
 
 		return $string;
 	}
