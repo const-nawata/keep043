@@ -10,7 +10,10 @@ class LoginPane extends PRnd1Pane{
 
 		$this->mForm	= array(
     		'event'		=> 'onsubmit',
-			'handler'	=> "xajax_onHandler( \"".self::getHandleResourceString( 'doLogin', 'LoginPane' )."\",xajax.getFormValues(this));return false;"
+			'handler'	=>
+				'xajax_onHandler('.
+					'"'.self::getHandleResourceString( 'doLogin', 'LoginPane' ).'",xajax.getFormValues(this)'.
+				');return false;'
     	);
 
 		$this->mButtons	= array(
@@ -97,10 +100,15 @@ class LoginPane extends PRnd1Pane{
 	 */
 	private function checkLogin( $formValues ){
 		$db_obj	= new KeepDbl( $this );
-// 		$sql = "SELECT `id`, `level` FROM `login_info` WHERE `login`='".$formValues['login']."' AND `password`='".$formValues['password']."'";
-		$sql = "SELECT `id`, `level` FROM `users` WHERE `login`='".$formValues['login']."' AND `password`='".$formValues['password']."'";
+
+		$sql =
+
+"SELECT `id`, `level` ".
+"FROM `users` ".
+"WHERE `login`='".$formValues['login']."' AND `password`='".$formValues['password']."'";
 
 		$user_info = $db_obj->execSelectQuery( $sql, 'LoginPane::checkLogin' );
+
 		if( (bool)count( $user_info )){ return $user_info[0]; }
 		else{ return FALSE; }
 	}
