@@ -28,7 +28,7 @@ class AddEditManagerPane extends PAddEditPane{
     }
 //______________________________________________________________________________
 
-    public function initHtmlView(){
+    public function initHtmlView( $view = '' ){
     	$db_obj	= new PDbl( $this );
 		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 

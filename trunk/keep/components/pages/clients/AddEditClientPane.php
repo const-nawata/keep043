@@ -22,7 +22,7 @@ class AddEditClientPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-	public function initHtmlView(){
+	public function initHtmlView( $view = '' ){
 		$rec_id	= $this->mRecId;
 
 		$db_obj	= new PDbl( $this );

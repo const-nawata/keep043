@@ -15,7 +15,7 @@ class TableToolPane extends PPane{
 		parent::__construct( $this );
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function adjustProperties(){
 		foreach( $this->mButtons as $type => &$button ){
@@ -26,15 +26,22 @@ class TableToolPane extends PPane{
 			$button[ 'css_dwn' ]	= ( !isset( $button[ 'css_dwn' ] ) ) ? 'PPSK_'.$type.'RowBtnDown' : $button[ 'css_dwn' ];
 		}
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-	public function initHtmlView(){
-		$view	= "<div class='PPSK_simple_pane table_tool_pane' style='width: ".$this->mWidth."px; height: ".$this->mHeigth."px; background-color:".$this->mBkgClr."; border-color: ".$this->mBrdClr.";'>".
+	public function initHtmlView( $view = '' ){
+		$view	=
+'<div class="PPSK_simple_pane table_tool_pane" '.
+	'style="width:'.$this->mWidth.'px;'.
+		'height:'.$this->mHeigth.'px;'.
+		'background-color:'.$this->mBkgClr.';'.
+		'border-color:'.$this->mBrdClr.';"'.
+'>'.
+
 		$this->getInnerHtmlContent().
-    			"</div>";
+'</div>';
+
 		parent:: initHtmlView( $view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 }//	Class end
-?>

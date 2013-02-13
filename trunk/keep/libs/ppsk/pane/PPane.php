@@ -73,7 +73,7 @@ abstract class PPane extends Core{
 	}
 //--------------------------------------------------------------------------------------------------
 
-	public function adjustBtnProperties( &$button ){
+	public static function adjustBtnProperties( &$button ){
 		( !isset( $button[ 'type' ] ) )		? $button[ 'type' ]		= 'button':'';
 		( !isset( $button[ 'is_dis' ] ) )	? $button[ 'is_dis' ]	= false:'';
 		( !isset( $button[ 'prompt' ] ) )	? $button[ 'prompt' ]	= _EMPTY:'';

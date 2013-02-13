@@ -17,7 +17,7 @@ abstract class PPage extends Core{
 	}
 //______________________________________________________________________________
 
-	public function initHtmlView( $view = NULL ){
+	public function initHtmlView( $view = '' ){
 		if( $view == NULL ){
 			$const_name	= _TAB_PRMPT.$_SESSION[ 'tab_code' ];
 			$view		=_SORRY." Страничка: ".constant( $const_name );
