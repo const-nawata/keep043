@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+body,body * {
+	font-family: Arial, Tahoma, Helvetica, sans-serif;
+	color: #887788;
+	font-size: 14px;
+	padding: 0px;
+	margin: 0px;
+}
+
+body {
+	background-color: #EFF7F3;
+}
