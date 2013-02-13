@@ -76,7 +76,8 @@ abstract class PTable extends Core{
 	const _stdPgGrpLen	= 5;
 	const _gradValue	= 20;
 	const _fstPg		= 1;
-	//-----------------------//----------------------//----------------------//-----------------------//
+
+//------------------//-----------------//-----------------//-------------------/
 
 	/**
 	 * @property string $mSourceDbTable -  Table name which is used for SQL query. Mandatory.
@@ -308,14 +309,14 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-	public function __get( $property ){
-		if( property_exists( $this, $property )){
-			return $this->$property;
-		}else{
-			Log::_log("Undefind property was requested: $property");
-		}
-	}
-//______________________________________________________________________________
+// 	public function __get( $property ){
+// 		if( property_exists( $this, $property )){
+// 			return $this->$property;
+// 		}else{
+// 			Log::_log("Undefind property was requested: $property");
+// 		}
+// 	}
+// //______________________________________________________________________________
 
 	/**
 	 * sets HTML view
@@ -328,7 +329,11 @@ abstract class PTable extends Core{
 		$class	= get_class( $this );
 
 		$paging	=
-'<tr><td colspan="'.count( $this->mColumns ).'" class="'.$paging['css_panel'].'">'.$this->buildPagingHtmlContent().'</td></tr>';
+'<tr>'.
+	'<td colspan="'.count( $this->mColumns ).'" class="'.(isset( $paging['css_panel'] ) ? $paging['css_panel'] : '').'">'.
+		$this->buildPagingHtmlContent().
+	'</td>'.
+'</tr>';
 
 		$view	=
 '<table class="PPSK_tableTbl" cellpadding="0" cellspacing="0">'.
@@ -488,7 +493,7 @@ abstract class PTable extends Core{
 		$string =
 '<table class="PPSK_tablePagingTbl" cellpadding="0" cellspacing="0">'.
 	'<tr>'.
-		"<td class='".$paging['css_info']."'>"._FOUND.": ".$info['n_all']."</td>";
+		"<td class='".(isset( $paging['css_info'] ) ? $paging['css_info'] : '')."'>"._FOUND.": ".$info['n_all']."</td>";
 
 		if( $info['n_all'] > $this->mPgLen ){
 			$pg_obj	= new PagingButton( $this );
@@ -888,6 +893,7 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
+//FIXME: Paging design crash after row deletion
 	public function deleteRowHandler( &$objResponse, $nullValue ){
 		$edit_pane_obj	= new $this->mPaneClassName( $this );
 		$table_name = $edit_pane_obj->getTargetDbTable();

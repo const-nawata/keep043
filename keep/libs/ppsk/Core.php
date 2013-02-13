@@ -50,6 +50,15 @@ abstract class Core{
 	}
 //______________________________________________________________________________
 
+	public function __get( $property ){
+		if( property_exists( $this, $property )){
+			return $this->$property;
+		}else{
+			Log::_log("Undefind property was requested: $property");
+		}
+	}
+//______________________________________________________________________________
+
 	/**
 	 * sets handler
 	 * @access	protected

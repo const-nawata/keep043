@@ -1,5 +1,5 @@
 <?php
-class PDbl extends Core{ //
+class PDbl extends Core{
 	const _duplicateEntry	= 1062;
 	const _cannotDelUpdate	= 1451;
 
@@ -45,7 +45,7 @@ class PDbl extends Core{ //
 	}
 //______________________________________________________________________________
 
-	public function execSelectQuery( $sql, $resource='Undefined' ){
+	public function execSelectQuery( $sql, $resource = 'Undefined' ){
 		global $gl_MysqliObj;
 
 		$result = $gl_MysqliObj->query( $sql );
@@ -128,8 +128,8 @@ class PDbl extends Core{ //
 	}
 //______________________________________________________________________________
 
-	public function getRow( $id, $isSetFields=FALSE ){
-		$tbl	= &$this->mOwner->getSourceDbTable();
+	public function getRow( $id, $isSetFields = FALSE ){
+		$tbl	= $this->mOwner->getSourceDbTable();
 
 		if( !(bool)$id && $isSetFields ){
 			return $this->getTblNullItem( $tbl, $isSetFields );
@@ -175,7 +175,7 @@ class PDbl extends Core{ //
  * @param	string $cond - condition
  * @return	array - list to create select box
  */
-	public function getSelBoxList( $tbl, $cond='' ){
+	public function getSelBoxList( $tbl, $cond = '' ){
 		global $gl_MysqliObj;
 		$cond	= ( '' == $cond ) ? $cond : ' WHERE '.$cond;
 		$sql	= 'SELECT `id`, `name` FROM `'.$tbl.'`'.$cond.' ORDER BY `name`';
