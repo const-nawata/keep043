@@ -11,8 +11,8 @@ abstract class Core{
 	public $mName;
 
 	private $mHtmlView;
-	private $mPrmpt		= _EMPTY;
-	private $mHint		= _EMPTY;
+	private $mPrmpt		= '';
+	private $mHint		= '';
 	protected $mBkgClr	= 'transparent';
 	protected $mBrdClr	= _PPSK_BLACK_COLOR;
 	protected $mWidth	= self::_stdWidth;
@@ -61,8 +61,8 @@ abstract class Core{
 	 *
 	 * @return void
 	 */
-	protected function setHandler( $handler = _EMPTY, $event = 'onclick' ){
-		$this->mHandlers[ $event ]	= $handler;
+	protected function setHandler( $handler = '', $event = 'onclick' ){
+		$this->mHandlers[$event]	= $handler;
 	}
 //______________________________________________________________________________
 
