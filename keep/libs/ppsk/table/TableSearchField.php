@@ -3,7 +3,7 @@ class TableSearchField  extends Core{
 	private $mFilterValue;
 	private $mBtnSearch;
 	private $mBtnClear;
-	//-----------------------//----------------------//----------------------//-----------------------//
+//------------------//-----------------//-----------------//-------------------/
 
 	public function __construct( $Owner, $filterValue = _EMPTY ){
 		$this->mFilterValue	= $filterValue;
@@ -12,7 +12,7 @@ class TableSearchField  extends Core{
 		$this->adjustProperties();
 		$this->initHtmlView();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	private function adjustProperties(){
 		$button	= &$this->mBtnSearch;
@@ -37,9 +37,9 @@ class TableSearchField  extends Core{
 
 		PPane::adjustBtnProperties( $button );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-	public function initHtmlView(){
+	public function initHtmlView( $view = '' ){
 		$btn_search	= &$this->mBtnSearch;
 		$btn_clear	= &$this->mBtnClear;
 
@@ -78,12 +78,11 @@ class TableSearchField  extends Core{
 </table>";
 		parent:: initHtmlView( $view );
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
 	public function __destruct(){
 		parent::__destruct();
 	}
-	//--------------------------------------------------------------------------------------------------
+//______________________________________________________________________________
 
-}//	Class end
-?>
+}//		Class end

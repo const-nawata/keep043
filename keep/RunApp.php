@@ -34,7 +34,7 @@ class RunApp extends Core{
 	}
 //______________________________________________________________________________
 
-	public function initHtmlView(){
+	public function initHtmlView( $view = '' ){
 		$tabs_obj	= $this->tabsSetClassSelector( $this );
 		$page_obj	= $this->pageClassSelector( $this );
 		$view		= array(
@@ -53,4 +53,5 @@ class RunApp extends Core{
 	}
 //______________________________________________________________________________
 
-}//	Class end
+}//		Class end
+//------------------//-----------------//-----------------//-------------------/

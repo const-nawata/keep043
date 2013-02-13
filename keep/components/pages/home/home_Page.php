@@ -70,7 +70,7 @@ class home_Page extends PPage{
 	}
 //______________________________________________________________________________
 
-	public function initHtmlView(){
+	public function initHtmlView( $view = '' ){
 		$news_pane		= new NewsPane1( $this );
 		$slides_pane	= new SlidesPane1( $this );
 		$view	=
@@ -88,4 +88,4 @@ class home_Page extends PPage{
 	}
 //______________________________________________________________________________
 
-}//	Class end
+}//		Class end

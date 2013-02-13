@@ -8,7 +8,7 @@ class login_Page extends PPage{
 	}
 //______________________________________________________________________________
 
-	public function initHtmlView(){
+	public function initHtmlView( $view = '' ){
 		$login_pane	= new LoginPane( $this );
 		$view		= $login_pane->getHtmlView();
 		parent::initHtmlView( $view );
