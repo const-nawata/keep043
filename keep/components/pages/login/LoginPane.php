@@ -1,7 +1,7 @@
 <?php
 class LoginPane extends PRnd1Pane{
 
-	public function __construct(){
+	public function __construct( $owner ){
 		$this->mTitle		= _TITLE_INPUT_LOGIN;
 		$this->mWidth	= 320;
 		$this->mHeigth	= 200;
@@ -65,7 +65,7 @@ class LoginPane extends PRnd1Pane{
 
     	$this->mContent	= $this->getLoginPaneHtmlContent();//	Individual content
 
-    	parent::__construct( $this );
+    	parent::__construct( $owner );
     	$this->initHtmlView();
 	}
 //______________________________________________________________________________
@@ -121,7 +121,8 @@ class LoginPane extends PRnd1Pane{
 			$_SESSION['level']		= $login_info['level'];
 			$_SESSION['user_id']	= $login_info['id'];
 			$_SESSION['tab_code']	= NULL;
-			PTabsSet::execTabHandler( $objResponse );
+			$tabs_set_obj	= new PTabsSet( $this );
+			$tabs_set_obj->execTabHandler( $objResponse );
 		}else{
 			$objResponse->assign( 'errLoginCont', 'innerHTML', _MESSAGE_BAD_LOGIN );
 		}

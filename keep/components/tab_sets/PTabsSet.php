@@ -1,6 +1,6 @@
 <?php
 require_once ( $gl_tab_setsPath.'TabImage.php' );
-abstract class PTabsSet extends Core{
+class PTabsSet extends Core{
 	/**
 	 *
 	 * @var array - list of tab codes
