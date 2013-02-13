@@ -35,29 +35,62 @@ $page_contet	=
 
 
 
+
+
+
+print_r( $_SERVER['SCRIPT_URL'] );
+
 $page_contet	.=
 '</body>'.
-'</html>'.
 
-'<script type="text/javascript">'.
 
-'showFileName = function(){'.
-	"document.getElementById('file_name_inp').value = document.getElementById('file').value;".
-	"document.getElementById('buttonUploadTdId').innerHTML =	\"<div id='button' class='gneral_button button_25_inside button_orange'><div class='limit_90'></div><button name='logo_upload' id='logo_upload' title='"._UPLOAD."' class='button' type='submit'>"._UPLOAD."</button></div>\";".
-'};'.
+"\n".'<script>'."\n\n".
 
-'function checkUploadForm(){'.
-	"return xajax.upload('uploadLogo', 'OrganizationForm');".
+'showFileName = function(){'."\n".
+	"document.getElementById('file_name_inp').value = document.getElementById('file').value;\n".
+	"document.getElementById('buttonUploadTdId').innerHTML = \"<div id='button' class='gneral_button button_25_inside button_orange'><div class='limit_90'></div><button name='logo_upload' id='logo_upload' title='' class='button' type='submit'>"._UPLOAD."</button></div>\";\n".
+'};'."\n".
+
+'function checkUploadForm(){'."\n".
+	"return xajax.upload('uploadLogo', 'OrganizationForm');\n".
 '}'.
 
+"
 
+	        $ (public static function () {
+			});
+
+	        ".
 '</script>'.
 
 
+/*
+ *
+ *
+ *
+ *
+ *
+
+
+			    $('#orgUploadField').fileupload({
+			        dataType: 'json',
+			        url: './?xjxfun=uploadLogo',
+			        done: public static function (e, data) {
+			        	if(data.result.error!=1){
+			           		$('#logoImageDiv').css('background-image','url(\"./'+data.result.name+'\")');
+			           	}else{
+			           		alert('ggg');
+						}
+			        }
+			    });
 
 
 
 
+
+
+*/
+'</html>'.
 '';
 
 echo $page_contet;
