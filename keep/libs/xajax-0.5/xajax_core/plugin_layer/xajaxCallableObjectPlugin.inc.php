@@ -43,19 +43,19 @@ class xajaxCallableObjectPlugin extends xajaxRequestPlugin
 		String: sXajaxPrefix
 	*/
 	var $sXajaxPrefix;
-	
+
 	/*
 		String: sDefer
 	*/
 	var $sDefer;
-	
+
 	var $bDeferScriptGeneration;
 
 	/*
 		String: sRequestedClass
 	*/
 	var $sRequestedClass;
-	
+
 	/*
 		String: sRequestedMethod
 	*/
@@ -121,7 +121,7 @@ class xajaxCallableObjectPlugin extends xajaxRequestPlugin
 //EndSkipDebug
 
 				if (false === is_a($xco, 'xajaxCallableObject'))
-					$xco =& new xajaxCallableObject($xco);
+					$xco = new xajaxCallableObject($xco);
 
 				if (2 < count($aArgs))
 					if (is_array($aArgs[2]))
@@ -148,7 +148,7 @@ class xajaxCallableObjectPlugin extends xajaxRequestPlugin
 			if (0 < count($this->aCallableObjects))
 			{
 				$sCrLf = "\n";
-				
+
 				echo $sCrLf;
 				echo '<';
 				echo 'script type="text/javascript" ';
@@ -215,5 +215,5 @@ class xajaxCallableObjectPlugin extends xajaxRequestPlugin
 	}
 }
 
-$objPluginManager =& xajaxPluginManager::getInstance();
+$objPluginManager = xajaxPluginManager::getInstance();
 $objPluginManager->registerPlugin(new xajaxCallableObjectPlugin(), 102);

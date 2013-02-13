@@ -309,15 +309,6 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-// 	public function __get( $property ){
-// 		if( property_exists( $this, $property )){
-// 			return $this->$property;
-// 		}else{
-// 			Log::_log("Undefind property was requested: $property");
-// 		}
-// 	}
-// //______________________________________________________________________________
-
 	/**
 	 * sets HTML view
 	 * @param boolean $isHndl - this parameter is set to define if it is necessary to create external container
@@ -327,10 +318,9 @@ abstract class PTable extends Core{
 		$paging	= &$this->mPaging;
 		$this->prepareData();
 		$class	= get_class( $this );
-
-		$paging	=
+		$paging_tool	=
 '<tr>'.
-	'<td colspan="'.count( $this->mColumns ).'" class="'.(isset( $paging['css_panel'] ) ? $paging['css_panel'] : '').'">'.
+	'<td colspan="'.count( $this->mColumns ).'" class="'.(isset( $paging['css_panel'] ) ? $paging['css_panel'] : '').'">'.// isset ?????
 		$this->buildPagingHtmlContent().
 	'</td>'.
 '</tr>';
@@ -340,7 +330,7 @@ abstract class PTable extends Core{
 		$this->mUpperLine.
 		$this->buildColumnsHtmlContent().
 		$this->buildLinesHtmlContent().
-		$paging.
+		$paging_tool.
 '</table>';
 
 		$view	= ( !$isHndl ) ? '<div id="'.$class.'_container">'.$view.'</div>' : $view;

@@ -15,7 +15,7 @@ if (false == class_exists('xajaxPlugin') || false == class_exists('xajaxPluginMa
 {
 	$sBaseFolder = dirname(dirname(dirname(__FILE__)));
 	$sXajaxCore = $sBaseFolder . '/xajax_core';
-	
+
 	if (false == class_exists('xajaxPlugin'))
 		require $sXajaxCore . '/xajaxPlugin.inc.php';
 	if (false == class_exists('xajaxPluginManager'))
@@ -29,36 +29,36 @@ class clsTableUpdater extends xajaxResponsePlugin
 {
 	/*
 		String: sDefer
-		
+
 		Used to store the state of the scriptDeferral configuration setting.  When
 		script deferral is desired, this member contains 'defer' which will request
-		that the browser defer loading of the javascript until the rest of the page 
+		that the browser defer loading of the javascript until the rest of the page
 		has been loaded.
 	*/
 	var $sDefer;
-	
+
 	/*
 		String: sJavascriptURI
-		
+
 		Used to store the base URI for where the javascript files are located.  This
 		enables the plugin to generate a script reference to it's javascript file
 		if the javascript code is NOT inlined.
 	*/
 	var $sJavascriptURI;
-	
+
 	/*
 		Boolean: bInlineScript
-		
+
 		Used to store the value of the inlineScript configuration option.  When true,
 		the plugin will return it's javascript code as part of the javascript header
 		for the page, else, it will generate a script tag referencing the file by
 		using the <clsTableUpdater->sJavascriptURI>.
 	*/
 	var $bInlineScript;
-	
+
 	/*
 		Function: clsTableUpdater
-		
+
 		Constructs and initializes an instance of the table updater class.
 	*/
 	function clsTableUpdater()
@@ -67,13 +67,13 @@ class clsTableUpdater extends xajaxResponsePlugin
 		$this->sJavascriptURI = '';
 		$this->bInlineScript = true;
 	}
-	
+
 	/*
 		Function: configure
-		
-		Receives configuration settings set by <xajax> or user script calls to 
+
+		Receives configuration settings set by <xajax> or user script calls to
 		<xajax->configure>.
-		
+
 		sName - (string):  The name of the configuration option being set.
 		mValue - (mixed):  The value being associated with the configuration option.
 	*/
@@ -91,10 +91,10 @@ class clsTableUpdater extends xajaxResponsePlugin
 					$this->bInlineScript = $mValue;
 			}
 	}
-	
+
 	/*
 		Function: generateClientScript
-		
+
 		Called by the <xajaxPluginManager> during the script generation phase.  This
 		will either inline the script or insert a script tag which references the
 		<tableUpdater.js> file based on the value of the <clsTableUpdater->bInlineScript>
@@ -106,33 +106,33 @@ class clsTableUpdater extends xajaxResponsePlugin
 		{
 			echo "\n<script type='text/javascript' " . $this->sDefer . "charset='UTF-8'>\n";
 			echo "/* <![CDATA[ */\n";
-			
+
 			include(dirname(__FILE__) . '/tableUpdater.js');
-			
+
 			echo "/* ]]> */\n";
 			echo "</script>\n";
 		} else {
 			echo "\n<script type='text/javascript' src='" . $this->sJavascriptURI . "tableUpdater.js' " . $this->sDefer . "charset='UTF-8'>\n";
 		}
 	}
-	
+
 	function getName()
 	{
 		return get_class($this);
 	}
-	
+
 	// tables
 	function appendTable($table, $parent) {
 		$command = array(
-				'cmd'=>'et_at', 
+				'cmd'=>'et_at',
 				'id'=>$parent
 				);
-		$this->addCommand($command, $table);	
+		$this->addCommand($command, $table);
 	}
 	function insertTable($table, $parent, $position) {
 		$command = array(
-				'cmd'=>'et_it', 
-				'id'=>$parent, 
+				'cmd'=>'et_it',
+				'id'=>$parent,
 				'pos'=>$position
 				);
 		$this->addCommand($command, $table);
@@ -141,14 +141,14 @@ class clsTableUpdater extends xajaxResponsePlugin
 		$this->addCommand(
 				array(
 					'cmd'=>'et_dt'
-					), 
+					),
 				$table
 				);
 	}
 	// rows
 	function appendRow($row, $parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_ar', 
+				'cmd'=>'et_ar',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -157,7 +157,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function insertRow($row, $parent, $position = null, $before = null) {
 		$command = array(
-				'cmd'=>'et_ir', 
+				'cmd'=>'et_ir',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -168,7 +168,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function replaceRow($row, $parent, $position = null, $before = null) {
 		$command = array(
-				'cmd'=>'et_rr', 
+				'cmd'=>'et_rr',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -179,7 +179,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function deleteRow($parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_dr', 
+				'cmd'=>'et_dr',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -188,7 +188,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function assignRow($values, $parent, $position = null, $start_column = null) {
 		$command = array(
-				'cmd'=>'et_asr', 
+				'cmd'=>'et_asr',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -199,7 +199,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function assignRowProperty($property, $value, $parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_asrp', 
+				'cmd'=>'et_asrp',
 				'id'=>$parent,
 				'prop'=>$property
 				);
@@ -210,7 +210,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	// columns
 	function appendColumn($column, $parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_acol', 
+				'cmd'=>'et_acol',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -219,7 +219,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function insertColumn($column, $parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_icol', 
+				'cmd'=>'et_icol',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -228,7 +228,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function replaceColumn($column, $parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_rcol', 
+				'cmd'=>'et_rcol',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -237,7 +237,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function deleteColumn($parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_dcol', 
+				'cmd'=>'et_dcol',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -246,7 +246,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function assignColumn($values, $parent, $position = null, $start_row = null) {
 		$command = array(
-				'cmd'=>'et_ascol', 
+				'cmd'=>'et_ascol',
 				'id'=>$parent
 				);
 		if (null != $position)
@@ -257,7 +257,7 @@ class clsTableUpdater extends xajaxResponsePlugin
 	}
 	function assignColumnProperty($property, $value, $parent, $position = null) {
 		$command = array(
-				'cmd'=>'et_ascolp', 
+				'cmd'=>'et_ascolp',
 				'id'=>$parent,
 				'prop'=>$property
 				);
@@ -268,25 +268,25 @@ class clsTableUpdater extends xajaxResponsePlugin
 	function assignCell($row, $column, $value) {
 		$this->addCommand(
 				array(
-					'cmd'=>'et_asc', 
-					'id'=>$row, 
+					'cmd'=>'et_asc',
+					'id'=>$row,
 					'pos'=>$column
-					), 
+					),
 				$value
 				);
 	}
 	function assignCellProperty($row, $column, $property, $value) {
 		$this->addCommand(
 				array(
-					'cmd'=>'et_ascp', 
-					'id'=>$row, 
+					'cmd'=>'et_ascp',
+					'id'=>$row,
 					'pos'=>$column,
 					'prop'=>$property
-					), 
+					),
 				$value
 				);
 	}
 }
 
-$objPluginManager =& xajaxPluginManager::getInstance();
+$objPluginManager = xajaxPluginManager::getInstance();
 $objPluginManager->registerPlugin(new clsTableUpdater());

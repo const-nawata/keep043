@@ -24,8 +24,8 @@ if (!defined('XAJAX_METHOD_POST')) define('XAJAX_METHOD_POST', 2);
 
 /*
 	Class: xajaxArgumentManager
-	
-	This class processes the input arguments from the GET or POST data of 
+
+	This class processes the input arguments from the GET or POST data of
 	the request.  If this is a request for the initial page load, no arguments
 	will be processed.  During a xajax request, any arguments found in the
 	GET or POST will be converted to a PHP array.
@@ -34,55 +34,55 @@ class xajaxArgumentManager
 {
 	/*
 		Array: aArgs
-		
+
 		An array of arguments received via the GET or POST parameter
 		xjxargs.
 	*/
 	var $aArgs;
-	
+
 	/*
 		Boolean: bDecodeUTF8Input
-		
+
 		A configuration option used to indicate whether input data should be
 		UTF8 decoded automatically.
 	*/
 	var $bDecodeUTF8Input;
-	
+
 	/*
 		String: sCharacterEncoding
-		
+
 		The character encoding in which the input data will be received.
 	*/
 	var $sCharacterEncoding;
-	
+
 	/*
 		Integer: nMethod
-		
+
 		Stores the method that was used to send the arguments from the client.  Will
 		be one of: XAJAX_METHOD_UNKNOWN, XAJAX_METHOD_GET, XAJAX_METHOD_POST
 	*/
 	var $nMethod;
-	
+
 	/*
 		Array: aSequence
-		
+
 		Stores the decoding sequence table.
 	*/
 	var $aSequence;
-	
+
 	/*
 		Function: convertStringToBool
-		
+
 		Converts a string to a bool var.
-		
+
 		Parameters:
-			$sValue - (string): 
-				
+			$sValue - (string):
+
 		Returns:
 			(bool) : true / false
-	
+
 	*/
-	
+
 	function convertStringToBool($sValue)
 	{
 		if (0 == strcasecmp($sValue, 'true'))
@@ -97,42 +97,42 @@ class xajaxArgumentManager
 		}
 		return false;
 	}
-	
+
 	function argumentStripSlashes(&$sArg)
 	{
 		if (false == is_string($sArg))
 			return;
-		
+
 		$sArg = stripslashes($sArg);
 	}
-	
+
 	function argumentDecodeXML(&$sArg)
 	{
 		if (false == is_string($sArg))
 			return;
-		
+
 		if (0 == strlen($sArg))
 			return;
-		
+
 		$nStackDepth = 0;
 		$aStack = array();
 		$aArg = array();
-		
+
 		$nCurrent = 0;
 		$nLast = 0;
 		$aExpecting = array();
 		$nFound = 0;
 		list($aExpecting, $nFound) = $this->aSequence['start'];
-		
+
 		$nLength = strlen($sArg);
-			
+
 		$sKey = '';
 		$mValue = '';
-		
+
 		while ($nCurrent < $nLength)
 		{
 			$bFound = false;
-			
+
 			foreach ($aExpecting as $sExpecting => $nExpectedLength)
 			{
 				if ($sArg[$nCurrent] == $sExpecting[0])
@@ -140,7 +140,7 @@ class xajaxArgumentManager
 					if ($sExpecting == substr($sArg, $nCurrent, $nExpectedLength))
 					{
 						list($aExpecting, $nFound) = $this->aSequence[$sExpecting];
-						
+
 						switch ($nFound)
 						{
 						case 3:	// k
@@ -148,8 +148,8 @@ class xajaxArgumentManager
 							break;
 						case 4:	// /k
 							$sKey = str_replace(
-								array('<'.'![CDATA[', ']]>'), 
-								'', 
+								array('<'.'![CDATA[', ']]>'),
+								'',
 								substr($sArg, $nLast, $nCurrent - $nLast)
 								);
 							break;
@@ -160,11 +160,11 @@ class xajaxArgumentManager
 							if ($nLast < $nCurrent)
 							{
 								$mValue = str_replace(
-									array('<'.'![CDATA[', ']]>'), 
-									'', 
+									array('<'.'![CDATA[', ']]>'),
+									'',
 									substr($sArg, $nLast, $nCurrent - $nLast)
 									);
-								
+
 								$cType = substr($mValue, 0, 1);
 								$sValue = substr($mValue, 1);
 								switch ($cType) {
@@ -187,7 +187,7 @@ class xajaxArgumentManager
 							break;
 						case 8:	// /xjxobj
 							if (1 < $nStackDepth) {
-								$mValue = $aArg;								
+								$mValue = $aArg;
 								$sKey = array_pop($aStack);
 								$aArg = array_pop($aStack);
 								--$nStackDepth;
@@ -204,17 +204,17 @@ class xajaxArgumentManager
 					}
 				}
 			}
-			
+
 			if (false == $bFound)
 			{
 				if (0 == $nCurrent)
 				{
 					$sArg = str_replace(
-						array('<'.'![CDATA[', ']]>'), 
-						'', 
+						array('<'.'![CDATA[', ']]>'),
+						'',
 						$sArg
 						);
-					
+
 					$cType = substr($sArg, 0, 1);
 					$sValue = substr($sArg, 1);
 					switch ($cType) {
@@ -223,27 +223,27 @@ class xajaxArgumentManager
 						case 'N': $sArg = floatval($sValue); break;
 						case '*': $sArg = null; break;
 					}
-					
+
 					return;
 				}
-				
-//				for larger arg data, performance may suffer using concatenation				
+
+//				for larger arg data, performance may suffer using concatenation
 //				$sText .= $sArg[$nCurrent];
 				$nCurrent++;
 			}
 		}
-		
+
 		$objLanguageManager =& xajaxLanguageManager::getInstance();
-		
+
 		trigger_error(
-			$objLanguageManager->getText('ARGMGR:ERR:01') 
-			. $sExpecting 
-			. $objLanguageManager->getText('ARGMGR:ERR:02') 
+			$objLanguageManager->getText('ARGMGR:ERR:01')
+			. $sExpecting
+			. $objLanguageManager->getText('ARGMGR:ERR:02')
 			. $sArg
 			, E_USER_ERROR
 			);
 	}
-	
+
 	function argumentDecodeUTF8_iconv(&$mArg)
 	{
 		if (is_array($mArg))
@@ -252,21 +252,21 @@ class xajaxArgumentManager
 			{
 				$sNewKey = $sKey;
 				$this->argumentDecodeUTF8_iconv($sNewKey);
-				
+
 				if ($sNewKey != $sKey)
 				{
 					$mArg[$sNewKey] = $mArg[$sKey];
 					unset($mArg[$sKey]);
 					$sKey = $sNewKey;
 				}
-				
+
 				$this->argumentDecodeUTF8_iconv($mArg[$sKey]);
 			}
 		}
 		else if (is_string($mArg))
 			$mArg = iconv("UTF-8", $this->sCharacterEncoding.'//TRANSLIT', $mArg);
 	}
-	
+
 	function argumentDecodeUTF8_mb_convert_encoding(&$mArg)
 	{
 		if (is_array($mArg))
@@ -275,21 +275,21 @@ class xajaxArgumentManager
 			{
 				$sNewKey = $sKey;
 				$this->argumentDecodeUTF8_mb_convert_encoding($sNewKey);
-				
+
 				if ($sNewKey != $sKey)
 				{
 					$mArg[$sNewKey] = $mArg[$sKey];
 					unset($mArg[$sKey]);
 					$sKey = $sNewKey;
 				}
-				
+
 				$this->argumentDecodeUTF8_mb_convert_encoding($mArg[$sKey]);
 			}
 		}
 		else if (is_string($mArg))
 			$mArg = mb_convert_encoding($mArg, $this->sCharacterEncoding, "UTF-8");
 	}
-	
+
 	function argumentDecodeUTF8_utf8_decode(&$mArg)
 	{
 		if (is_array($mArg))
@@ -298,62 +298,62 @@ class xajaxArgumentManager
 			{
 				$sNewKey = $sKey;
 				$this->argumentDecodeUTF8_utf8_decode($sNewKey);
-				
+
 				if ($sNewKey != $sKey)
 				{
 					$mArg[$sNewKey] = $mArg[$sKey];
 					unset($mArg[$sKey]);
 					$sKey = $sNewKey;
 				}
-				
+
 				$this->argumentDecodeUTF8_utf8_decode($mArg[$sKey]);
 			}
 		}
 		else if (is_string($mArg))
 			$mArg = utf8_decode($mArg);
 	}
-	
+
 	/*
 		Constructor: xajaxArgumentManager
-		
+
 		Initializes configuration settings to their default values and reads
 		the argument data from the GET or POST data.
 	*/
 	function xajaxArgumentManager()
 	{
 		$this->aArgs = array();
-		
+
 		$this->bDecodeUTF8Input = false;
 		$this->sCharacterEncoding = 'UTF-8';
 		$this->nMethod = XAJAX_METHOD_UNKNOWN;
-		
+
 		$this->aSequence = array(
 			'<'.'k'.'>' => array(array(
 				'<'.'/k'.'>' => 4
 				), 3),
 			'<'.'/k'.'>' => array(array(
-				'<'.'v'.'>' => 3, 
+				'<'.'v'.'>' => 3,
 				'<'.'/e'.'>' => 4
 				), 4),
 			'<'.'v'.'>' => array(array(
-				'<'.'xjxobj'.'>' => 8, 
+				'<'.'xjxobj'.'>' => 8,
 				'<'.'/v'.'>' => 4
 				), 5),
 			'<'.'/v'.'>' => array(array(
-				'<'.'/e'.'>' => 4, 
+				'<'.'/e'.'>' => 4,
 				'<'.'k'.'>' => 3
 				), 6),
 			'<'.'e'.'>' => array(array(
-				'<'.'k'.'>' => 3, 
-				'<'.'v'.'>' => 3, 
+				'<'.'k'.'>' => 3,
+				'<'.'v'.'>' => 3,
 				'<'.'/e'.'>' => 4
 				), 2),
 			'<'.'/e'.'>' => array(array(
-				'<'.'e'.'>' => 3, 
+				'<'.'e'.'>' => 3,
 				'<'.'/xjxobj'.'>' => 9
 				), 7),
 			'<'.'xjxobj'.'>' => array(array(
-				'<'.'e'.'>' => 3, 
+				'<'.'e'.'>' => 3,
 				'<'.'/xjxobj'.'>' => 9
 				), 1),
 			'<'.'/xjxobj'.'>' => array(array(
@@ -363,7 +363,7 @@ class xajaxArgumentManager
 				'<'.'xjxobj'.'>' => 8
 				), 9)
 			);
-		
+
 		if (isset($_POST['xjxargs'])) {
 			$this->nMethod = XAJAX_METHOD_POST;
 			$this->aArgs = $_POST['xjxargs'];
@@ -371,22 +371,22 @@ class xajaxArgumentManager
 			$this->nMethod = XAJAX_METHOD_GET;
 			$this->aArgs = $_GET['xjxargs'];
 		}
-		
+
 		if (1 == get_magic_quotes_gpc())
 			array_walk($this->aArgs, array(&$this, 'argumentStripSlashes'));
-		
+
 		array_walk($this->aArgs, array(&$this, 'argumentDecodeXML'));
 	}
-	
+
 	/*
 		Function: getInstance
-		
+
 		Returns:
-		
+
 		object - A reference to an instance of this class.  This function is
 			used to implement the singleton pattern.
 	*/
-	function &getInstance()
+	public static function &getInstance()
 	{
 		static $obj;
 		if (!$obj) {
@@ -394,17 +394,17 @@ class xajaxArgumentManager
 		}
 		return $obj;
 	}
-	
+
 	/*
 		Function: configure
-		
+
 		Accepts configuration settings from the main <xajax> object.
-		
+
 		Parameters:
-		
-		
+
+
 		The <xajaxArgumentManager> tracks the following configuration settings:
-		
+
 			<decodeUTF8Input> - (boolean): See <xajaxArgumentManager->bDecodeUTF8Input>
 			<characterEncoding> - (string): See <xajaxArgumentManager->sCharacterEncoding>
 	*/
@@ -417,21 +417,21 @@ class xajaxArgumentManager
 			$this->sCharacterEncoding = $mValue;
 		}
 	}
-	
+
 	/*
 		Function: getRequestMethod
-		
+
 		Returns the method that was used to send the arguments from the client.
 	*/
 	function getRequestMethod()
 	{
 		return $this->nMethod;
 	}
-	
+
 	/*
 		Function: process
-		
-		Returns the array of arguments that were extracted and parsed from 
+
+		Returns the array of arguments that were extracted and parsed from
 		the GET or POST data.
 	*/
 	function process()
@@ -439,7 +439,7 @@ class xajaxArgumentManager
 		if ($this->bDecodeUTF8Input)
 		{
 			$sFunction = '';
-			
+
 			if (function_exists('iconv'))
 				$sFunction = "iconv";
 			else if (function_exists('mb_convert_encoding'))
@@ -453,14 +453,14 @@ class xajaxArgumentManager
 					, E_USER_NOTICE
 					);
 			}
-			
+
 			$mFunction = array(&$this, 'argumentDecodeUTF8_' . $sFunction);
-			
+
 			array_walk($this->aArgs, $mFunction);
-			
+
 			$this->bDecodeUTF8Input = false;
 		}
-		
+
 		return $this->aArgs;
 	}
 }
