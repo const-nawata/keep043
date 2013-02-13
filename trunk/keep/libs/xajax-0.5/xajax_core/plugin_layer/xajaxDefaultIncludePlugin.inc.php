@@ -153,10 +153,10 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 		$this->printJavascriptConfig();
 		return ob_get_clean();
 	}
-	
+
 	/*
 		Function: printJavascriptConfig
-		
+
 		See <xajaxIncludeClientScriptPlugin::getJavascriptConfig>
 	*/
 	function printJavascriptConfig()
@@ -199,7 +199,7 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 		echo 'xajax.config.defaultMethod = "';
 		echo $this->sDefaultMethod;
 		echo '";';
-		
+
 		if (false === (null === $this->nResponseQueueSize))
 		{
 			echo $sCrLf;
@@ -207,7 +207,7 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 			echo $this->nResponseQueueSize;
 			echo ';';
 		}
-		
+
 		echo $sCrLf;
 		echo '/* ]]> */';
 		echo $sCrLf;
@@ -237,10 +237,10 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 		$this->printJavascriptInclude();
 		return ob_get_clean();
 	}
-	
+
 	/*
 		Function: printJavascriptInclude
-		
+
 		See <xajaxIncludeClientScriptPlugin::getJavascriptInclude>
 	*/
 	function printJavascriptInclude()
@@ -250,22 +250,22 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 
 		if (0 == count($aJsFiles)) {
 			$aJsFiles[] = array($this->_getScriptFilename('xajax_js/xajax_core.js'), 'xajax');
-			
+
 			if (true === $this->bDebug)
 				$aJsFiles[] = array($this->_getScriptFilename('xajax_js/xajax_debug.js'), 'xajax.debug');
-			
+
 			if (true === $this->bVerboseDebug)
 				$aJsFiles[] = array($this->_getScriptFilename('xajax_js/xajax_verbose.js'), 'xajax.debug.verbose');
-			
+
 			if (null !== $this->sLanguage)
 				$aJsFiles[] = array($this->_getScriptFilename('xajax_js/xajax_lang_' . $this->sLanguage . '.js'), 'xajax');
 		}
-		
-		if ($sJsURI != '' && substr($sJsURI, -1) != '/') 
+
+		if ($sJsURI != '' && substr($sJsURI, -1) != '/')
 			$sJsURI .= '/';
-			
+
 		$sCrLf = "\n";
-		
+
 		foreach ($aJsFiles as $aJsFile) {
 			echo '<';
 			echo 'script type="text/javascript" src="';
@@ -277,7 +277,7 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 			echo '/script>';
 			echo $sCrLf;
 		}
-			
+
 		if (0 < $this->nScriptLoadTimeout) {
 			foreach ($aJsFiles as $aJsFile) {
 				echo '<';
@@ -323,23 +323,23 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 			}
 		}
 	}
-	
+
 	/*
 		Function: _getScriptFilename
-		
+
 		Returns the name of the script file, based on the current settings.
-		
+
 		sFilename - (string):  The base filename.
-		
+
 		Returns:
-		
+
 		string - The filename as it should be specified in the script tags
 		on the browser.
 	*/
 	function _getScriptFilename($sFilename)
 	{
 		if ($this->bUseUncompressedScripts) {
-			return str_replace('.js', '_uncompressed.js', $sFilename);  
+			return str_replace('.js', '_uncompressed.js', $sFilename);
 		}
 		return $sFilename;
 	}
@@ -348,5 +348,5 @@ class xajaxIncludeClientScriptPlugin extends xajaxRequestPlugin
 /*
 	Register the xajaxIncludeClientScriptPlugin object with the xajaxPluginManager.
 */
-$objPluginManager =& xajaxPluginManager::getInstance();
+$objPluginManager = xajaxPluginManager::getInstance();
 $objPluginManager->registerPlugin(new xajaxIncludeClientScriptPlugin(), 99);

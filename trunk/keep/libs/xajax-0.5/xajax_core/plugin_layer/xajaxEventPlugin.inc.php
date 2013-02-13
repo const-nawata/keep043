@@ -22,7 +22,7 @@
 	Constant: XAJAX_EVENT
 		Specifies that the item being registered via the <xajax->register> function
 		is an event.
-		
+
 	Constant: XAJAX_EVENT_HANDLER
 		Specifies that the item being registered via the <xajax->register> function
 		is an event handler.
@@ -36,7 +36,7 @@ require dirname(__FILE__) . '/support/xajaxEvent.inc.php';
 
 /*
 	Class: xajaxEventPlugin
-	
+
 	Plugin that adds server side event handling capabilities to xajax.  Events can
 	be registered, then event handlers attached.
 */
@@ -51,7 +51,7 @@ class xajaxEventPlugin extends xajaxRequestPlugin
 		String: sXajaxPrefix
 	*/
 	var $sXajaxPrefix;
-	
+
 	/*
 		String: sEventPrefix
 	*/
@@ -61,7 +61,7 @@ class xajaxEventPlugin extends xajaxRequestPlugin
 		String: sDefer
 	*/
 	var $sDefer;
-	
+
 	var $bDeferScriptGeneration;
 
 	/*
@@ -127,7 +127,7 @@ class xajaxEventPlugin extends xajaxRequestPlugin
 
 				if (false === isset($this->aEvents[$sEvent]))
 				{
-					$xe =& new xajaxEvent($sEvent);
+					$xe = new xajaxEvent($sEvent);
 
 					if (2 < count($aArgs))
 						if (is_array($aArgs[2]))
@@ -151,7 +151,7 @@ class xajaxEventPlugin extends xajaxRequestPlugin
 						$xuf =& $aArgs[2];
 
 						if (false === is_a($xuf, 'xajaxUserFunction'))
-							$xuf =& new xajaxUserFunction($xuf);
+							$xuf = new xajaxUserFunction($xuf);
 
 						$objEvent =& $this->aEvents[$sEvent];
 						$objEvent->addHandler($xuf);
@@ -225,5 +225,5 @@ class xajaxEventPlugin extends xajaxRequestPlugin
 	}
 }
 
-$objPluginManager =& xajaxPluginManager::getInstance();
+$objPluginManager = xajaxPluginManager::getInstance();
 $objPluginManager->registerPlugin(new xajaxEventPlugin(), 103);

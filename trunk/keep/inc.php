@@ -4,8 +4,8 @@ require_once( 'config.php' );
 global $gl_PpskPath; $gl_PpskPath = $gl_Path.'libs/ppsk/';
 global $gl_PpskLogFile; $gl_PpskLogFile = $gl_Path.'keep.log';
 
-// DEFINE( '_XAJAX_JS_DIR', $gl_Path.'libs/xajax-0.5' );
-DEFINE( '_XAJAX_JS_DIR', $gl_Path.'libs/xajax-0.6b1' );
+DEFINE( '_XAJAX_JS_DIR', $gl_Path.'libs/xajax-0.5' );
+// DEFINE( '_XAJAX_JS_DIR', $gl_Path.'libs/xajax-0.6b1' );
 require_once( _XAJAX_JS_DIR.'/xajax_core/xajax.inc.php' );
 
 require_once( $gl_Path.'prompts/russian.php' );

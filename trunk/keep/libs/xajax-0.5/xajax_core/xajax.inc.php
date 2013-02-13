@@ -63,20 +63,20 @@ class xajax
 
 	/*
 		Array: aSettings
-		
+
 		This array is used to store all the configuration settings that are set during
 		the run of the script.  This provides a single data store for the settings
 		in case we need to return the value of a configuration option for some reason.
-		
+
 		It is advised that individual plugins store a local copy of the settings they
-		wish to track, however, settings are available via a reference to the <xajax> 
+		wish to track, however, settings are available via a reference to the <xajax>
 		object using <xajax->getConfiguration>.
 	*/
 	var $aSettings;
 
 	/*
 		Boolean: bErrorHandler
-		
+
 		This is a configuration setting that the main xajax object tracks.  It is used
 		to enable an error handler function which will trap php errors and return them
 		to the client as part of the response.  The client can then display the errors
@@ -86,7 +86,7 @@ class xajax
 
 	/*
 		Array: aProcessingEvents
-		
+
 		Stores the processing event handlers that have been assigned during this run
 		of the script.
 	*/
@@ -94,65 +94,65 @@ class xajax
 
 	/*
 		Boolean: bExitAllowed
-		
+
 		A configuration option that is tracked by the main <xajax>object.  Setting this
 		to true allows <xajax> to exit immediatly after processing a xajax request.  If
 		this is set to false, xajax will allow the remaining code and HTML to be sent
-		as part of the response.  Typically this would result in an error, however, 
+		as part of the response.  Typically this would result in an error, however,
 		a response processor on the client side could be designed to handle this condition.
 	*/
 	var $bExitAllowed;
-	
+
 	/*
 		Boolean: bCleanBuffer
-		
+
 		A configuration option that is tracked by the main <xajax> object.  Setting this
-		to true allows <xajax> to clear out any pending output buffers so that the 
+		to true allows <xajax> to clear out any pending output buffers so that the
 		<xajaxResponse> is (virtually) the only output when handling a request.
 	*/
 	var $bCleanBuffer;
-	
+
 	/*
 		String: sLogFile
-	
+
 		A configuration setting tracked by the main <xajax> object.  Set the name of the
 		file on the server that you wish to have php error messages written to during
-		the processing of <xajax> requests.	
+		the processing of <xajax> requests.
 	*/
 	var $sLogFile;
 
 	/*
 		String: sCoreIncludeOutput
-		
+
 		This is populated with any errors or warnings produced while including the xajax
 		core components.  This is useful for debugging core updates.
 	*/
 	var $sCoreIncludeOutput;
-	
+
 	/*
 		Object: objPluginManager
-		
+
 		This stores a reference to the global <xajaxPluginManager>
 	*/
 	var $objPluginManager;
-	
+
 	/*
 		Object: objArgumentManager
-		
+
 		Stores a reference to the global <xajaxArgumentManager>
 	*/
 	var $objArgumentManager;
-	
+
 	/*
 		Object: objResponseManager
-		
+
 		Stores a reference to the global <xajaxResponseManager>
 	*/
 	var $objResponseManager;
-	
+
 	/*
 		Object: objLanguageManager
-		
+
 		Stores a reference to the global <xajaxLanguageManager>
 	*/
 	var $objLanguageManager;
@@ -163,7 +163,7 @@ class xajax
 		Constructor: xajax
 
 		Constructs a xajax instance and initializes the plugin system.
-		
+
 		Parameters:
 
 		sRequestURI - (optional):  The <xajax->sRequestURI> to be used
@@ -177,9 +177,9 @@ class xajax
 		$this->bExitAllowed = true;
 		$this->bCleanBuffer = true;
 		$this->sLogFile = '';
-		
+
 		$this->__wakeup();
-		
+
 		// The default configuration settings.
 		$this->configureMany(
 			array(
@@ -211,39 +211,39 @@ class xajax
 			$this->configure('requestURI', $sRequestURI);
 		else
 			$this->configure('requestURI', $this->_detectURI());
-		
+
 		if (null !== $sLanguage)
 			$this->configure('language', $sLanguage);
 
 		if ('utf-8' != XAJAX_DEFAULT_CHAR_ENCODING) $this->configure("decodeUTF8Input", true);
 
 	}
-	
+
 	/*
 		Function: __sleep
 	*/
 	function __sleep()
 	{
 		$aMembers = get_class_vars(get_class($this));
-		
+
 		if (isset($aMembers['objLanguageManager']))
 			unset($aMembers['objLanguageManager']);
-		
+
 		if (isset($aMembers['objPluginManager']))
 			unset($aMembers['objPluginManager']);
-			
+
 		if (isset($aMembers['objArgumentManager']))
 			unset($aMembers['objArgumentManager']);
-			
+
 		if (isset($aMembers['objResponseManager']))
 			unset($aMembers['objResponseManager']);
-			
+
 		if (isset($aMembers['sCoreIncludeOutput']))
 			unset($aMembers['sCoreIncludeOutput']);
-		
+
 		return array_keys($aMembers);
 	}
-	
+
 	/*
 		Function: __wakeup
 	*/
@@ -266,19 +266,19 @@ class xajax
 		// that will be automatically included at startup.
 		$aPluginFolders = array();
 		$aPluginFolders[] = dirname($sLocalFolder) . '/xajax_plugins';
-		
+
 //SkipAIO
 		$aPluginFolders[] = $sLocalFolder . '/plugin_layer';
 //EndSkipAIO
-		
+
 		// Setup plugin manager
-		$this->objPluginManager =& xajaxPluginManager::getInstance();
+		$this->objPluginManager = xajaxPluginManager::getInstance();
 		$this->objPluginManager->loadPlugins($aPluginFolders);
 
-		$this->objLanguageManager =& xajaxLanguageManager::getInstance();
-		$this->objArgumentManager =& xajaxArgumentManager::getInstance();
-		$this->objResponseManager =& xajaxResponseManager::getInstance();
-		
+		$this->objLanguageManager = xajaxLanguageManager::getInstance();
+		$this->objArgumentManager = xajaxArgumentManager::getInstance();
+		$this->objResponseManager = xajaxResponseManager::getInstance();
+
 		$this->sCoreIncludeOutput = ob_get_clean();
 	}
 
@@ -317,27 +317,27 @@ class xajax
 
 	/*
 		Function: register
-		
-		Call this function to register request handlers, including functions, 
+
+		Call this function to register request handlers, including functions,
 		callable objects and events.  New plugins can be added that support
 		additional registration methods and request processors.
 
 
 		Parameters:
-		
-		$sType - (string): Type of request handler being registered; standard 
+
+		$sType - (string): Type of request handler being registered; standard
 			options include:
 				XAJAX_FUNCTION: a function declared at global scope.
 				XAJAX_CALLABLE_OBJECT: an object who's methods are to be registered.
 				XAJAX_EVENT: an event which will cause zero or more event handlers
 					to be called.
 				XAJAX_EVENT_HANDLER: register an event handler function.
-				
+
 		$sFunction || $objObject || $sEvent - (mixed):
 			when registering a function, this is the name of the function
 			when registering a callable object, this is the object being registered
 			when registering an event or event handler, this is the name of the event
-			
+
 		$sIncludeFile || $aCallOptions || $sEventHandler
 			when registering a function, this is the (optional) include file.
 			when registering a callable object, this is an (optional) array
@@ -357,14 +357,14 @@ class xajax
 				$xuf =& $aArgs[2];
 
 				if (false == is_a($xuf, 'xajaxUserFunction'))
-					$xuf =& new xajaxUserFunction($xuf);
+					$xuf = new xajaxUserFunction($xuf);
 
 				$this->aProcessingEvents[$sEvent] =& $xuf;
 
 				return true;
 			}
 		}
-		
+
 		if (1 < $nArgs)
 		{
 			// for php4
@@ -376,16 +376,16 @@ class xajax
 
 	/*
 		Function: configure
-		
-		Call this function to set options that will effect the processing of 
+
+		Call this function to set options that will effect the processing of
 		xajax requests.  Configuration settings can be specific to the xajax
 		core, request processor plugins and response plugins.
 
 
 		Parameters:
-		
+
 		Options include:
-			javascript URI - (string): The path to the folder that contains the 
+			javascript URI - (string): The path to the folder that contains the
 				xajax javascript files.
 			errorHandler - (boolean): true to enable the xajax error handler, see
 				<xajax->bErrorHandler>
@@ -417,11 +417,11 @@ class xajax
 
 	/*
 		Function: configureMany
-		
+
 		Set an array of configuration options.
 
 		Parameters:
-		
+
 		$aOptions - (array): Associative array of configuration settings
 	*/
 	function configureMany($aOptions)
@@ -432,16 +432,16 @@ class xajax
 
 	/*
 		Function: getConfiguration
-		
+
 		Get the current value of a configuration setting that was previously set
 		via <xajax->configure> or <xajax->configureMany>
 
 		Parameters:
-		
+
 		$sName - (string): The name of the configuration setting
-				
+
 		Returns:
-		
+
 		$mValue : (mixed):  The value of the setting if set, null otherwise.
 	*/
 	function getConfiguration($sName)
@@ -453,11 +453,11 @@ class xajax
 
 	/*
 		Function: canProcessRequest
-		
+
 		Determines if a call is a xajax request or a page load request.
-		
+
 		Return:
-		
+
 		boolean - True if this is a xajax request, false otherwise.
 	*/
 	function canProcessRequest()
@@ -498,7 +498,7 @@ class xajax
 				$GLOBALS['xajaxErrorHandlerText'] = "";
 				set_error_handler("xajaxErrorHandler");
 			}
-			
+
 			$mResult = true;
 
 			// handle beforeProcessing event
@@ -563,23 +563,23 @@ class xajax
 						$fH = @fopen($this->sLogFile, "a");
 						if (NULL != $fH) {
 							fwrite(
-								$fH, 
+								$fH,
 								$this->objLanguageManager->getText('LOGHDR:01')
-								. strftime("%b %e %Y %I:%M:%S %p") 
+								. strftime("%b %e %Y %I:%M:%S %p")
 								. $this->objLanguageManager->getText('LOGHDR:02')
-								. $sErrorMessage 
+								. $sErrorMessage
 								. $this->objLanguageManager->getText('LOGHDR:03')
 								);
 							fclose($fH);
 						} else {
 							$this->objResponseManager->debug(
-								$this->objLanguageManager->getText('LOGERR:01') 
+								$this->objLanguageManager->getText('LOGERR:01')
 								. $this->sLogFile
 								);
 						}
 					}
 					$this->objResponseManager->debug(
-						$this->objLanguageManager->getText('LOGMSG:01') 
+						$this->objLanguageManager->getText('LOGMSG:01')
 						. $sErrorMessage
 						);
 				}
@@ -595,23 +595,23 @@ class xajax
 
 	/*
 		Function: printJavascript
-		
+
 		Prints the xajax Javascript header and wrapper code into your page.
 		This should be used to print the javascript code between the HEAD
 		and /HEAD tags at the top of the page.
-		
+
 		The javascript code output by this function is dependent on the plugins
 		that are included and the functions that are registered.
-		
+
 		Parameters:
-		
+
 		$sJsURI - (string, optional, deprecated): the path to the xajax javascript file(s)
-			
+
 			This option is deprecated and will be removed in future versions; instead
 			please use <xajax->configure> with the option name 'javascript URI'
 		$aJsFiles - (array, optional, deprecated): an array of xajax javascript files
 			that will be loaded via SCRIPT tags.  This option is deprecated and will
-			be removed in future versions; please use <xajax->configure> with the 
+			be removed in future versions; please use <xajax->configure> with the
 			option name 'javascript files' instead.
 	*/
 	function printJavascript($sJsURI="", $aJsFiles=array())
@@ -627,7 +627,7 @@ class xajax
 
 	/*
 		Function: getJavascript
-		
+
 		See <xajax->printJavascript> for more information.
 	*/
 	function getJavascript($sJsURI='', $aJsFiles=array())
@@ -644,7 +644,7 @@ class xajax
 		_uncompressed file with a similar name.  This strips out the
 		comments and extraneous whitespace so the file is as small as
 		possible without modifying the function of the code.
-		
+
 		Parameters:
 
 		sJsFullFilename - (string):  The relative path and name of the file
@@ -668,8 +668,8 @@ class xajax
 			$srcFile = str_replace('.js', '_uncompressed.js', $realJsFile);
 			if (!file_exists($srcFile)) {
 				trigger_error(
-					$this->objLanguageManager->getText('CMPRSJS:RDERR:01') 
-					. dirname($realJsFile) 
+					$this->objLanguageManager->getText('CMPRSJS:RDERR:01')
+					. dirname($realJsFile)
 					. $this->objLanguageManager->getText('CMPRSJS:RDERR:02')
 					, E_USER_ERROR
 					);
@@ -680,8 +680,8 @@ class xajax
 			$fH = @fopen($realJsFile, 'w');
 			if (!$fH) {
 				trigger_error(
-					$this->objLanguageManager->getText('CMPRSJS:WTERR:01') 
-					. dirname($realJsFile) 
+					$this->objLanguageManager->getText('CMPRSJS:WTERR:01')
+					. dirname($realJsFile)
 					. $this->objLanguageManager->getText('CMPRSJS:WTERR:02')
 					, E_USER_ERROR
 					);
@@ -692,12 +692,12 @@ class xajax
 			}
 		}
 	}
-	
+
 	function _compressSelf($sFolder=null)
 	{
 		if (null == $sFolder)
 			$sFolder = dirname(dirname(__FILE__));
-			
+
 		require_once(dirname(__FILE__) . '/xajaxCompress.inc.php');
 
 		if ($handle = opendir($sFolder)) {
@@ -709,7 +709,7 @@ class xajax
 						$sName = substr($sName, 0, strlen($sName) - 8);
 						$sPath = $sFolder . '/' . $sName . '.inc.php';
 						if (file_exists($sPath)) {
-							
+
 							$aParsed = array();
 							$aFile = file($sPath);
 							$nSkip = 0;
@@ -721,15 +721,15 @@ class xajax
 								else if (0 == $nSkip)
 									$aParsed[] = $aFile[$sKey];
 							unset($aFile);
-							
+
 							$compressedScript = xajaxCompressFile(implode('', $aParsed));
-							
+
 							$sNewPath = $sPath;
 							$fH = @fopen($sNewPath, 'w');
 							if (!$fH) {
 								trigger_error(
-									$this->objLanguageManager->getText('CMPRSPHP:WTERR:01') 
-									. $sNewPath 
+									$this->objLanguageManager->getText('CMPRSPHP:WTERR:01')
+									. $sNewPath
 									. $this->objLanguageManager->getText('CMPRSPHP:WTERR:02')
 									, E_USER_ERROR
 									);
@@ -742,18 +742,18 @@ class xajax
 					}
 				}
 			}
-			
+
 			closedir($handle);
 		}
 	}
-	
+
 	function _compile($sFolder=null, $bWriteFile=true)
 	{
 		if (null == $sFolder)
 			$sFolder = dirname(__FILE__);
-			
+
 		require_once(dirname(__FILE__) . '/xajaxCompress.inc.php');
-		
+
 		$aOutput = array();
 
 		if ($handle = opendir($sFolder)) {
@@ -765,12 +765,12 @@ class xajax
 						$sName = substr($sName, 0, strlen($sName) - 8);
 						$sPath = $sFolder . '/' . $sName . '.inc.php';
 						if (
-							'xajaxAIO' != $sName && 
-							'legacy' != $sName && 
+							'xajaxAIO' != $sName &&
+							'legacy' != $sName &&
 							'xajaxCompress' != $sName
 							) {
 							if (file_exists($sPath)) {
-								
+
 								$aParsed = array();
 								$aFile = file($sPath);
 								$nSkip = 0;
@@ -788,24 +788,24 @@ class xajax
 									else if (0 == $nSkip)
 										$aParsed[] = $aFile[$sKey];
 								unset($aFile);
-								
+
 								$aOutput[] = xajaxCompressFile(implode('', $aParsed));
 							}
 						}
 					}
 				}
 			}
-			
+
 			closedir($handle);
 		}
-		
+
 		if ($bWriteFile)
 		{
 			$fH = @fopen($sFolder . '/xajaxAIO.inc.php', 'w');
 			if (!$fH) {
 				trigger_error(
-					$this->objLanguageManager->getText('CMPRSAIO:WTERR:01') 
-					. $sFolder 
+					$this->objLanguageManager->getText('CMPRSAIO:WTERR:01')
+					. $sFolder
 					. $this->objLanguageManager->getText('CMPRSAIO:WTERR:02')
 					, E_USER_ERROR
 					);
@@ -816,7 +816,7 @@ class xajax
 				fclose($fH);
 			}
 		}
-		
+
 		return implode('', $aOutput);
 	}
 
@@ -834,13 +834,13 @@ class xajax
 
 		// Try to get the request URL
 		if (!empty($_SERVER['REQUEST_URI'])) {
-		
+
 			$_SERVER['REQUEST_URI'] = str_replace(
-				array('"',"'",'<','>'), 
-				array('%22','%27','%3C','%3E'), 
+				array('"',"'",'<','>'),
+				array('%22','%27','%3C','%3E'),
 				$_SERVER['REQUEST_URI']
 				);
-				
+
 			$aURL = parse_url($_SERVER['REQUEST_URI']);
 		}
 
@@ -849,9 +849,9 @@ class xajax
 			if (!empty($_SERVER['HTTP_SCHEME'])) {
 				$aURL['scheme'] = $_SERVER['HTTP_SCHEME'];
 			} else {
-				$aURL['scheme'] = 
-					(!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off') 
-					? 'https' 
+				$aURL['scheme'] =
+					(!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off')
+					? 'https'
 					: 'http';
 			}
 		}
@@ -885,7 +885,7 @@ class xajax
 		if (!empty($aURL['path']))
 			if (0 == strlen(basename($aURL['path'])))
 				unset($aURL['path']);
-		
+
 		if (empty($aURL['path'])) {
 			$sPath = array();
 			if (!empty($_SERVER['PATH_INFO'])) {
@@ -920,8 +920,8 @@ class xajax
 		$sURL.= $aURL['host'];
 
 		// Add the port if needed
-		if (!empty($aURL['port']) 
-			&& (($aURL['scheme'] == 'http' && $aURL['port'] != 80) 
+		if (!empty($aURL['port'])
+			&& (($aURL['scheme'] == 'http' && $aURL['port'] != 80)
 			|| ($aURL['scheme'] == 'https' && $aURL['port'] != 443))) {
 			$sURL.= ':'.$aURL['port'];
 		}
@@ -931,9 +931,9 @@ class xajax
 
 		// Clean up
 		unset($aURL);
-		
+
 		$aURL = explode("?", $sURL);
-		
+
 		if (1 < count($aURL))
 		{
 			$aQueries = explode("&", $aURL[1]);
@@ -943,11 +943,11 @@ class xajax
 				if ("xjxGenerate" == substr($sQuery, 0, 11))
 					unset($aQueries[$sKey]);
 			}
-			
+
 			$sQueries = implode("&", $aQueries);
-			
+
 			$aURL[1] = $sQueries;
-			
+
 			$sURL = implode("?", $aURL);
 		}
 
@@ -966,12 +966,12 @@ class xajax
 		Typically, you will not need to use this method since the default
 		character encoding can be configured using the constant
 		<XAJAX_DEFAULT_CHAR_ENCODING>.
-		
+
 		Parameters:
 
 		sEncoding - (string):  The encoding to use.
 			- examples include (UTF-8, ISO-8859-1)
-		
+
 		Note:
 		deprecated : This function will be removed in future versions.  Please
 			use <xajax->configure> instead.
@@ -1004,12 +1004,12 @@ class xajax
 		Function: setFlags
 
 		Sets a series of flags.  See also, <xajax->setFlag>.
-		
+
 		Parameters:
 
 		flags - (array):  An associative array containing the name of the flag
 			and the value to set.
-		
+
 		Note:
 		deprecated : This function will be removed in future versions.  Please
 			use <xajax->configureMany> instead.
@@ -1040,14 +1040,14 @@ class xajax
 			- allowBlankResponse, false
 			- allowAllResponseTypes, false
 			- generateStubs, true
-		
+
 		Parameters:
 
 		name - (string): The name of the flag to set.
 		value - (boolean):  The value to set.
-		
+
 		Note:
-		
+
 		deprecated : This function will be removed in future versions.  Please
 			use <xajax->configure> instead.
 	*/
@@ -1061,7 +1061,7 @@ class xajax
 		Function: getFlag
 
 		Returns the current value of the flag.  See also <xajax->setFlag>.
-		
+
 		Parameters:
 
 		name - (string):  The name of the flag.
@@ -1083,12 +1083,12 @@ class xajax
 		Function: setRequestURI
 
 		Sets the URI to which requests will be sent.
-		
+
 		Parameters:
 
 		sRequestURI - (string):  The URI
 
-		Note: 
+		Note:
 
 		$xajax->setRequestURI("http://www.xajaxproject.org");
 
@@ -1122,7 +1122,7 @@ class xajax
 		Function: setDefaultMode
 
 		Sets the default mode for requests from the browser.
-		
+
 		Parameters:
 
 		sDefaultMode - (string):  The mode to set as the default.
@@ -1149,7 +1149,7 @@ class xajax
 
 		string - The default mode to be used by the browser for each
 			request.
-		
+
 		Note:
 		deprecated : This function will be removed in future versions.  Please
 			use <xajax->getConfiguration> instead.
@@ -1163,7 +1163,7 @@ class xajax
 		Function: setDefaultMethod
 
 		Sets the default method for making xajax requests.
-		
+
 		Parameters:
 
 		sMethod - (string):  The name of the method.
@@ -1187,7 +1187,7 @@ class xajax
 		Returns:
 
 		string - The current method configured.
-		
+
 		Note:
 		deprecated : This function will be removed in future versions.  Please
 			use <xajax->getConfiguration> instead.
@@ -1203,7 +1203,7 @@ class xajax
 		Sets the prefix that will be prepended to the javascript wrapper
 		functions.  This allows a little flexibility in setting the naming
 		for the wrapper functions.
-		
+
 		Parameters:
 
 		sPrefix - (string):  The prefix to be used.
@@ -1226,7 +1226,7 @@ class xajax
 		Returns:
 
 		string - The current wrapper prefix.
-		
+
 		Note:
 		deprecated : This function will be removed in future versions.  Please
 			use <xajax->getConfiguration> instead.
@@ -1243,7 +1243,7 @@ class xajax
 		request.  This is only used by the error handling system at this
 		point.  If you do not invoke this method or you pass in an empty
 		string, then no log file will be written to.
-		
+
 		Parameters:
 
 		sFilename - (string):  The full or reletive path to the log file.
@@ -1281,7 +1281,7 @@ class xajax
 		Registers a PHP function or method with the xajax request processor.  This
 		makes the function available to the browser via an asynchronous
 		(or synchronous) javascript call.
-		
+
 		Parameters:
 
 		mFunction - (string or array):  The string containing the function name
@@ -1302,7 +1302,7 @@ class xajax
 	*/
 	function registerFunction($mFunction, $sIncludeFile=null)
 	{
-		$xuf =& new xajaxUserFunction($mFunction, $sIncludeFile);
+		$xuf = new xajaxUserFunction($mFunction, $sIncludeFile);
 		return $this->register(XAJAX_FUNCTION, $xuf);
 	}
 
@@ -1312,12 +1312,12 @@ class xajax
 		Registers an object whose methods will be searched for a match to the
 		incoming request.  If more than one callable object is registered, the
 		first on that contains the requested method will be used.
-		
+
 		Parameters:
 
 		oObject - (object, by reference):  The object whose methods will be
 			registered.
-		
+
 		Note:
 		deprecated : This function will be removed in future versions.  Please
 			use <xajax->register> instead.
@@ -1325,14 +1325,14 @@ class xajax
 	function registerCallableObject(&$oObject)
 	{
 		$mResult = false;
-		
+
 		if (0 > version_compare(PHP_VERSION, '5.0'))
 			// for PHP4; using eval because PHP5 will complain it is deprecated
 			eval('$mResult = $this->register(XAJAX_CALLABLE_OBJECT, &$oObject);');
 		else
 			// for PHP5
 			$mResult = $this->register(XAJAX_CALLABLE_OBJECT, $oObject);
-			
+
 		return $mResult;
 	}
 
@@ -1346,7 +1346,7 @@ class xajax
 			- beforeProcessing: triggered before the request is processed.
 			- afterProcessing: triggered after the request is processed.
 			- invalidRequest: triggered if no matching function/method is found.
-			
+
 		Parameters:
 
 		mCallback - (function): The function or object callback to be assigned.
@@ -1379,7 +1379,7 @@ function xajaxErrorHandler($errno, $errstr, $errfile, $errline)
 {
 	$errorReporting = error_reporting();
 	if (($errno & $errorReporting) == 0) return;
-	
+
 	if ($errno == E_NOTICE) {
 		$errTypeStr = 'NOTICE';
 	}
@@ -1401,9 +1401,9 @@ function xajaxErrorHandler($errno, $errstr, $errfile, $errline)
 	else {
 		$errTypeStr = 'UNKNOWN: ' . $errno;
 	}
-	
+
 	$sCrLf = "\n";
-	
+
 	ob_start();
 	echo $GLOBALS['xajaxErrorHandlerText'];
 	echo $sCrLf;
