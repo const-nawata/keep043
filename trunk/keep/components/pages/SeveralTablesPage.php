@@ -15,7 +15,7 @@ abstract class SeveralTablesPage extends PPage{
 
 	private $mRowSpan	= 0;
 
-//----------------------//-----------------------//-----------------------//----------------------//
+//------------------//-----------------//-----------------//-------------------/
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
@@ -23,22 +23,23 @@ abstract class SeveralTablesPage extends PPage{
 	}
 //______________________________________________________________________________
 
-	public function getNotSelectedSellHanlders( $sellCode, $prompt ){
+	public static function getNotSelectedSellHanlders( $sellCode, $prompt ){
 		return array(
-			'onmouseover'	=> "setMouseOverCss( this, \"SeveralTablesPageMenuOverSellTd\" );",
-			'onmouseout'	=> "setMouseOutCss( this );",
-			'onclick'		=>	"var old_code = document.getElementById( \"prev_sell_code\" ).value;".
-								"var old_div_id = \"div_sell_\" + old_code;".
-								"var info = {\"old_code\":old_code,".
-											"\"new_code\":\"".$sellCode."\",".
-											"\"old_prompt\":document.getElementById( old_div_id ).innerHTML,".
-											"\"new_prompt\":\"".$prompt."\"};".
-								"xajax_onHandler( \"".self::getHandleResourceString( 'showTable', 'tableListController' )."\", info );"
-								);
+			'onmouseover'	=> "setMouseOverCss(this, \"SeveralTablesPageMenuOverSellTd\");",
+			'onmouseout'	=> "setMouseOutCss(this);",
+			'onclick'		=>
+				"var old_code = document.getElementById(\"prev_sell_code\").value;".
+				"var old_div_id = \"div_sell_\" + old_code;".
+				"var info = {\"old_code\":old_code,".
+							"\"new_code\":\"".$sellCode."\",".
+							"\"old_prompt\":document.getElementById(old_div_id).innerHTML,".
+							"\"new_prompt\":\"".$prompt."\"};".
+				"xajax_onHandler( \"".self::getHandleResourceString( 'showTable', 'tableListController' )."\", info);"
+		);
 	}
 //______________________________________________________________________________
 
-	public function getSellHtmlContent( $sellCode, $prompt, $handlers, $css ){
+	public static function getSellHtmlContent( $sellCode, $prompt, $handlers, $css ){
 
 
 		//echo "prompt: $prompt<br>";
