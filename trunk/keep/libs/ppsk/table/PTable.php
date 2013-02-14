@@ -795,20 +795,18 @@ abstract class PTable extends Core{
 			$info_pane_obj->initHtmlView();
 			$info_pane_html	= $info_pane_obj->getHtmlView();
 
-			$objResponse->prepend( 'body_id', 'innerHTML', "<div id='veil' class='PPSK_vail_div'></div>" );
-			$objResponse->prepend( 'body_id', 'innerHTML', "<div id='pane_container' class='PPSK_pane_container_div'>".$info_pane_html."</div>" );
+			$objResponse->prepend( 'body_id', 'innerHTML', '<div id="veil" class="PPSK_vail_div"></div>' );
+			$objResponse->prepend( 'body_id', 'innerHTML', '<div id="pane_container" class="PPSK_pane_container_div">'.$info_pane_html.'</div>' );
 
 			$class = get_class( $this );
-			$objResponse->assign(  'inp_'.$class."_TableSearchField", 'value', $_SESSION[ 'tables' ][ $class ][ 'filter' ] );	//	This necessary for Firefox!!!
-			if( _EMPTY != $info_pane_obj->mInitFocus ){
-				$objResponse->script( "setFocus( '".$info_pane_obj->mInitFocus."' );" );
+			$objResponse->assign( 'inp_'.$class.'_TableSearchField', 'value', $_SESSION['tables'][$class]['filter'] );	//	This necessary for Firefox!!!
+			if( '' != $info_pane_obj->mInitFocus ){
+				$objResponse->script( 'setFocus("'.$info_pane_obj->mInitFocus.'");' );
 			}
 
 		}else{
 			$objResponse = $this->doAccessDenied();
 		}
-
-
 	}
 //______________________________________________________________________________
 
@@ -883,7 +881,7 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-//FIXME: Paging design crash after row deletion
+
 	public function deleteRowHandler( &$objResponse, $nullValue ){
 		$edit_pane_obj	= new $this->mPaneClassName( $this );
 		$table_name = $edit_pane_obj->getTargetDbTable();
