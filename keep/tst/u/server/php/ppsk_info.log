@@ -1,0 +1,118 @@
+
+
+Message type: Info *** 14-02-2013 13:17:45.875977 *** PPSK Logger *** D:/DataServer/WebRoot/
+------------------------------------------------------------------------
+Array
+(
+    [script_url] => http://localhost/keep/tst/u/server/php/
+    [upload_dir] => D:/DataServer/WebRoot/keep/tst/u/server/php/files/
+    [upload_url] => http://localhost/keep/tst/u/server/php/files/
+    [user_dirs] => 
+    [mkdir_mode] => 493
+    [param_name] => files
+    [delete_type] => DELETE
+    [access_control_allow_origin] => *
+    [access_control_allow_credentials] => 
+    [access_control_allow_methods] => Array
+        (
+            [0] => OPTIONS
+            [1] => HEAD
+            [2] => GET
+            [3] => POST
+            [4] => PUT
+            [5] => PATCH
+            [6] => DELETE
+        )
+
+    [access_control_allow_headers] => Array
+        (
+            [0] => Content-Type
+            [1] => Content-Range
+            [2] => Content-Disposition
+        )
+
+    [download_via_php] => 
+    [inline_file_types] => /\.(gif|jpe?g|png)$/i
+    [accept_file_types] => /.+$/i
+    [max_file_size] => 
+    [min_file_size] => 1
+    [max_number_of_files] => 
+    [max_width] => 
+    [max_height] => 
+    [min_width] => 1
+    [min_height] => 1
+    [discard_aborted_uploads] => 1
+    [orient_image] => 
+    [image_versions] => Array
+        (
+            [thumbnail] => Array
+                (
+                    [max_width] => 80
+                    [max_height] => 80
+                )
+
+        )
+
+    [thumbnail] => Array
+        (
+            [max_width] => 40
+            [max_height] => 40
+        )
+
+)
+
+
+Message type: Info *** 14-02-2013 13:20:27.642591 *** PPSK Logger *** D:/DataServer/WebRoot/
+------------------------------------------------------------------------
+Array
+(
+    [script_url] => http://localhost/keep/tst/u/server/php/
+    [upload_dir] => D:/DataServer/WebRoot/keep/tst/u/server/php/files/
+    [upload_url] => http://localhost/keep/tst/u/server/php/files/
+    [user_dirs] => 
+    [mkdir_mode] => 493
+    [param_name] => files
+    [delete_type] => DELETE
+    [access_control_allow_origin] => *
+    [access_control_allow_credentials] => 
+    [access_control_allow_methods] => Array
+        (
+            [0] => OPTIONS
+            [1] => HEAD
+            [2] => GET
+            [3] => POST
+            [4] => PUT
+            [5] => PATCH
+            [6] => DELETE
+        )
+
+    [access_control_allow_headers] => Array
+        (
+            [0] => Content-Type
+            [1] => Content-Range
+            [2] => Content-Disposition
+        )
+
+    [download_via_php] => 
+    [inline_file_types] => /\.(gif|jpe?g|png)$/i
+    [accept_file_types] => /.+$/i
+    [max_file_size] => 
+    [min_file_size] => 1
+    [max_number_of_files] => 
+    [max_width] => 
+    [max_height] => 
+    [min_width] => 1
+    [min_height] => 1
+    [discard_aborted_uploads] => 1
+    [orient_image] => 
+    [image_versions] => Array
+        (
+            [thumbnail] => Array
+                (
+                    [max_width] => 40
+                    [max_height] => 40
+                )
+
+        )
+
+)

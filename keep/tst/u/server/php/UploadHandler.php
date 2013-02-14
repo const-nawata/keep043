@@ -109,6 +109,9 @@ class UploadHandler
         if ($options) {
             $this->options = array_merge($this->options, $options);
         }
+
+Log::_log(print_r( $this->options, TRUE));
+
         if ($initialize) {
             $this->initialize();
         }
@@ -572,7 +575,7 @@ class UploadHandler
     protected function body($str) {
         echo $str;
     }
-    
+
     protected function header($str) {
         header($str);
     }
