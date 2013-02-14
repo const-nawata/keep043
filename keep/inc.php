@@ -9,7 +9,7 @@ DEFINE( '_XAJAX_JS_DIR', $gl_Path.'libs/xajax-0.5' );
 require_once( _XAJAX_JS_DIR.'/xajax_core/xajax.inc.php' );
 
 require_once( $gl_Path.'prompts/russian.php' );
-require_once( $gl_PpskPath.'inc_ppsk.php' );
+require_once( $gl_PpskPath.'inc_ppsk.php' );//		Includs all ppsk reources
 require_once( $gl_Path.'css/css_constants.php' );
 require_once( $gl_Path.'libs/utils/constants.php' );
 require_once( $gl_Path.'prompts/tab_prompts.php' );

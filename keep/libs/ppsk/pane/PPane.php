@@ -60,6 +60,7 @@ abstract class PPane extends Core{
  * @property	string	$mContent
  */
 	protected $mContent		= '';
+	protected $mJsScript	= '';	//	Script to execute after HTML creation
 	protected $mForm		= NULL;
 	protected $mTitle		= '';
 	protected $mButtons		= array();

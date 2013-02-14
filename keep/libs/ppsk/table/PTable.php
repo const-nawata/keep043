@@ -791,6 +791,10 @@ abstract class PTable extends Core{
 		$auth_obj = new Authentication();
 		if( $auth_obj->isGrantAccess( $this->mLevels ) ){
 			$info_pane_obj	= new $this->mPaneClassName( $this );
+
+
+// Log::_log(print_r( $info_pane_obj, TRUE));
+
 			$info_pane_obj->setRecId( $recId );
 			$info_pane_obj->initHtmlView();
 			$info_pane_html	= $info_pane_obj->getHtmlView();
@@ -800,6 +804,15 @@ abstract class PTable extends Core{
 
 			$class = get_class( $this );
 			$objResponse->assign( 'inp_'.$class.'_TableSearchField', 'value', $_SESSION['tables'][$class]['filter'] );	//	This necessary for Firefox!!!
+
+
+
+			$script	= $info_pane_obj->mJsScript;
+			if( '' != $script ){
+				$objResponse->script( $script );
+			}
+
+
 			if( '' != $info_pane_obj->mInitFocus ){
 				$objResponse->script( 'setFocus("'.$info_pane_obj->mInitFocus.'");' );
 			}
@@ -822,12 +835,12 @@ abstract class PTable extends Core{
 
 	//	Handlers	<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
 
-	public function addRowHandler( &$objResponse, $nullValue ){
+	public function addRowHandler( &$objResponse, $dummy ){
 		$this->setPAddEditPane( $objResponse, NULL );
 	}
 //______________________________________________________________________________
 
-	public function editRowHandler( &$objResponse, $nullValue ){
+	public function editRowHandler( &$objResponse, $dummy ){
 		$class	= get_class( $this );
 		$this->setPAddEditPane( $objResponse, $_SESSION['tables'][$class]['line_id'] );
 	}
@@ -882,7 +895,7 @@ abstract class PTable extends Core{
 //______________________________________________________________________________
 
 
-	public function deleteRowHandler( &$objResponse, $nullValue ){
+	public function deleteRowHandler( &$objResponse, $dummy ){
 		$edit_pane_obj	= new $this->mPaneClassName( $this );
 		$table_name = $edit_pane_obj->getTargetDbTable();
 
