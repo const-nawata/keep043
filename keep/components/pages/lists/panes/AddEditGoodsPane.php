@@ -31,7 +31,14 @@ class AddEditGoodsPane extends PAddEditPane{
 		$lines	.= $this->getInputLineContent( 'cku', 'text', _GOOD_ARTICLE._PPSK_ASTERISK, $old_info['cku'], $tanindex++, self::_onchange );
 // 		$lines	.= $this->getInputLineContent( 'img_file', 'file', _GOOD_IMAGE._PPSK_ASTERISK, $old_info['img_file'], $tanindex++, self::_onchange, 'width:240px;height:28px;' );
 
-// 		$lines	.= "<input id='orgUploadField' type='file' name='file'>";
+		$lines	.=
+
+'<tr>'.
+	'<td id="fileupload_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'._GOOD_IMAGE._PPSK_ASTERISK.'</td>'.
+	'<td id="fileupload_cnt_td" class="edit_pane_content_td">'.
+		'<input type="file" id="fileupload" name="files[]" data-url="u/server/php/u2loader.php" multiple tabindex="'.($tabindex++).'" />'.
+	'</td>'.
+'</tr>';
 
 		parent::initHtmlView();
 	}
