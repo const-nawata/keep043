@@ -110,8 +110,6 @@ class UploadHandler
             $this->options = array_merge($this->options, $options);
         }
 
-// Log::_log(print_r( $this->options, TRUE));
-
         if ($initialize) {
             $this->initialize();
         }
@@ -758,7 +756,11 @@ class UploadHandler
     public function delete($print_response = true) {
         $file_name = $this->get_file_name_param();
         $file_path = $this->get_upload_path($file_name);
+
         $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
+
+
+
         if ($success) {
             foreach($this->options['image_versions'] as $version => $options) {
                 if (!empty($version)) {
@@ -769,6 +771,7 @@ class UploadHandler
                 }
             }
         }
+
         return $this->generate_response(array('success' => $success), $print_response);
     }
 

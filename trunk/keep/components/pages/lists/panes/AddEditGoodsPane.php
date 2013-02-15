@@ -18,16 +18,19 @@ class AddEditGoodsPane extends PAddEditPane{
 		$this->mBrdClr	= _PANE_BORDER_COLOR;
 		$this->mBkgClr	= _GEN_BKGRND_COLOR;
 
-		$this->mJsScript	= "$(function () {
-    $('#fileupload').fileupload({
-        dataType: 'json',
-        done: function (e, data) {
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo(document.body);
-            });
-        }
-    });
-});";
+		$this->mJsScript	=
+'$(function(){'.
+	'$("#fileupload").fileupload({'.
+		'dataType:"json",'.
+
+		'done:function(e,data){'.
+			'$.each(data.result.files,function(index,file){'.
+				'$("<p/>").text(file.name).appendTo(document.body);'.
+				'$("#prev_file").val(file.name);'.
+			'});'.
+		'}'.
+	'});'.
+'});';
 
 		$this->mInitFocus= 'name';
 	}
@@ -46,6 +49,8 @@ class AddEditGoodsPane extends PAddEditPane{
 
 '<tr>'.
 	'<td colspan="2" id="fileupload_cnt_td" class="edit_pane_content_td">'.
+
+	'<input type="hidden" id="prev_file" name="prev_file" value="">'.
 
 '<table cellpadding="0" cellspacing="0" class="AddEditGoodsPaneN_uploadTable">'.
 	'<tr>'.
