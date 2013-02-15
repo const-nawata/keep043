@@ -117,10 +117,10 @@ abstract class PPane extends Core{
 			$btns_view	.= "<td class='PPSK_button_sell_td' id='".$button_obj->mName."_btn_sell_td'>".$button_obj->getHtmlView()."</td>";
 		}
 		$content	= ( $btns_view != '' )
-		? "
-<table cellpadding='0' cellspacing='0'  class='PPSK_buttons_pane_tbl'>
-	<tr><td class='PPSK_sell_before_btns_td'>&nbsp;</td>".$btns_view."<td class='PPSK_sell_after_btns_td'>&nbsp;</td></tr>
-</table>":"";
+		?
+'<table cellpadding="0" cellspacing="0" class="PPSK_buttons_pane_tbl">'.
+	'<tr><td class="PPSK_sell_before_btns_td">&nbsp;</td>'.$btns_view.'<td class="PPSK_sell_after_btns_td">&nbsp;</td></tr>'.
+'</table>':'';
 		return $content;
 	}
 //--------------------------------------------------------------------------------------------------
