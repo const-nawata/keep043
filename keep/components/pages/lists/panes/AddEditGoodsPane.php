@@ -13,7 +13,7 @@ class AddEditGoodsPane extends PAddEditPane{
 		$this->mSelCss	= 'edit_pane_sel';
 
 		$this->mWidth	= 455;
-		$this->mHeigth	= 250;
+		$this->mHeigth	= 400;
 
 		$this->mBrdClr	= _PANE_BORDER_COLOR;
 		$this->mBkgClr	= _GEN_BKGRND_COLOR;
@@ -46,9 +46,16 @@ class AddEditGoodsPane extends PAddEditPane{
 		$lines	.=
 
 '<tr>'.
-	'<td id="fileupload_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'._GOOD_IMAGE._PPSK_ASTERISK.'</td>'.
-	'<td id="fileupload_cnt_td" class="edit_pane_content_td">'.
-		'<input type="file" id="fileupload" name="files[]" data-url="upload/loader.php" multiple tabindex="'.($tabindex++).'" />'.
+// 	'<td id="fileupload_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'._GOOD_IMAGE._PPSK_ASTERISK.'</td>'.
+	'<td colspan="2" id="fileupload_cnt_td" class="edit_pane_content_td">'.
+
+		'<div class="uploadDiv">'.
+			'<input style="opacity: 0;" type="file" id="fileupload" name="files[]" data-url="upload/loader.php" multiple />'.
+		'</div>'.
+
+
+
+		'<div style="width:200px;height:110px;background-color:#FF0000;"></div>'.
 	'</td>'.
 '</tr>';
 
