@@ -437,7 +437,7 @@ input.welcomeLine {
 .AddEditGoodsPaneN_uploadInput{
 	z-index: 10000;
 	position: relative; top: 9px; right: 170px;
-	opacity: 0.5;
+	opacity: 0;
 	
 	height: 22px;
 	width: 105px;
