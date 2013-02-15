@@ -41,21 +41,23 @@ class AddEditGoodsPane extends PAddEditPane{
 		$lines	= &$this->mLines;
 		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
 		$lines	.= $this->getInputLineContent( 'cku', 'text', _GOOD_ARTICLE._PPSK_ASTERISK, $old_info['cku'], $tanindex++, self::_onchange );
-// 		$lines	.= $this->getInputLineContent( 'img_file', 'file', _GOOD_IMAGE._PPSK_ASTERISK, $old_info['img_file'], $tanindex++, self::_onchange, 'width:240px;height:28px;' );
 
 		$lines	.=
 
 '<tr>'.
-// 	'<td id="fileupload_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'._GOOD_IMAGE._PPSK_ASTERISK.'</td>'.
 	'<td colspan="2" id="fileupload_cnt_td" class="edit_pane_content_td">'.
 
-		'<div class="uploadDiv">'.
-			'<input style="opacity: 0;" type="file" id="fileupload" name="files[]" data-url="upload/loader.php" multiple />'.
-		'</div>'.
+'<table cellpadding="0" cellspacing="0" class="AddEditGoodsPaneN_uploadTable">'.
+	'<tr>'.
+		'<td class="AddEditGoodsPaneN_uploadTd">'.
+			'<input type="file" id="fileupload" name="files[]" data-url="upload/loader.php" multiple class="AddEditGoodsPaneN_uploadInput"/>'.
+			'<button class="AddEditGoodsPaneN_uploadBtn">'._GOOD_IMAGE.'</button>'.
+		'</td>'.
 
+		'<td><div class="AddEditGoodsPaneN_imgExternDiv"><div style="" class="AddEditGoodsPaneN_imgInnerDiv"></div></div></td>'.
+	'</tr>'.
+'</table>'.
 
-
-		'<div style="width:200px;height:110px;background-color:#FF0000;"></div>'.
 	'</td>'.
 '</tr>';
 

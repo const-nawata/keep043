@@ -427,6 +427,43 @@ input.welcomeLine {
 	width: 96.55%;
 }
 
+
+/*Panes   translate(10px,0) */
+.AddEditGoodsPaneN_uploadTable{}
+.AddEditGoodsPaneN_uploadTd{
+	width: 152px;
+}
+
+.AddEditGoodsPaneN_uploadInput{
+	z-index: 10000;
+	position: relative; top: 9px; right: 170px;
+	opacity: 0.5;
+	
+	height: 22px;
+	width: 105px;
+/*	
+	height: 13px;
+	width: 152px;
+*/
+	-ms-transform: translate(172px,0px) scale(1.4, 1.25);	/*IE9*/
+	-webkit-transform: translate(185px,3px) scale(1, 1);			/*Chrom*/
+	transform: scale(1.4, 1.25);
+}
+.AddEditGoodsPaneN_uploadBtn{
+	position: relative; bottom: 15px; left: 17px;
+	width: 110px;
+}
+.AddEditGoodsPaneN_imgExternDiv{
+	border: 1px solid;
+	padding: 2px;
+}
+.AddEditGoodsPaneN_imgInnerDiv{
+	width:200px;
+	height:110px;
+	background-color:#FF0000;
+}
+
+
 /*Pane Titles*/
 .AddEditManagerPaneN_PaneTitle,
 .AddEditCountryPaneN_PaneTitle,
