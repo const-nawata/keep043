@@ -31,7 +31,7 @@ class AddEditGoodsPane extends PAddEditPane{
 		'done:function(e,data){'.
 			'$.each(data.result.files,function(index,file){'.
 				'$("<p/>").text(file.name).appendTo(document.body);'.
-// 				'$("#prev_file").val(file.url);'.
+// 				'$("#prev_file").val(file.url);'.//
 
 // 				'$("#iimmg").replaceWith("<div>Aloha World</div>");'.
 
