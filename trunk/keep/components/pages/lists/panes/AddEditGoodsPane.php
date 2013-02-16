@@ -18,6 +18,11 @@ class AddEditGoodsPane extends PAddEditPane{
 		$this->mBrdClr	= _PANE_BORDER_COLOR;
 		$this->mBkgClr	= _GEN_BKGRND_COLOR;
 
+
+// 		$prop	= $this->__get( 'mSelCss_1' );
+
+// Log::_log(print_r( $prop, TRUE));
+
 		$this->mJsScript	=
 '$(function(){'.
 	'$("#fileupload").fileupload({'.
@@ -26,7 +31,23 @@ class AddEditGoodsPane extends PAddEditPane{
 		'done:function(e,data){'.
 			'$.each(data.result.files,function(index,file){'.
 				'$("<p/>").text(file.name).appendTo(document.body);'.
-				'$("#prev_file").val(file.name);'.
+// 				'$("#prev_file").val(file.url);'.
+
+// 				'$("#iimmg").replaceWith("<div>Aloha World</div>");'.
+
+				"$('#iimmg').css('background-image', 'url(\"' + file.thumbnail_url + '\")');".
+// 				"$('#iimmg').css('background-repeat', 'no-repeat');".
+
+				'$("#iimmg").css({'.
+					'backgroundRepeat:"no-repeat",'.
+// 					'backgroundAttachment:"fixed",'.
+					'backgroundPosition:"center"'.
+				'});'.
+
+
+// 				'$("#iimmg").replaceWith("<div>Aloha World</div>");'.
+
+
 			'});'.
 		'}'.
 	'});'.
@@ -59,12 +80,16 @@ class AddEditGoodsPane extends PAddEditPane{
 			'<button class="AddEditGoodsPaneN_uploadBtn">'._GOOD_IMAGE.'</button>'.
 		'</td>'.
 
-		'<td><div class="AddEditGoodsPaneN_imgExternDiv"><div style="" class="AddEditGoodsPaneN_imgInnerDiv"></div></div></td>'.
+		'<td><div class="AddEditGoodsPaneN_imgExternDiv"><div id="iimmg" class="AddEditGoodsPaneN_imgInnerDiv"></div></div></td>'.
 	'</tr>'.
 '</table>'.
 
 	'</td>'.
-'</tr>';
+'</tr>'.
+
+
+
+'';
 
 		parent::initHtmlView();
 	}

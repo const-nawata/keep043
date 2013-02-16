@@ -75,7 +75,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     			'css_ovr'	=> 'btn_over',
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "removeElement( \"pane_container\" );removeElement( \"veil\" );"
+    					'handler'	=> 'removeElement("pane_container");removeElement("veil");'
     				)
     			)
     		)
@@ -144,28 +144,37 @@ abstract class PAddEditPane extends PRnd1Pane{
 
     protected function getSelBoxLineContent( $htmlId, $prompt, $selOpt, $tabindex, $onchange = '' ){
     	return
-"<tr>
-	<td id='".$htmlId."_prmpt_td' class='edit_pane_prmpt ".$this->mPrmCss."'>".$prompt."</td>
-	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'>".$this->getSelBoxContent( $htmlId, $selOpt, $tabindex, $onchange )."</td>
-</tr>";
+'<tr>'.
+	'<td id="'.$htmlId.'_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'.$prompt.'</td>'.
+	'<td id="'.$htmlId.'_cnt_td" class="edit_pane_content_td">'.
+		$this->getSelBoxContent( $htmlId, $selOpt, $tabindex, $onchange ).
+	'</td>'.
+'</tr>';
     }
 //______________________________________________________________________________
 
     protected function getInputLineContent( $htmlId, $type, $prompt='', $value='', $tabindex='', $onchange='', $css='' ){
     	return
-"<tr>
-	<td id='".$htmlId."_prmpt_td' class='edit_pane_prmpt ".$this->mPrmCss."'>".$prompt."</td>
-	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'><input type='".$type."' name='".$htmlId."' id='".$htmlId."' value='".$value."' class='".$this->mInpCss."' style='".$css."' tabindex='".$tabindex."' onkeyup='".$onchange."' /></td>
-</tr>";
+'<tr>'.
+	'<td id="'.$htmlId.'_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'.$prompt.'</td>'.
+	'<td id="'.$htmlId.'_cnt_td" class="edit_pane_content_td">'.
+		'<input type="'.$type.'" name="'.$htmlId.'" id="'.$htmlId.'" value="'.$value.'" '.
+			'class="'.$this->mInpCss.'" style="'.$css.'" tabindex="'.$tabindex.'" onkeyup="'.$onchange.'" />'.
+	'</td>'.
+'</tr>';
     }
 //______________________________________________________________________________
 
     protected function getTextareaLineContent( $htmlId, $prompt = '', $value = '', $tabindex = '', $onchange = '' ){
     	return
-"<tr>
-	<td id='".$htmlId."_prmpt_td' class='edit_pane_prmpt ".$this->mPrmCss."'>".$prompt."</td>
-	<td id='".$htmlId."_cnt_td' class='edit_pane_content_td'><textarea name='".$htmlId."' id='".$htmlId."' class='".$this->mTarCss."' tabindex='".$tabindex."' onkeyup='".$onchange."'>".$value."</textarea></td>
-</tr>";
+'<tr>'.
+	'<td id="'.$htmlId.'_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'.$prompt.'</td>'.
+	'<td id="'.$htmlId.'_cnt_td" class="edit_pane_content_td">'.
+		'<textarea name="'.$htmlId.'" id="'.$htmlId.'" class="'.$this->mTarCss.'" tabindex="'.$tabindex.'" onkeyup="'.$onchange.'">'.
+			$value.
+		'</textarea>'.
+	'</td>'.
+'</tr>';
     }
 //______________________________________________________________________________
 

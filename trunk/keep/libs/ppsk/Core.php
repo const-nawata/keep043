@@ -54,7 +54,18 @@ abstract class Core{
 		if( property_exists( $this, $property )){
 			return $this->$property;
 		}else{
-			Log::_log("Undefind property was requested: $property");
+			$class = get_class( $this );
+			throw new Exception( 'Undefind property `'.$property.'` was requested in class '.$class.' by __get method.' );
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( $this, $property )){
+			$this->$property = $value;
+		}else{
+			$class = get_class( $this );
+			throw new Exception( 'Undefind property `'.$property.'` was requested in class '.$class.' by __set method.' );
 		}
 	}
 //______________________________________________________________________________
