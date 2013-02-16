@@ -1,5 +1,5 @@
 <?php
-require_once($gl_PpskPath."pane/PaneButton.php");
+require_once( $gl_PpskPath.'pane/PaneButton.php' );
 /**
  * See doc.txt before use this class.
  * PPane class is used as inheritable to create presentation of panel view.
@@ -63,9 +63,27 @@ abstract class PPane extends Core{
 	protected $mJsScript	= '';	//	Script to execute after HTML creation
 	protected $mForm		= NULL;
 	protected $mTitle		= '';
-	protected $mButtons		= array();
+	private $mButtons		= array();
 	private $mHiddens		= array();
 //----------------------//-----------------------//
+
+	public function __get( $property ){
+		if( property_exists( 'PPane', $property )){
+			return $this->$property;
+		}else{
+			return parent::__get( $property )  ;
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( 'PPane', $property )){
+			$this->$property = $value;
+		}else{
+			parent::__set( $property, $value );
+		}
+	}
+//______________________________________________________________________________
 
 
 	public function __construct( $Owner ){
@@ -75,24 +93,24 @@ abstract class PPane extends Core{
 //--------------------------------------------------------------------------------------------------
 
 	public static function adjustBtnProperties( &$button ){
-		( !isset( $button[ 'type' ] ) )		? $button[ 'type' ]		= 'button':'';
-		( !isset( $button[ 'is_dis' ] ) )	? $button[ 'is_dis' ]	= false:'';
-		( !isset( $button[ 'prompt' ] ) )	? $button[ 'prompt' ]	= _EMPTY:'';
-		( !isset( $button[ 'hint' ] ) )		? $button[ 'hint' ]		= _EMPTY:'';
-		( !isset( $button[ 'css_act' ] ) )	? $button[ 'css_act' ]	= _EMPTY:'';
-		( !isset( $button[ 'css_dis' ] ) )	? $button[ 'css_dis' ]	= _EMPTY:'';
-		( !isset( $button[ 'css_ovr' ] ) )	? $button[ 'css_ovr' ]	= _EMPTY:'';
-		( !isset( $button[ 'css_dwn' ] ) )	? $button[ 'css_dwn' ]	= _EMPTY:'';
-		( !isset( $button[ 'css_up' ] ) )	? $button[ 'css_up' ]	= $button[ 'css_act' ]:'';
-		( !isset( $button[ 'handlers' ] ) )	? $button[ 'handlers' ]	= array():'';
+		( !isset( $button['type'] ))		? $button['type']		= 'button'				:NULL;
+		( !isset( $button['is_dis'] ))		? $button['is_dis']		= FALSE					:NULL;
+		( !isset( $button['prompt'] ))		? $button['prompt']		= ''					:NULL;
+		( !isset( $button['hint'] ) )		? $button[ 'hint']		= ''					:NULL;
+		( !isset( $button['css_act'] ))		? $button['css_act']	= ''					:NULL;
+		( !isset( $button['css_dis'] ))		? $button['css_dis']	= ''					:NULL;
+		( !isset( $button['css_ovr'] ))		? $button['css_ovr']	= ''					:NULL;
+		( !isset( $button['css_dwn'] ))		? $button['css_dwn']	= ''					:NULL;
+		( !isset( $button['css_up'] ))		? $button['css_up']		= $button['css_act']	:NULL;
+		( !isset( $button['handlers'] ))	? $button['handlers']	= array()				:NULL;
 
-		$handlers	= &$button[ 'handlers' ];
-		( !isset( $handlers[ 'onclick' ] ) ) ? $handlers[ 'onclick' ] = array( 'handler' => _EMPTY ) :'';
+		$handlers	= &$button['handlers'];
+		( !isset( $handlers['onclick'] )) ? $handlers[ 'onclick' ] = array( 'handler' => '' ) :'';
 
-		( !isset( $handlers[ 'onmousedown' ] ) )	? $handlers[ 'onmousedown' ]	= array( 'handler'=> "mouseOverOut( this, \"".$button[ 'css_dwn' ]."\");" ) :'';
-		( !isset( $handlers[ 'onmouseup' ] ) )		? $handlers[ 'onmouseup' ]		= array( 'handler'=> "mouseOverOut( this, \"".$button[ 'css_up' ]."\");" ) :'';
-		( !isset( $handlers[ 'onmouseover' ] ) )	? $handlers[ 'onmouseover' ]	= array( 'handler'=> "mouseOverOut( this, \"".$button[ 'css_ovr' ]."\");" ) :'';
-		( !isset( $handlers[ 'onmouseout' ] ) )		? $handlers[ 'onmouseout' ]		= array( 'handler'=> "mouseOverOut( this, \"".$button[ 'css_act' ]."\");" ) :'';
+		( !isset( $handlers['onmousedown'] ))	? $handlers['onmousedown']	= array( 'handler'=> "mouseOverOut(this,\"".$button['css_dwn']."\");" ) :'';
+		( !isset( $handlers['onmouseup'] ))		? $handlers['onmouseup']	= array( 'handler'=> "mouseOverOut(this,\"".$button['css_up']."\");" ) :'';
+		( !isset( $handlers['onmouseover'] ))	? $handlers['onmouseover']	= array( 'handler'=> "mouseOverOut(this,\"".$button['css_ovr']."\");" ) :'';
+		( !isset( $handlers['onmouseout'] ))	? $handlers['onmouseout']	= array( 'handler'=> "mouseOverOut(this,\"".$button['css_act']."\");" ) :'';
 	}
 //--------------------------------------------------------------------------------------------------
 

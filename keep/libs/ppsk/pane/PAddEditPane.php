@@ -58,11 +58,15 @@ abstract class PAddEditPane extends PRnd1Pane{
     		'handler'	=> "xajax_onHandler( \"".self::getHandleResourceString( 'saveInfo', get_class( $this ) )."\", xajax.getFormValues( this ) ); return false;"
     	);
 
-    	$this->mButtons	= array(
+
+    	$buttons	= $this->__get( 'mButtons' );
+
+    	$buttons	= ( count( $buttons ) == 0 )
+    		? array(
     		array (	//	Button to save info
     			'name'		=> 'btn_save',
     			'type'		=> 'submit',
-    			'is_dis'	=> true,
+    			'is_dis'	=> TRUE,
     			'prompt'	=> _PPSK_SAVE,
     			'hint'		=> _PPSK_SAVE,
     			'css_dis'	=>'btn_disabled',
@@ -79,10 +83,39 @@ abstract class PAddEditPane extends PRnd1Pane{
     				)
     			)
     		)
-    	);
+    	)
+    		: $buttons;
+
+    	$this->__set( 'mButtons', $buttons );
+
+
+
+
 		parent::__construct( $Owner );
     }
 //______________________________________________________________________________
+
+
+
+	public function __get( $property ){
+		if( property_exists( 'PAddEditPane', $property )){
+
+			return $this->$property;
+		}else{
+			return parent::__get( $property );
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( 'PAddEditPane', $property )){
+			$this->$property = $value;
+		}else{
+			parent::__set( $property, $value );
+		}
+	}
+//______________________________________________________________________________
+
 
 /**
  * fills $mSaveData property.
@@ -112,8 +145,8 @@ abstract class PAddEditPane extends PRnd1Pane{
 
     	$this->setHiddenInput( 'inst', self::encipherFilledValue( $owner_class.( ( $this->mRecId ) ? '.'.self::_edit : '.'.self::_add ) ) );
 
-    	$this->mLines	.= "<tr><td colspan='2' style='height: 10px; font-size: 1px;'>&nbsp;</td></tr>";
-    	$this->mContent	= "<table class='editPaneTbl' cellpadding='0' cellspacing='0'>".$this->mLines."</table>";
+    	$this->mLines	.= '<tr><td colspan="2" style="height:10px;font-size:1px;">&nbsp;</td></tr>';
+    	$this->mContent	= '<table class="editPaneTbl" cellpadding="0" cellspacing="0">'.$this->mLines.'</table>';
 
     	parent::initHtmlView();
     }

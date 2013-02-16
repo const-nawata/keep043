@@ -3,16 +3,9 @@
 
 
 require('../libs/ppsk/Log.php');
-
-// Log::_log("Poin3");
-
-
-
 require('UploadHandler.php');
 
 $opts	= array(
-// 	'max_width'			=> 200,
-// 	'max_height'		=> 110,
 	'image_versions' => array(
 		'thumbnail' => array(
 			'max_width'	=> 200,
