@@ -55,9 +55,9 @@ abstract class PAddEditPane extends PRnd1Pane{
 
     	$this->mForm	= array(
     		'event'		=> 'onsubmit',
-    		'handler'	=> "xajax_onHandler( \"".self::getHandleResourceString( 'saveInfo', get_class( $this ) )."\", xajax.getFormValues( this ) ); return false;"
+    		'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'saveInfo', get_class( $this )).'",'.
+    											'xajax.getFormValues(this)); return false;'
     	);
-
 
     	$buttons	= $this->__get( 'mButtons' );
 
@@ -88,14 +88,9 @@ abstract class PAddEditPane extends PRnd1Pane{
 
     	$this->__set( 'mButtons', $buttons );
 
-
-
-
 		parent::__construct( $Owner );
     }
 //______________________________________________________________________________
-
-
 
 	public function __get( $property ){
 		if( property_exists( 'PAddEditPane', $property )){
@@ -167,7 +162,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     	$content	= "<select name='".$htmlId."' id='".$htmlId."' class='".$this->mSelCss."' tabindex='".$tabindex."' onchange='".$onchange."'>";
 	    foreach( $options as $option ){
 			$is_sel = ( $option[ 'id' ] == $selOpt ) ? " selected='selected' " : '';
-	    	$content	.= "<option value='".$option[ 'id' ]."'$is_sel>".$option[ 'name' ]."</option>";
+	    	$content	.= "<option value='".$option['id']."'$is_sel>".$option['name']."</option>";
 	    }
 	    $content	.= "</select>";
 
@@ -192,7 +187,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 	'<td id="'.$htmlId.'_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'.$prompt.'</td>'.
 	'<td id="'.$htmlId.'_cnt_td" class="edit_pane_content_td">'.
 		'<input type="'.$type.'" name="'.$htmlId.'" id="'.$htmlId.'" value="'.$value.'" '.
-			'class="'.$this->mInpCss.'" style="'.$css.'" tabindex="'.$tabindex.'" onkeyup="'.$onchange.'" />'.
+			'class="'.$this->mInpCss.'" style="'.$css.'" tabindex="'.$tabindex.'" onkeyup='."'".$onchange."' />".
 	'</td>'.
 '</tr>';
     }
@@ -203,7 +198,7 @@ abstract class PAddEditPane extends PRnd1Pane{
 '<tr>'.
 	'<td id="'.$htmlId.'_prmpt_td" class="edit_pane_prmpt '.$this->mPrmCss.'">'.$prompt.'</td>'.
 	'<td id="'.$htmlId.'_cnt_td" class="edit_pane_content_td">'.
-		'<textarea name="'.$htmlId.'" id="'.$htmlId.'" class="'.$this->mTarCss.'" tabindex="'.$tabindex.'" onkeyup="'.$onchange.'">'.
+		'<textarea name="'.$htmlId.'" id="'.$htmlId.'" class="'.$this->mTarCss.'" tabindex="'.$tabindex.'" onkeyup='."'".$onchange."'>".
 			$value.
 		'</textarea>'.
 	'</td>'.
