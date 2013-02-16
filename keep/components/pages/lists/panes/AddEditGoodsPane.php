@@ -6,7 +6,7 @@ final class AddEditGoodsPane extends PAddEditPane{
     		array (	//	Button to save info
     			'name'		=> 'btn_save',
     			'type'		=> 'submit',
-    			'is_dis'	=> true,
+    			'is_dis'	=> TRUE,
     			'prompt'	=> _PPSK_SAVE,
     			'hint'		=> _PPSK_SAVE,
     			'css_dis'	=>'btn_disabled',
@@ -101,9 +101,6 @@ final class AddEditGoodsPane extends PAddEditPane{
 
 	'</td>'.
 '</tr>'.
-
-
-
 '';
 
 		parent::initHtmlView();
@@ -117,14 +114,8 @@ final class AddEditGoodsPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	public function delUpload(){
-
-// 		unlink();
-
-		$fls	= glob( "upload/files/*.*" );
-
-Log::_log("fls:\n".print_r( $fls, TRUE));
-
-// Log::_log("Point do delete upload");
+		array_map( 'unlink', glob( 'upload/files/*.*' ));
+		array_map( 'unlink', glob( 'upload/files/thumbnail/*.*'));
 	}
 //______________________________________________________________________________
 
