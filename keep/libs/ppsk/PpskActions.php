@@ -48,6 +48,7 @@ class PpskActions{
 
 // Log::_log("res: $className::$hndlName");		//	Don't delete
 
+
 		$obj = new $className( NULL );	//	Value NULL is set becouse of presense of $Owner paramenter
 
 		if( !( $hndlName && method_exists( $obj, $hndlName ) ) ){
@@ -58,7 +59,7 @@ class PpskActions{
 		try{
 			$obj->$hndlName( $objResponse, $value );  //  Parameter $objResponse is mandatory in handler and must be a reference (starts with &)
 		}catch( Exception $e ){
-			Log::_log( $e->getMessage(), 'Error' );
+			Log::_log( _EX.'PpskActions::onHandler. -- '.$e->getMessage(), 'Error' );
 		}
 		return $objResponse;
 	}
