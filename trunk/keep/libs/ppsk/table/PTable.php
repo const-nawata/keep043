@@ -309,6 +309,24 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
+	public function __get( $property ){
+		if( property_exists( 'PTable', $property )){
+			return $this->$property;
+		}else{
+			return parent::__get( $property )  ;
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( 'PTable', $property )){
+			$this->$property = $value;
+		}else{
+			parent::__set( $property, $value );
+		}
+	}
+//______________________________________________________________________________
+
 	/**
 	 * sets HTML view
 	 * @param boolean $isHndl - this parameter is set to define if it is necessary to create external container

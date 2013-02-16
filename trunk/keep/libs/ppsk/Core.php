@@ -51,7 +51,7 @@ abstract class Core{
 //______________________________________________________________________________
 
 	public function __get( $property ){
-		if( property_exists( $this, $property )){
+		if( property_exists( 'Core', $property )){
 			return $this->$property;
 		}else{
 			$class = get_class( $this );

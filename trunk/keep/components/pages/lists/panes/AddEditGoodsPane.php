@@ -1,8 +1,35 @@
 <?php
-class AddEditGoodsPane extends PAddEditPane{
+final class AddEditGoodsPane extends PAddEditPane{
 
 	public function __construct( $Owner ){
-		parent::__construct( $Owner );
+    	$buttons	= array(
+    		array (	//	Button to save info
+    			'name'		=> 'btn_save',
+    			'type'		=> 'submit',
+    			'is_dis'	=> true,
+    			'prompt'	=> _PPSK_SAVE,
+    			'hint'		=> _PPSK_SAVE,
+    			'css_dis'	=>'btn_disabled',
+    			'css_ovr'	=>'btn_over'
+    		),
+    		array(	//	Button to cancel info
+    			'name'		=> 'btn_cancel',
+    			'prompt'	=> _PPSK_CANCEL,
+    			'hint'		=> _PPSK_CANCEL,
+    			'css_ovr'	=> 'btn_over',
+    			'handlers'	=> array(
+    				'onclick'	=> array(
+    					'handler'	=> 'removeElement("pane_container");removeElement("veil");'.
+								'xajax_onHandler("'.self::getHandleResourceString( 'delUpload', get_class($this)).'",null);'
+
+    				)
+    			)
+    		)
+    	);
+
+    	$this->__set( 'mButtons', $buttons );
+
+    	parent::__construct( $Owner );
 
 		$this->mTitle	= _EDITING.' '._GOOD_PARS_ROD;
 
@@ -19,10 +46,6 @@ class AddEditGoodsPane extends PAddEditPane{
 		$this->mBkgClr	= _GEN_BKGRND_COLOR;
 
 
-// 		$prop	= $this->__get( 'mSelCss_1' );
-
-// Log::_log(print_r( $prop, TRUE));
-
 		$this->mJsScript	=
 '$(function(){'.
 	'$("#fileupload").fileupload({'.
@@ -30,24 +53,16 @@ class AddEditGoodsPane extends PAddEditPane{
 
 		'done:function(e,data){'.
 			'$.each(data.result.files,function(index,file){'.
-				'$("<p/>").text(file.name).appendTo(document.body);'.
-// 				'$("#prev_file").val(file.url);'.//
+// 				'$("<p/>").text(file.name).appendTo(document.body);'.
+				'$("#prev_file").val(file.url);'.
 
-// 				'$("#iimmg").replaceWith("<div>Aloha World</div>");'.
-
-				"$('#iimmg').css('background-image', 'url(\"' + file.thumbnail_url + '\")');".
-// 				"$('#iimmg').css('background-repeat', 'no-repeat');".
-
-				'$("#iimmg").css({'.
+				'var turl="url(\""+file.thumbnail_url+"\")";'.
+				'$("#img_preview").css({'.
+					'backgroundImage:turl,'.
 					'backgroundRepeat:"no-repeat",'.
 // 					'backgroundAttachment:"fixed",'.
 					'backgroundPosition:"center"'.
 				'});'.
-
-
-// 				'$("#iimmg").replaceWith("<div>Aloha World</div>");'.
-
-
 			'});'.
 		'}'.
 	'});'.
@@ -80,7 +95,7 @@ class AddEditGoodsPane extends PAddEditPane{
 			'<button class="AddEditGoodsPaneN_uploadBtn">'._GOOD_IMAGE.'</button>'.
 		'</td>'.
 
-		'<td><div class="AddEditGoodsPaneN_imgExternDiv"><div id="iimmg" class="AddEditGoodsPaneN_imgInnerDiv"></div></div></td>'.
+		'<td><div class="AddEditGoodsPaneN_imgExternDiv"><div id="img_preview" class="AddEditGoodsPaneN_imgInnerDiv"></div></div></td>'.
 	'</tr>'.
 '</table>'.
 
@@ -98,6 +113,18 @@ class AddEditGoodsPane extends PAddEditPane{
 	protected function isValidData( &$formValues ){
 
 		$formValues['is_valid']	= TRUE;
+	}
+//______________________________________________________________________________
+
+	public function delUpload(){
+
+// 		unlink();
+
+		$fls	= glob( "upload/files/*.*" );
+
+Log::_log("fls:\n".print_r( $fls, TRUE));
+
+// Log::_log("Point do delete upload");
 	}
 //______________________________________________________________________________
 

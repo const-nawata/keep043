@@ -1,5 +1,5 @@
 <?php
-require_once($gl_PpskPath."pane/PPane.php");
+require_once($gl_PpskPath.'pane/PPane.php');
 
 /**
  * See doc.txt before use this class.
@@ -10,6 +10,25 @@ require_once($gl_PpskPath."pane/PPane.php");
  @author C.Nawata (nawataster@gmail.com)
  */
 class PRnd1Pane extends PPane{
+
+
+	public function __get( $property ){
+		if( property_exists( 'PRnd1Pane', $property )){
+			return $this->$property;
+		}else{
+			return parent::__get( $property )  ;
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( 'PRnd1Pane', $property )){
+			$this->$property = $value;
+		}else{
+			parent::__set( $property, $value );
+		}
+	}
+//______________________________________________________________________________
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );

@@ -1,7 +1,7 @@
 <?php
 require_once( $gl_pagesPath.'lists/panes/AddEditGoodsPane.php' );
 
-class GoodsTable extends PTable{
+final class GoodsTable extends PTable{
 
 	public function __construct( $Owner=NULL, $isHndl=FALSE, $isInitView=TRUE ){
 		$this->setProperties();

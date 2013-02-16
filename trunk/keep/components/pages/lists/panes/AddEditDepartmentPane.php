@@ -1,5 +1,5 @@
 <?php
-class AddEditDepartmentPane extends PAddEditPane{
+final class AddEditDepartmentPane extends PAddEditPane{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );

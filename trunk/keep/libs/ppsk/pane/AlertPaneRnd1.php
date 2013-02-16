@@ -11,17 +11,17 @@ class AlertPaneRnd1 extends PRnd1Pane{
 		$fcjs	= ( $focus != '' ) ? "setFocus(\"".$focus."\");" : '';
 
 		$this->mButtons	= array(
-		array(	//	Button to close pane
-    			'name'		=> 'btn_cancel',
-    			'prompt'	=> _PPSK_CLOSE,
-    			'hint'		=> _PPSK_CLOSE,
-    			'css_ovr'	=> 'btn_over',
-    			'handlers'	=> array(
-    				'onclick'	=> array(
-    					'handler'	=> "removeElement(\"alert_container\");removeElement(\"alert_veil\");".$fcjs
-		)
-		)
-		)
+			array(	//	Button to close pane
+	    			'name'		=> 'btn_cancel',
+	    			'prompt'	=> _PPSK_CLOSE,
+	    			'hint'		=> _PPSK_CLOSE,
+	    			'css_ovr'	=> 'btn_over',
+	    			'handlers'	=> array(
+	    				'onclick'	=> array(
+	    					'handler'	=> 'removeElement("alert_container");removeElement("alert_veil");'.$fcjs
+						)
+					)
+			)
 		);
 		$this->mMessage	= $message;
 		$this->mBrdClr	= _PPSK_ALERT_BRD_COLOR;
