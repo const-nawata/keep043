@@ -81,7 +81,7 @@ final class AddEditGoodsPane extends PAddEditPane{
 		global $gl_Path;
 
 		$this->delUpload();
-		$img_file	= ( $old_info['id'] == NULL ) ? 'dummy.jpg' : $old_info['id'].'.jpg';
+		$img_file	= ( $old_info['id'] == NULL ) ? _PPSK_DUMMY_IMG : $old_info['id'].'.jpg';
 
 		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$img_file );
 		copy( $gl_Path.'img/assortment/thumbnail/'.$img_file, $gl_Path.'upload/files/thumbnail/'.$img_file );
@@ -100,9 +100,9 @@ final class AddEditGoodsPane extends PAddEditPane{
 '<tr>'.
 	'<td colspan="2" id="fileupload_cnt_td" class="edit_pane_content_td">'.
 
-	'<input type="hidden" id="main_url" name="main_url" value="">'.
-	'<input type="hidden" id="thumb_url" name="thumb_url" value="">'.
-	'<input type="hidden" id="fname" name="fname" value="">'.
+'<input type="hidden" id="main_url" name="main_url" value="">'.
+'<input type="hidden" id="thumb_url" name="thumb_url" value="">'.
+'<input type="hidden" id="fname" name="fname" value="">'.
 
 '<table cellpadding="0" cellspacing="0" class="AddEditGoodsPaneN_uploadTable">'.
 	'<tr>'.
@@ -129,6 +129,9 @@ final class AddEditGoodsPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
+
+
+Log::_log(print_r( $formValues, TRUE));
 
 		$formValues['is_valid']	= TRUE;
 	}

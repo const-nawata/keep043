@@ -34,3 +34,6 @@ define( '_PPSK_BLACK_COLOR', '#000000' );
 @define( '_PPSK_DB_ERR_DUBLICATE_ENTRY', 'Value `%1s` for field `%2s`has already been registered.<br>Try another value.' );
 @define( '_PPSK_DB_ERR_FOREIGN_KEY_CONSTRAINT', 'Cannot delete or update this row. Its values are used in other lists.' );
 
+
+//	Other
+@define( '_PPSK_DUMMY_IMG', 'dummy.jpg' );
