@@ -5,11 +5,12 @@
 
 //TODO: Move all upload artefacts to ppsk library.
 
+require('../libs/ppsk/ppsk_constants.php');
 require('../libs/ppsk/Log.php');
 require('UploadHandler.php');
 
 final class PpskUploadHandler extends UploadHandler{
-	function __construct( $options = null, $initialize = true ){
+	function __construct( $options = NULL, $initialize = TRUE ){
 		parent::__construct($options, $initialize);
 	}
 //______________________________________________________________________________
@@ -18,7 +19,7 @@ final class PpskUploadHandler extends UploadHandler{
 		$file	= parent::handle_file_upload($uploaded_file, $name, $size, $type, $error, $index, $content_range );
 
 		if( isset( $file->error )){
-			$file->name			= 'dummy.jpg';
+			$file->name			= _PPSK_DUMMY_IMG;
 			$file->url			= $this->get_upload_path( $file->name );
 			$file->thumbnail_url= $this->get_download_url( $file->name, 'thumbnail' );
 		}
@@ -44,7 +45,7 @@ $opts	= array(
 
 $upload_handler = new PpskUploadHandler( $opts );
 
-if( $_POST['fname'] !== 'dummy.jpg' ){
+if( $_POST['fname'] !== _PPSK_DUMMY_IMG ){
 	$_GET['file']	= $_POST['main_url'];
 	$upload_handler->delete( FALSE );
 }
