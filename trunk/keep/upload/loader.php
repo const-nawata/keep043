@@ -8,7 +8,7 @@
 require('../libs/ppsk/Log.php');
 require('UploadHandler.php');
 
-class PpskUploadHandler extends UploadHandler{
+final class PpskUploadHandler extends UploadHandler{
 	function __construct( $options = null, $initialize = true ){
 		parent::__construct($options, $initialize);
 	}
@@ -18,11 +18,9 @@ class PpskUploadHandler extends UploadHandler{
 		$file	= parent::handle_file_upload($uploaded_file, $name, $size, $type, $error, $index, $content_range );
 
 		if( isset( $file->error )){
-			$file->name	= 'dummy.jpg';
-			$file_path = $this->get_upload_path( $file->name );
-			$file_size = $this->get_file_size( $file_path, $append_file );
-			$file->url = $file_path;
-			$file->thumbnail_url = $this->get_download_url( $file->name, 'thumbnail' );
+			$file->name			= 'dummy.jpg';
+			$file->url			= $this->get_upload_path( $file->name );
+			$file->thumbnail_url= $this->get_download_url( $file->name, 'thumbnail' );
 		}
 		return $file;
 	}
