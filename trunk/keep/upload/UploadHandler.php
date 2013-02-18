@@ -589,7 +589,7 @@ class UploadHandler
             }
             $this->head();
             if (isset($_SERVER['HTTP_CONTENT_RANGE'])) {
-                $files = isset($content[$this->options['param_name']]) ?
+            	$files = isset($content[$this->options['param_name']]) ?
                     $content[$this->options['param_name']] : null;
                 if ($files && is_array($files) && is_object($files[0]) && $files[0]->size) {
                     $this->header('Range: 0-'.($this->fix_integer_overflow(intval($files[0]->size)) - 1));

@@ -51,10 +51,15 @@ final class AddEditGoodsPane extends PAddEditPane{
 	'$("#fileupload").fileupload({'.
 		'dataType:"json",'.
 
+		'fail: function(e,data){var a = 1;alert(100);},'.
+
 		'done:function(e,data){'.
 			'$.each(data.result.files,function(index,file){'.
 // 				'$("<p/>").text(file.name).appendTo(document.body);'.
-				'$("#prev_file").val(file.url);'.
+				'$("#main_url").val(file.url);'.
+				'$("#thumb_url").val(file.thumbnail_url);'.
+				'$("#fname").val(file.name);'.
+
 
 				'var turl="url(\""+file.thumbnail_url+"\")";'.
 				'$("#img_preview").css({'.
@@ -73,6 +78,15 @@ final class AddEditGoodsPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	public function initHtmlView( $view = '' ){
+		global $gl_Path;
+
+		$this->delUpload();
+		$img_file	= ( $old_info['id'] == NULL ) ? 'dummy.jpg' : $old_info['id'].'.jpg';
+
+		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$img_file );
+		copy( $gl_Path.'img/assortment/thumbnail/'.$img_file, $gl_Path.'upload/files/thumbnail/'.$img_file );
+
+
 		$db_obj	= new PDbl( $this );
 		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 
@@ -86,7 +100,9 @@ final class AddEditGoodsPane extends PAddEditPane{
 '<tr>'.
 	'<td colspan="2" id="fileupload_cnt_td" class="edit_pane_content_td">'.
 
-	'<input type="hidden" id="prev_file" name="prev_file" value="">'.
+	'<input type="hidden" id="main_url" name="main_url" value="">'.
+	'<input type="hidden" id="thumb_url" name="thumb_url" value="">'.
+	'<input type="hidden" id="fname" name="fname" value="">'.
 
 '<table cellpadding="0" cellspacing="0" class="AddEditGoodsPaneN_uploadTable">'.
 	'<tr>'.
@@ -95,7 +111,12 @@ final class AddEditGoodsPane extends PAddEditPane{
 			'<button class="AddEditGoodsPaneN_uploadBtn">'._GOOD_IMAGE.'</button>'.
 		'</td>'.
 
-		'<td><div class="AddEditGoodsPaneN_imgExternDiv"><div id="img_preview" class="AddEditGoodsPaneN_imgInnerDiv"></div></div></td>'.
+		'<td>'.
+			'<div class="AddEditGoodsPaneN_imgExternDiv">'.
+				'<div id="img_preview" class="AddEditGoodsPaneN_imgInnerDiv" '.
+					'style="background-image:url(\'upload/files/thumbnail/dummy.jpg\');"></div>'.
+			'</div>'.
+		'</td>'.
 	'</tr>'.
 '</table>'.
 
@@ -113,6 +134,9 @@ final class AddEditGoodsPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
+/**
+ * deletes all files from upload folders. Don't do in static. It used in xajax actions.
+ */
 	public function delUpload(){
 		array_map( 'unlink', glob( 'upload/files/*.*' ));
 		array_map( 'unlink', glob( 'upload/files/thumbnail/*.*'));
