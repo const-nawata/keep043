@@ -14,7 +14,6 @@ $opts	= array(
 	)
 );
 
-
 $upload_handler = new UploadHandler( $opts );
-$_GET['file']	= $_POST['prev_file'];
+$_GET['file']	= $_POST['main_url'];
 $upload_handler->delete( FALSE );
