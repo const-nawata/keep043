@@ -394,7 +394,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_ADD_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'addRowHandler', get_class( $this ) )."\", null );"
+    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'addRowHandler', get_class( $this ) ).'",null);'
     				)
     			)
     		),
@@ -403,7 +403,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_EDIT_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'editRowHandler', get_class( $this ) )."\", null );"
+    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'editRowHandler', get_class( $this ) ).'",null);'
     				)
     			)
     		),
@@ -413,8 +413,8 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_DELETE_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'showConfirmHandler', get_class( $this ) )."\", ".
-    									"{ \"message\" : \""._MESSAGE_IS_DEL_RECORD."\", \"action\" : \"".self::encipherFilledValue( 'deleteRowHandler' )."\"} );"
+    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'showConfirmHandler', get_class( $this ) ).'",'.
+    									'{"message":"'._MESSAGE_IS_DEL_RECORD.'","action":"'.self::encipherFilledValue( 'deleteRowHandler' ).'"});'
     				)
     			)
     		)
