@@ -86,8 +86,9 @@ final class AddEditGoodsPane extends PAddEditPane{
 		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 		$img_file	= ( $old_info['id'] == NULL ) ? _PPSK_DUMMY_IMG : $old_info['id'].'.jpg';
 
-		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$img_file );
-		copy( $gl_Path.'img/assortment/thumbnail/'.$img_file, $gl_Path.'upload/files/thumbnail/'.$img_file );
+		$dest_img_file	= rand( 1, 10000 ).$img_file;
+		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$dest_img_file );
+		copy( $gl_Path.'img/assortment/thumbnail/'.$img_file, $gl_Path.'upload/files/thumbnail/'.$dest_img_file );
 
 
 		$tanindex	= 1;
@@ -115,7 +116,7 @@ final class AddEditGoodsPane extends PAddEditPane{
 			'<div class="AddEditGoodsPaneN_imgExternDiv">'.
 				'<div id="img_preview" class="AddEditGoodsPaneN_imgInnerDiv" '.
 					'style="'.
-						'background-image:url(\'upload/files/thumbnail/'.$img_file.'\');'.
+						'background-image:url(\'upload/files/thumbnail/'.$dest_img_file.'\');'.
 						'background-repeat:no-repeat;'.
 						'background-position:center;'.
 				'"></div>'.
@@ -143,20 +144,13 @@ final class AddEditGoodsPane extends PAddEditPane{
 
 		$result	= parent::saveData();
 
-
-Log::_log(print_r( $result, TRUE));
-
 		if( !$result['is_error'] ){
 			$form_vals	= $this->__get( 'mForm' );
 			$img_file	= $form_vals['fname'];
-
-Log::_log("img_file: $img_file");
-
 			$id	= $result['id'];
 			copy( $gl_Path.'upload/files/'.$img_file, $gl_Path.'img/assortment/'.$id.'.jpg' );
 			copy( $gl_Path.'upload/files/thumbnail/'.$img_file, $gl_Path.'img/assortment/thumbnail/'.$id.'.jpg' );
 		}
-
 
 		return $result;
 	}
