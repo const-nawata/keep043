@@ -23,6 +23,9 @@ final class PpskUploadHandler extends UploadHandler{
 			$file->url			= $this->get_upload_path( $file->name );
 			$file->thumbnail_url= $this->get_download_url( $file->name, 'thumbnail' );
 		}
+
+Log::_log(print_r( $file, TRUE));
+
 		return $file;
 	}
 //______________________________________________________________________________
