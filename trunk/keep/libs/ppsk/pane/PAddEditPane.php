@@ -61,18 +61,20 @@ abstract class PAddEditPane extends PRnd1Pane{
 
     	$buttons	= $this->__get( 'mButtons' );
 
-    	$buttons	= ( count( $buttons ) == 0 )
-    		? array(
-    		array (	//	Button to save info
+    	if( !isset($buttons[0]) ){
+    		$buttons[0]	= array (	//	Button to save info
     			'name'		=> 'btn_save',
     			'type'		=> 'submit',
     			'is_dis'	=> TRUE,
     			'prompt'	=> _PPSK_SAVE,
     			'hint'		=> _PPSK_SAVE,
-    			'css_dis'	=>'btn_disabled',
+//     			'css_dis'	=>'btn_disabled',
     			'css_ovr'	=>'btn_over'
-    		),
-    		array(	//	Button to cancel info
+    		);
+    	}
+
+    	if( !isset($buttons[1]) ){
+    		$buttons[1]	= array(	//	Button to cancel info
     			'name'		=> 'btn_cancel',
     			'prompt'	=> _PPSK_CANCEL,
     			'hint'		=> _PPSK_CANCEL,
@@ -82,9 +84,11 @@ abstract class PAddEditPane extends PRnd1Pane{
     					'handler'	=> 'removeElement("pane_container");removeElement("veil");'
     				)
     			)
-    		)
-    	)
-    		: $buttons;
+    		);
+    	}
+
+    	ksort( $buttons );
+
 
     	$this->__set( 'mButtons', $buttons );
 
@@ -129,6 +133,8 @@ abstract class PAddEditPane extends PRnd1Pane{
  */
     abstract protected function isValidData( &$formValues );
 //______________________________________________________________________________
+
+
 
 /**
  * creates HTML content

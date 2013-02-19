@@ -2,17 +2,19 @@
 final class AddEditGoodsPane extends PAddEditPane{
 
 	public function __construct( $Owner ){
+
     	$buttons	= array(
-    		array (	//	Button to save info
-    			'name'		=> 'btn_save',
-    			'type'		=> 'submit',
-    			'is_dis'	=> TRUE,
-    			'prompt'	=> _PPSK_SAVE,
-    			'hint'		=> _PPSK_SAVE,
-    			'css_dis'	=>'btn_disabled',
-    			'css_ovr'	=>'btn_over'
-    		),
-    		array(	//	Button to cancel info
+//     		array (	//	Button to save info
+//     			'name'		=> 'btn_save',
+//     			'type'		=> 'submit',
+//     			'is_dis'	=> TRUE,
+//     			'prompt'	=> _PPSK_SAVE,
+//     			'hint'		=> _PPSK_SAVE,
+// //     			'css_dis'	=>'btn_disabled',
+//     			'css_ovr'	=>'btn_over'
+//     		),
+
+    		1	=> array(	//	Button to cancel info
     			'name'		=> 'btn_cancel',
     			'prompt'	=> _PPSK_CANCEL,
     			'hint'		=> _PPSK_CANCEL,
