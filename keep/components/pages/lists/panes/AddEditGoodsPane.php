@@ -24,7 +24,7 @@ final class AddEditGoodsPane extends PAddEditPane{
 	'$("#fileupload").fileupload({'.
 		'dataType:"json",'.
 
-		'fail: function(e,data){var a = 1;alert(100);},'.
+		'fail: function(e,data){var a=1; alert(100);},'.
 
 		'done:function(e,data){'.
 			'$.each(data.result.files,function(index,file){'.
@@ -56,7 +56,7 @@ final class AddEditGoodsPane extends PAddEditPane{
 								'xajax_onHandler("'.self::getHandleResourceString( 'delUpload', get_class($this)).'",null);';
 		return $buttons;
 	}
-//______________________________________________________________________________
+//______________________________________________________________________________ img/assortment/
 
 	public function initHtmlView( $view = '' ){
 		global $gl_Path;
@@ -66,14 +66,14 @@ final class AddEditGoodsPane extends PAddEditPane{
 		$db_obj	= new PDbl( $this );
 		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 		$img_file	= ( $old_info['id'] == NULL ) ? _PPSK_DUMMY_IMG : $old_info['id'].'.jpg';
-		$img_file	= ( !file_exists($gl_Path.'img/assortment/'.$img_file ) || !file_exists($gl_Path.'img/assortment/thumbnail/'.$img_file ))
+		$img_file	= ( !file_exists($gl_Path._ASSORT_IMG_PATH.$img_file ) || !file_exists($gl_Path._ASSORT_IMG_PATH._PPSK_THUMB_FOLD.$img_file ))
 			? _PPSK_DUMMY_IMG
 			: $img_file;
 
 		$dest_img_file	= ( $img_file != _PPSK_DUMMY_IMG ) ? rand( 1, 10000 ).'_'.$img_file : $img_file;
 
-		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$dest_img_file );
-		copy( $gl_Path.'img/assortment/thumbnail/'.$img_file, $gl_Path.'upload/files/thumbnail/'.$dest_img_file );
+		copy( $gl_Path._ASSORT_IMG_PATH.$img_file, $gl_Path._PPSK_UPLOAD_FILES.$dest_img_file );
+		copy( $gl_Path._ASSORT_IMG_PATH._PPSK_THUMB_FOLD.$img_file, $gl_Path._PPSK_UPLOAD_FILES._PPSK_THUMB_FOLD.$dest_img_file );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
@@ -92,7 +92,7 @@ final class AddEditGoodsPane extends PAddEditPane{
 '<table cellpadding="0" cellspacing="0" class="AddEditGoodsPaneN_uploadTable">'.
 	'<tr>'.
 		'<td class="AddEditGoodsPaneN_uploadTd">'.
-			'<input type="file" id="fileupload" name="files[]" data-url="upload/loader.php" multiple class="AddEditGoodsPaneN_uploadInput"/>'.
+			'<input type="file" id="fileupload" name="files[]" data-url="'._PPSK_UPLOAD_FOLD.'loader.php" multiple class="AddEditGoodsPaneN_uploadInput"/>'.
 			'<button class="AddEditGoodsPaneN_uploadBtn">'._GOOD_IMAGE.'</button>'.
 		'</td>'.
 
@@ -100,7 +100,7 @@ final class AddEditGoodsPane extends PAddEditPane{
 			'<div class="AddEditGoodsPaneN_imgExternDiv">'.
 				'<div id="img_preview" class="AddEditGoodsPaneN_imgInnerDiv" '.
 					'style="'.
-						'background-image:url(\'upload/files/thumbnail/'.$dest_img_file.'\');'.
+						'background-image:url(\''._PPSK_UPLOAD_FILES._PPSK_THUMB_FOLD.$dest_img_file.'\');'.
 						'background-repeat:no-repeat;'.
 						'background-position:center;'.
 				'"></div>'.
@@ -133,8 +133,8 @@ final class AddEditGoodsPane extends PAddEditPane{
 
 			if( $img_file != '' ){
 				$id	= $result['id'];
-				copy( $gl_Path.'upload/files/'.$img_file, $gl_Path.'img/assortment/'.$id.'.jpg' );
-				copy( $gl_Path.'upload/files/thumbnail/'.$img_file, $gl_Path.'img/assortment/thumbnail/'.$id.'.jpg' );
+				copy( $gl_Path._PPSK_UPLOAD_FILES.$img_file, $gl_Path._ASSORT_IMG_PATH.$id.'.jpg' );
+				copy( $gl_Path._PPSK_UPLOAD_FILES._PPSK_THUMB_FOLD.$img_file, $gl_Path._ASSORT_IMG_PATH._PPSK_THUMB_FOLD.$id.'.jpg' );
 			}
 		}
 
@@ -146,8 +146,8 @@ final class AddEditGoodsPane extends PAddEditPane{
  * deletes all files from upload folders. Don't do in static. It used in xajax actions.
  */
 	public function delUpload(){
-		array_map( 'unlink', glob( 'upload/files/*.*' ));
-		array_map( 'unlink', glob( 'upload/files/thumbnail/*.*'));
+		array_map( 'unlink', glob( _PPSK_UPLOAD_FILES.'*.*' ));
+		array_map( 'unlink', glob( _PPSK_UPLOAD_FILES._PPSK_THUMB_FOLD.'*.*'));
 	}
 //______________________________________________________________________________
 

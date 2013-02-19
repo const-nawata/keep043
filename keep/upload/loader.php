@@ -21,10 +21,8 @@ final class PpskUploadHandler extends UploadHandler{
 		if( isset( $file->error )){
 			$file->name			= _PPSK_DUMMY_IMG;
 			$file->url			= $this->get_upload_path( $file->name );
-			$file->thumbnail_url= $this->get_download_url( $file->name, 'thumbnail' );
+			$file->thumbnail_url= $this->get_download_url( $file->name, _PPSK_THUMB_FOLD );
 		}
-
-Log::_log(print_r( $file, TRUE));
 
 		return $file;
 	}
@@ -39,7 +37,7 @@ $opts	= array(
 	'accept_file_types' => '/\.(jpe?g)$/i',
 
 	'image_versions' => array(
-		'thumbnail' => array(
+		'thumbnail' => array(//TODO: Check if it is folder name.
 			'max_width'	=> 200,
 			'max_height'=> 110
 		)
