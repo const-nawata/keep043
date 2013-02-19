@@ -225,7 +225,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     }
 //______________________________________________________________________________
 
-    private function saveData(){
+    protected function saveData(){
     	if( count( $this->mSaveData ) ){
 	    	$db_obj	= new PDbl( $this );
 
@@ -244,7 +244,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     }
 //______________________________________________________________________________
 
-    private function prepareData(){
+    protected function prepareData( $ags=NULL ){
     	foreach( $this->mSaveData as &$items ){
     		if( !isset( $items[2] )){ $items[2] = NULL; }
     		if( !isset( $items[3] )){ $items[3] = ''; }
@@ -272,9 +272,9 @@ abstract class PAddEditPane extends PRnd1Pane{
 				$this->prepareData();
 
 //TODO: Uncomment for real work.
-// 				$result	= $this->saveData();
+				$result	= $this->saveData();
 
-				$result['is_error']	= FALSE;	//Don't delete. It is needed for debug purposes.
+// 				$result['is_error']	= FALSE;	//Don't delete. It is needed for debug purposes.
 
 
 				if( $result['is_error'] ){

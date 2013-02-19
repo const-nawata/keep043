@@ -81,14 +81,14 @@ final class AddEditGoodsPane extends PAddEditPane{
 		global $gl_Path;
 
 		$this->delUpload();
+
+		$db_obj	= new PDbl( $this );
+		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 		$img_file	= ( $old_info['id'] == NULL ) ? _PPSK_DUMMY_IMG : $old_info['id'].'.jpg';
 
 		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$img_file );
 		copy( $gl_Path.'img/assortment/thumbnail/'.$img_file, $gl_Path.'upload/files/thumbnail/'.$img_file );
 
-
-		$db_obj	= new PDbl( $this );
-		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
@@ -114,7 +114,11 @@ final class AddEditGoodsPane extends PAddEditPane{
 		'<td>'.
 			'<div class="AddEditGoodsPaneN_imgExternDiv">'.
 				'<div id="img_preview" class="AddEditGoodsPaneN_imgInnerDiv" '.
-					'style="background-image:url(\'upload/files/thumbnail/dummy.jpg\');"></div>'.
+					'style="'.
+						'background-image:url(\'upload/files/thumbnail/'.$img_file.'\');'.
+						'background-repeat:no-repeat;'.
+						'background-position:center;'.
+				'"></div>'.
 			'</div>'.
 		'</td>'.
 	'</tr>'.
@@ -129,11 +133,32 @@ final class AddEditGoodsPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	protected function isValidData( &$formValues ){
-
-
-Log::_log(print_r( $formValues, TRUE));
-
+		$this->__set( 'mForm', $formValues );
 		$formValues['is_valid']	= TRUE;
+	}
+//______________________________________________________________________________
+
+	protected function saveData(){
+		global $gl_Path;
+
+		$result	= parent::saveData();
+
+
+Log::_log(print_r( $result, TRUE));
+
+		if( !$result['is_error'] ){
+			$form_vals	= $this->__get( 'mForm' );
+			$img_file	= $form_vals['fname'];
+
+Log::_log("img_file: $img_file");
+
+			$id	= $result['id'];
+			copy( $gl_Path.'upload/files/'.$img_file, $gl_Path.'img/assortment/'.$id.'.jpg' );
+			copy( $gl_Path.'upload/files/thumbnail/'.$img_file, $gl_Path.'img/assortment/thumbnail/'.$id.'.jpg' );
+		}
+
+
+		return $result;
 	}
 //______________________________________________________________________________
 
