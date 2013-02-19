@@ -85,6 +85,9 @@ final class AddEditGoodsPane extends PAddEditPane{
 		$db_obj	= new PDbl( $this );
 		$old_info	= $db_obj->getRow( $this->mRecId, TRUE );
 		$img_file	= ( $old_info['id'] == NULL ) ? _PPSK_DUMMY_IMG : $old_info['id'].'.jpg';
+		$img_file	= ( !file_exists($gl_Path.'img/assortment/'.$img_file ) || !file_exists($gl_Path.'img/assortment/thumbnail/'.$img_file ))
+			? _PPSK_DUMMY_IMG
+			: $img_file;
 
 		$dest_img_file	= rand( 1, 10000 ).$img_file;
 		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$dest_img_file );
