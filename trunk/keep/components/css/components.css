@@ -441,10 +441,6 @@ input.welcomeLine {
 	
 	height: 22px;
 	width: 105px;
-/*	
-	height: 13px;
-	width: 152px;
-*/
 	-ms-transform: translate(172px,0px) scale(1.4, 1.25);	/*IE9*/
 	-webkit-transform: translate(185px,3px) scale(1, 1);			/*Chrom*/
 	transform: scale(1.4, 1.25);
@@ -537,3 +533,11 @@ input.welcomeLine {
 	vertical-align: top;
 }
 /*Multi tables page  (end) ###############################################*/
+
+.Pane_cats_div {
+	position: absolute;
+	top: 120px;
+	left: 350px;
+	z-index: 999999;
+}
+

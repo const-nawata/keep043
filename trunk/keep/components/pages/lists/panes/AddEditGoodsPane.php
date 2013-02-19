@@ -59,7 +59,7 @@ final class AddEditGoodsPane extends PAddEditPane{
 
 		$objResponse->script(
 			"prependDiv('body_id','cats_veil','PPSK_alert_vail_div');".
-			"prependDiv('body_id','cats_container','PPSK_pane_alert_container_div');"
+			"prependDiv('body_id','cats_container','PPSK_pane_alert_container_div Pane_cats_div');"
 		);
 
 		$objResponse->assign( 'cats_container', 'innerHTML', $view );

@@ -385,25 +385,25 @@
 }
 
 .PPSK_vail_div {
-	z-index: 999996;
+	z-index: 99996;
 }
 
 .PPSK_alert_vail_div {
-	z-index: 999998;
+	z-index: 99998;
 }
 
 .PPSK_pane_container_div {
 	position: absolute;
 	top: 200px;
 	left: 400px;
-	z-index: 999997;
+	z-index: 99997;
 }
 
 .PPSK_pane_alert_container_div {
 	position: absolute;
 	top: 320px;
 	left: 350px;
-	z-index: 999999;
+	z-index: 99999;
 }
 
 /*CTYLES FOR PANES (END)--------------------------------------------------------------------------*/
