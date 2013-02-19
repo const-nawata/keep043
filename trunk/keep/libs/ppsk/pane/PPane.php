@@ -144,7 +144,7 @@ abstract class PPane extends Core{
 //--------------------------------------------------------------------------------------------------
 
 	/**
-	 *
+	 * gets
 	 * @return string HTML content
 	 */
 	protected function getInnerHtmlContent(){

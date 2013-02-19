@@ -59,36 +59,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     											'xajax.getFormValues(this)); return false;'
     	);
 
-    	$buttons	= $this->__get( 'mButtons' );
-
-    	if( !isset($buttons[0]) ){
-    		$buttons[0]	= array (	//	Button to save info
-    			'name'		=> 'btn_save',
-    			'type'		=> 'submit',
-    			'is_dis'	=> TRUE,
-    			'prompt'	=> _PPSK_SAVE,
-    			'hint'		=> _PPSK_SAVE,
-//     			'css_dis'	=>'btn_disabled',
-    			'css_ovr'	=>'btn_over'
-    		);
-    	}
-
-    	if( !isset($buttons[1]) ){
-    		$buttons[1]	= array(	//	Button to cancel info
-    			'name'		=> 'btn_cancel',
-    			'prompt'	=> _PPSK_CANCEL,
-    			'hint'		=> _PPSK_CANCEL,
-    			'css_ovr'	=> 'btn_over',
-    			'handlers'	=> array(
-    				'onclick'	=> array(
-    					'handler'	=> 'removeElement("pane_container");removeElement("veil");'
-    				)
-    			)
-    		);
-    	}
-
-    	ksort( $buttons );
-
+		$buttons	= $this->getEditPainButtons();
 
     	$this->__set( 'mButtons', $buttons );
 
@@ -134,7 +105,32 @@ abstract class PAddEditPane extends PRnd1Pane{
     abstract protected function isValidData( &$formValues );
 //______________________________________________________________________________
 
+	protected function getEditPainButtons(){
+		return array(
+			array (	//	Button to save info
+    			'name'		=> 'btn_save',
+    			'type'		=> 'submit',
+    			'is_dis'	=> TRUE,
+    			'prompt'	=> _PPSK_SAVE,
+    			'hint'		=> _PPSK_SAVE,
+    			'css_dis'	=>'btn_disabled',
+    			'css_ovr'	=>'btn_over'
+    		),
 
+			array(	//	Button to cancel info
+    			'name'		=> 'btn_cancel',
+    			'prompt'	=> _PPSK_CANCEL,
+    			'hint'		=> _PPSK_CANCEL,
+    			'css_ovr'	=> 'btn_over',
+    			'handlers'	=> array(
+    				'onclick'	=> array(
+    					'handler'	=> 'removeElement("pane_container");removeElement("veil");'
+    				)
+    			)
+    		)
+		);
+	}
+//______________________________________________________________________________
 
 /**
  * creates HTML content

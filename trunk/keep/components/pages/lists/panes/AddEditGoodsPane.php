@@ -2,35 +2,6 @@
 final class AddEditGoodsPane extends PAddEditPane{
 
 	public function __construct( $Owner ){
-
-    	$buttons	= array(
-//     		array (	//	Button to save info
-//     			'name'		=> 'btn_save',
-//     			'type'		=> 'submit',
-//     			'is_dis'	=> TRUE,
-//     			'prompt'	=> _PPSK_SAVE,
-//     			'hint'		=> _PPSK_SAVE,
-// //     			'css_dis'	=>'btn_disabled',
-//     			'css_ovr'	=>'btn_over'
-//     		),
-
-    		1	=> array(	//	Button to cancel info
-    			'name'		=> 'btn_cancel',
-    			'prompt'	=> _PPSK_CANCEL,
-    			'hint'		=> _PPSK_CANCEL,
-    			'css_ovr'	=> 'btn_over',
-    			'handlers'	=> array(
-    				'onclick'	=> array(
-    					'handler'	=> 'removeElement("pane_container");removeElement("veil");'.
-								'xajax_onHandler("'.self::getHandleResourceString( 'delUpload', get_class($this)).'",null);'
-
-    				)
-    			)
-    		)
-    	);
-
-    	$this->__set( 'mButtons', $buttons );
-
     	parent::__construct( $Owner );
 
 		$this->mTitle	= _EDITING.' '._GOOD_PARS_ROD;
@@ -57,7 +28,6 @@ final class AddEditGoodsPane extends PAddEditPane{
 
 		'done:function(e,data){'.
 			'$.each(data.result.files,function(index,file){'.
-// 				'$("<p/>").text(file.name).appendTo(document.body);'.
 				'$("#main_url").val(file.url);'.
 				'$("#thumb_url").val(file.thumbnail_url);'.
 				'$("#fname").val(file.name);'.
@@ -70,12 +40,21 @@ final class AddEditGoodsPane extends PAddEditPane{
 // 					'backgroundAttachment:"fixed",'.
 					'backgroundPosition:"center"'.
 				'});'.
+				self::_onchange.
 			'});'.
 		'}'.
 	'});'.
 '});';
 
 		$this->mInitFocus= 'name';
+	}
+//______________________________________________________________________________
+
+	protected function getEditPainButtons(){
+		$buttons	= parent::getEditPainButtons();
+		$buttons[1]['handlers']['onclick']['handler']	= 'removeElement("pane_container");removeElement("veil");'.
+								'xajax_onHandler("'.self::getHandleResourceString( 'delUpload', get_class($this)).'",null);';
+		return $buttons;
 	}
 //______________________________________________________________________________
 
@@ -91,10 +70,10 @@ final class AddEditGoodsPane extends PAddEditPane{
 			? _PPSK_DUMMY_IMG
 			: $img_file;
 
-		$dest_img_file	= rand( 1, 10000 ).$img_file;
+		$dest_img_file	= ( $img_file != _PPSK_DUMMY_IMG ) ? rand( 1, 10000 ).'_'.$img_file : $img_file;
+
 		copy( $gl_Path.'img/assortment/'.$img_file, $gl_Path.'upload/files/'.$dest_img_file );
 		copy( $gl_Path.'img/assortment/thumbnail/'.$img_file, $gl_Path.'upload/files/thumbnail/'.$dest_img_file );
-
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;
@@ -148,13 +127,15 @@ final class AddEditGoodsPane extends PAddEditPane{
 		global $gl_Path;
 
 		$result	= parent::saveData();
-
 		if( !$result['is_error'] ){
 			$form_vals	= $this->__get( 'mForm' );
 			$img_file	= $form_vals['fname'];
-			$id	= $result['id'];
-			copy( $gl_Path.'upload/files/'.$img_file, $gl_Path.'img/assortment/'.$id.'.jpg' );
-			copy( $gl_Path.'upload/files/thumbnail/'.$img_file, $gl_Path.'img/assortment/thumbnail/'.$id.'.jpg' );
+
+			if( $img_file != '' ){
+				$id	= $result['id'];
+				copy( $gl_Path.'upload/files/'.$img_file, $gl_Path.'img/assortment/'.$id.'.jpg' );
+				copy( $gl_Path.'upload/files/thumbnail/'.$img_file, $gl_Path.'img/assortment/thumbnail/'.$id.'.jpg' );
+			}
 		}
 
 		return $result;
