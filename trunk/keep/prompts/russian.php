@@ -38,6 +38,7 @@ define( '_CITY', 'Город' );
 define( '_CITIES', 'Города' );
 define( '_CITY_NAME', 'Название города' );
 define( '_CLOSE', 'Закрыть' );
+define( '_CATEGORIES', 'Категории' );
 define( '_COUNTRY', 'Страна' );
 define( '_COUNTRIES', 'Страны' );
 define( '_COUNTRY_NAME', 'Название страны' );
@@ -77,6 +78,7 @@ define( '_TITLE_EDIT_SETTINGS', 'Редактирование настроек' 
 define( '_TITLE_GENERAL_INFO', 'Новости сайта' );
 define( '_TITLE_INPUT_LOGIN', 'Введите Ваш логин и пароль' );
 define( '_TITLE_MANAGERS_EDIT', 'Редактирование' );
+define( '_TITLE_ASSIGN_CATS', 'Назначьте категории.' );
 
 //	Errors and confirm descriptions
 @define( '_PPSK_ATTENTION', 'Внимание' );

@@ -1,4 +1,6 @@
 <?php
+require_once($gl_CompsPath.'/pages/lists/panes/AddDelCatsPane.php');
+
 final class AddEditGoodsPane extends PAddEditPane{
 
 	public function __construct( $Owner ){
@@ -50,13 +52,44 @@ final class AddEditGoodsPane extends PAddEditPane{
 	}
 //______________________________________________________________________________
 
-	protected function getEditPainButtons(){
-		$buttons	= parent::getEditPainButtons();
+	public function addDelCatsHandler( &$objResponse, $dummy ){
+		$obj_pane	= new AddDelCatsPane( $this );
+		$obj_pane->initHtmlView();
+		$view	= $obj_pane->getHtmlView();
+
+		$objResponse->script(
+			"prependDiv('body_id','cats_veil','PPSK_alert_vail_div');".
+			"prependDiv('body_id','cats_container','PPSK_pane_alert_container_div');"
+		);
+
+		$objResponse->assign( 'cats_container', 'innerHTML', $view );
+
+		return $objResponse;
+	}
+//______________________________________________________________________________ removeElement("pane_container");removeElement("veil");'
+
+	protected function getEditPaneButtons(){
+		$buttons	= parent::getEditPaneButtons();
 		$buttons[1]['handlers']['onclick']['handler']	= 'removeElement("pane_container");removeElement("veil");'.
 								'xajax_onHandler("'.self::getHandleResourceString( 'delUpload', get_class($this)).'",null);';
+
+		$buttons[2]	= $buttons[1];
+		$buttons[1]	= $buttons[0];
+		$buttons[0]	= array (	//	Button to show categories pane.
+    			'name'		=> 'btn_cats',
+    			'prompt'	=> _CATEGORIES,
+    			'hint'		=> _CATEGORIES,
+    			'css_ovr'	=>'btn_over',
+				'handlers'	=> array(
+					'onclick'	=> array(
+						'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'addDelCatsHandler', get_class($this)).'",null);'
+					)
+				)
+    		);
+
 		return $buttons;
 	}
-//______________________________________________________________________________ img/assortment/
+//______________________________________________________________________________
 
 	public function initHtmlView( $view = '' ){
 		global $gl_Path;

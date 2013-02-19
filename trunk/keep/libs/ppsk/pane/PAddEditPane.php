@@ -59,7 +59,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     											'xajax.getFormValues(this)); return false;'
     	);
 
-		$buttons	= $this->getEditPainButtons();
+		$buttons	= $this->getEditPaneButtons();
 
     	$this->__set( 'mButtons', $buttons );
 
@@ -105,7 +105,7 @@ abstract class PAddEditPane extends PRnd1Pane{
     abstract protected function isValidData( &$formValues );
 //______________________________________________________________________________
 
-	protected function getEditPainButtons(){
+	protected function getEditPaneButtons(){
 		return array(
 			array (	//	Button to save info
     			'name'		=> 'btn_save',
