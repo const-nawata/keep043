@@ -1,4 +1,9 @@
 <?php
+//PATHS
+@define( '_PPSK_UPLOAD_FOLD', 'upload/' );
+@define( '_PPSK_THUMB_FOLD', 'thumbnail/' );
+@define( '_PPSK_UPLOAD_FILES', _PPSK_UPLOAD_FOLD.'files/' );
+
 //	CONSTANTS
 define( '_EMPTY', '' );
 define( '_PPSK_WHITE_COLOR', '#FFFFFF' );
