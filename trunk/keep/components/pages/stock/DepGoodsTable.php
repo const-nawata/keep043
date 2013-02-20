@@ -45,21 +45,12 @@ final class DepGoodsTable extends PTable{
 				'sll_css'	=> 'goodsTblArticleClTd',
 				'bg_clr'	=> '#FFF7E2',
 				'is_sort'	=> TRUE
-			),
-
-			array(
-				'field'		=> 'cat_names',
-				'name'		=> _GOOD_CATS,
-				'ttl_css'	=> 'goodsTblCatsTtlTd',
-				'sll_css'	=> 'goodsTblCatsClTd',
-				'bg_clr'	=> '#FFF7E2',
-				'is_sort'	=> FALSE
 			)
 
 		);
 
 		$this->setSearchFields( array( 'name', 'cku' ));
-		$this->mPaneClassName	= 'AddEditGoodsPane';
+// 		$this->mPaneClassName	= 'AddEditGoodsPane';
 	}
 //______________________________________________________________________________
 

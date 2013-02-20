@@ -1,6 +1,7 @@
 <?php
-// class stock_Page extends SeveralTablesPage{
-class stock_Page extends KeepPage{
+
+// class stock_Page extends KeepPage{
+class stock_Page extends SeveralTablesPage{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );

@@ -16,9 +16,6 @@ final class GoodsTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-
-
-
 		$this->mLevels			= array( 'manager' );
 		$this->mSourceDbTable	= 'goods_view';
 		$this->mTargetDbTable	= 'goods';
