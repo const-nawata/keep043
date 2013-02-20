@@ -1,7 +1,7 @@
 <?php
 require_once( $gl_pagesPath.'tableListController.php' );
 
-abstract class SeveralTablesPage extends KeepPage{
+class SeveralTablesPage extends KeepPage{
 
 	/**
 	 * @property array $mTablesList => array(
@@ -19,7 +19,6 @@ abstract class SeveralTablesPage extends KeepPage{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
-		//    	$this->initHtmlView();
 	}
 //______________________________________________________________________________
 
@@ -80,36 +79,31 @@ abstract class SeveralTablesPage extends KeepPage{
 	}
 //______________________________________________________________________________
 
-	private function getMultiTablesHtmlContent(){
-
+	public function initHtmlView( $view = '' ){
 		$tbl_list	= &$this->mTablesList;
 
 		$rest_menu_items = '';
 		foreach( $tbl_list as $ind => &$tbl_params ){
 			$tbl_sell_name	= $this->getTableNameSellHtmlContent( $tbl_params['menu_prompt'], $tbl_params['table_code'] );
 
-
 			( $ind == 0 )
 				? $first_name_sell	= $tbl_sell_name
 				: $rest_menu_items	.= '<tr>'.$tbl_sell_name.'</tr>';
 		}
 
-		$tbl_view	= tableListController::buildSettingsTableHtmlContent( $tbl_list[0]['table_code'] );
-
-		return
-'<input id="prev_sell_code" name="prev_sell_code" type="hidden" value="'.$tbl_list[0]['table_code'].'" />'.
+		$tbl_code	= $tbl_list[0]['table_code'];
+		$tview	=
+'<input id="prev_sell_code" name="prev_sell_code" type="hidden" value="'.$tbl_code.'" />'.
 '<table class="SeveralTablesPageTbl" cellpadding="0" cellspacing="0">'.
 	'<tr>'.
 		$first_name_sell.
-		"<td id='multi_tables_page_container' rowspan='".( $this->mRowSpan + 1 )."' class='SeveralTablesPageContainerSellTd'>".$tbl_view.'</td>'.
+		'<td id="multi_tables_page_container" rowspan="'.($this->mRowSpan + 1).'" class="SeveralTablesPageContainerSellTd">'.
+			tableListController::buildSettingsTableHtmlContent( $tbl_code ).
+		'</td>'.
 	'</tr>'.$rest_menu_items.
 	'<tr><td class="SeveralTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.
 '</table>';
-	}
-//______________________________________________________________________________
 
-	public function initHtmlView( $view = '' ){
-		$tview	= $this->getMultiTablesHtmlContent();
 		parent::initHtmlView( $tview );
 	}
 //______________________________________________________________________________

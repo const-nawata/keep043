@@ -8,52 +8,48 @@ require_once( $gl_PpskPath.'pane/PaneButton.php' );
 
  Properties desription
  ---------------------------------
- protected $mForm = null	- form params if pane must be form.
+ protected $mForm = null	— form params if pane must be form.
  If pane is form then
  $mForm = array (
- 'event'=>'onsubmit or action',
- 'handler'=>'Onsubmit handler or URL'
+	 'event'=>'onsubmit or action',
+	 'handler'=>'Onsubmit handler or URL'
  )
 
- protected $mTitle		= NULL;		- Title for pane. Optional. You can override css properties by using ($this->mClassName).PPSK_innerBlockTitle class.
+protected $mTitle = NULL; — Title for pane. Optional. You can override css properties by using ($this->mClassName).PPSK_innerBlockTitle class.
 
- protected $mButtons		= array (	- Array to create additional buttons. Optional.
- array (
- 'name'	=>'Batton_name', - button name. This value is used as button id. Mandatory.
- 'type'	=>'button', - type of button. Optional.
- 'is_dis'=>false, - Status of button. (false = enabled, true = disabled) Optional.
- 'prompt'=>'Button',	- Prompt name. Optional.
- 'hint'	=>'Button',	- Hint name. Optional.
- 'css_act'=>_EMPTY,	- CSS class for active state.
- 'css_dis'=>_EMPTY,	- CSS class for desable state.
- 'css_ovr'=>_EMPTY,	- CSS class for mouse over state.
- 'handlers'=> array (	 - list of handlers of button. Optional.
- 'onclick'=>array(
- [handler]=>'alert',		- Mandatory
- [ask]=>'Are you shour'	- Optional
- ),
+protected $mButtons = array ( — Array to create additional buttons. Optional.
+	array (
+		'name'	=>'Batton_name', - button name. This value is used as button id. Mandatory.
+		'type'	=>'button', — type of button. Optional.
+		'is_dis'=>false, 	— Status of button. (false = enabled, true = disabled) Optional.
+		'prompt'=>'Button',	— Prompt name. Optional.
+		'hint'	=>'Button',	— Hint name. Optional.
+		'css_act'=>_EMPTY,	— CSS class for active state.
+		'css_dis'=>_EMPTY,	— CSS class for desable state.
+		'css_ovr'=>_EMPTY,	— CSS class for mouse over state.
+
+		'handlers'=> array (	 - list of handlers of button. Optional.
+			'onclick'=>array(
+				[handler]=>'showUserPane();', — JS. Mandatory for handler
+				[ask]=>'Are you sure?'	— Optional
+			),
+							...
+		)
+	),
  ...
- );
- )
- ...
- );
+);
 
  protected $mContent = '';
- protected $mWidth = 300;		- fraim width in pixels. Optional.
- protected $mHeigth = 300;		- fraim heigh in pixels. Optional.
+ protected $mWidth = 300;		— fraim width in pixels. Optional.
+ protected $mHeigth = 300;		— fraim heigh in pixels. Optional.
 
- protected $mBkgClr = "transparend";			- background color.  Optional.
- protected $mBorderClr = _PPSK_BLACK_COLOR;	- border color.  Optional.
+ protected $mBkgClr = "transparend";		— background color.  Optional.
+ protected $mBorderClr = _PPSK_BLACK_COLOR;	— border color.  Optional.
 
- --------------------
- General Remarks
- You can use
- --------------------
- This component was created and tested for  PHP version 5.2.11; Apache version 2.2.4.
- @author Constantine Nawata (nawataster@gmail.com)
- @version 1.0
+
+TODO: Provide opportunity to set standard close button (maybe replace one which is used now).
  */
-abstract class PPane extends Core{
+class PPane extends Core{
 
 /**
  * HTML content
@@ -202,4 +198,4 @@ abstract class PPane extends Core{
 	}
 //--------------------------------------------------------------------------------------------------
 
-}// Class end
+}//		Class end

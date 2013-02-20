@@ -43,10 +43,12 @@ final class AddDelCatsPane extends PAddEditPane{
 	public function initHtmlView( $view = '' ){
 // 		global $gl_Path;
 
-		$tanindex	= 1;
-		$lines	= &$this->mLines;
-		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
+// 		$tanindex	= 1;
+// 		$lines	= &$this->mLines;
+// 		$lines	.= $this->getInputLineContent( 'name', 'text', _PNAME1._PPSK_ASTERISK, $old_info['name'], $tanindex++, self::_onchange );
 
+
+		$this->__set( 'mLines', _SORRY );
 
 		parent::initHtmlView();
 	}

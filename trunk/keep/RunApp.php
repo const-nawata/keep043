@@ -1,5 +1,6 @@
 <?php
 /**
+ *	Does initial application run.
  */
 class RunApp extends Core{
 
