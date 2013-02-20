@@ -1,5 +1,5 @@
 <?php
-class stock_Page extends PPage{
+class stock_Page extends KeepPage{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );

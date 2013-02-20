@@ -1,7 +1,7 @@
 <?php
 require_once( $gl_pagesPath.'tableListController.php' );
 
-abstract class SeveralTablesPage extends PPage{
+abstract class SeveralTablesPage extends KeepPage{
 
 	/**
 	 * @property array $mTablesList => array(

@@ -1,5 +1,5 @@
 <?php
-class contact_Page extends PPage {
+class contact_Page extends KeepPage {
 
 	public function __construct($Owner) {
 		parent::__construct($Owner);

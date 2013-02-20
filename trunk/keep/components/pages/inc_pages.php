@@ -1,6 +1,6 @@
 <?php
 global $gl_pagesPath; $gl_pagesPath	 = $gl_Path.'components/pages/';
-require_once( $gl_pagesPath.'PPage.php' );
+require_once( $gl_pagesPath.'KeepPage.php' );
 require_once( $gl_pagesPath.'SeveralTablesPage.php' );
 
 require_once( $gl_pagesPath.'catalogue/catalogue_Page.php' );
