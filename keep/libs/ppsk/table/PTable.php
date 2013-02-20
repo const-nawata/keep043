@@ -550,8 +550,9 @@ abstract class PTable extends Core{
 
 	private function countAllRecs(){
 		$n_recs	= &$this->mInfo[ 'n_all' ];
-		$sql_cond	= $this->getSqlFilter();
-		$sql		= "SELECT count( id ) AS count FROM ".$this->mSourceDbTable.$sql_cond;
+		$cond	= $this->getCondition();
+		$cond	= ($cond != '' ) ? ' WHERE '.$cond : $cond;
+		$sql		= "SELECT count( id ) AS count FROM ".$this->mSourceDbTable.$cond;
 
 		global $gl_MysqliObj;
 		$result = $gl_MysqliObj->query( $sql );
@@ -609,55 +610,78 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-	private function getSqlFilter(){
+	protected function getCondition(){
 		$class = get_class( $this );
-		$filter	= &$_SESSION[ 'tables' ][ $class ][ 'filter' ];
-		$flields	= &$this->mSearchParams[ 'fields' ];
-		$sql_cond	= "";
-		if( _EMPTY != $filter && count( $flields) > 0 ){
-			$sql_cond	.= " WHERE (";
+		$filter	= &$_SESSION['tables'][$class]['filter'];
+		$flields	= &$this->mSearchParams['fields'];
 
+		if( '' != $filter && count( $flields) > 0 ){
+			$sql_cond	= array();
 			foreach( $flields as &$field_name ){
-				$sql_cond .= "(`".$field_name."` LIKE '%".$filter."%')OR";
+				$sql_cond[]	= '(`'.$field_name."` LIKE '%".$filter."%')";
 			}
-			$ln	= strlen( $sql_cond ) - 2;
-			$sql_cond	= substr( $sql_cond, 0, $ln );
-			$sql_cond	.= ")";
-		}
+
+			$sql_cond	= implode( 'OR', $sql_cond );
+			$sql_cond	= '('.$sql_cond.')';
+		}else
+			$sql_cond	= '';
+
 		return $sql_cond;
 	}
 //______________________________________________________________________________
 
-	private function readDataForPage(){
+	protected function getMainPartSelQuery(){
 		$class = get_class( $this );
-		$pg_len		= &$this->mPgLen;
-		$sort		= &$_SESSION[ 'tables' ][ $class ][ 'sort' ];
-		$start_rec	= ( $_SESSION[ 'tables' ][ $class ][ 'page' ] - 1 ) * $pg_len;
+		$pg_len		= $this->mPgLen;
+		$start_rec	= ( $_SESSION['tables'][$class]['page'] - 1 ) * $pg_len;
 
-		$sql_cond	= $this->getSqlFilter();
-		$sql	= "SELECT `id`, ";
-		foreach( $this->mColumns as &$column ){ $sql .= "`".$column[ 'field' ]."`,"; }
-		$lng	= strlen( $sql ) - 1;
-		$sql	= substr( $sql, 0, $lng );
+		$sql	= 'SELECT `id`, ';
 
-		$sql_cond .= ( NULL != $sort[ 'field' ] ) ? " ORDER BY `".$sort[ 'field' ]."` ".$sort[ 'dir' ]." " : '';
+		$fields	= array();
+		foreach( $this->mColumns as &$column ){
+			$fields[]	= '`'.$column['field'].'`';
+		}
+		$fields	= implode( ',', $fields );
+		$sql	.= $fields;
 
-		$sql	.= " FROM `".$this->mSourceDbTable."` ".$sql_cond." LIMIT $start_rec, $pg_len";
 
+		return $sql;
+	}
+//______________________________________________________________________________
+
+	protected function getOrderCond(){
+		$class = get_class( $this );
+		$sort		= $_SESSION['tables'][$class]['sort'];
+		return (( NULL != $sort['field'] ) ? ' ORDER BY `'.$sort['field'].'` '.$sort['dir'].' ' : '');
+	}
+//______________________________________________________________________________
+
+	protected function readDataForPage(){
+		$class = get_class( $this );
+		$pg_len		= $this->mPgLen;
+		$start_rec	= ( $_SESSION['tables'][$class]['page'] - 1 ) * $pg_len;
+
+		$main	= $this->getMainPartSelQuery();
+		$cond	= $this->getCondition();
+		$cond	= ($cond != '' ) ? 'WHERE '.$cond : $cond;
+		$order	= $this->getOrderCond();
+
+		$sql	= $main.' FROM `'.$this->mSourceDbTable.'` '.$cond.' '.$order.' LIMIT '.$start_rec.','.$pg_len;
+// Log::_log("$sql");
 		$db_obj	= new PDbl( $this );
-		$this->mInfo[ 'recs' ]	= $db_obj->execSelectQuery( $sql );
+		$this->mInfo['recs']	= $db_obj->execSelectQuery( $sql );
 	}
 //______________________________________________________________________________
 
 	private function prepareData(){
 		$class = get_class( $this );
-		$sess_ln_id	= &$_SESSION[ 'tables' ][ $class ][ 'line_id' ];
+		$sess_ln_id	= &$_SESSION['tables'][$class]['line_id'];
 
 		$this->mInfo	= array( 'page'=>NULL, 'max_page'=>NULL, 'recs'=>NULL, 'n_all'=>NULL, 'grp_start'=>0, 'max_gr_pg'=> $this->mMaxGrPg );
 		$this->preparePagingData();
 		$this->readDataForPage();
 
-		$sess_ln_id	= ( $sess_ln_id == NULL && count( $this->mInfo[ 'recs' ] ) > 0 ) ? $this->mInfo[ 'recs' ][ 0 ][ 'id' ] : $sess_ln_id;
+		$sess_ln_id	= ( $sess_ln_id == NULL && count( $this->mInfo['recs'] ) > 0 ) ? $this->mInfo['recs'][0]['id'] : $sess_ln_id;
 
 		if( $this->mIsFixHeight ){ $this->addEmptyLines(); }
 	}
