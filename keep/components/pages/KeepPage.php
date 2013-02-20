@@ -1,5 +1,5 @@
 <?php
-abstract class PPage extends Core{
+class KeepPage extends Core{
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );

@@ -23,7 +23,7 @@ final class AddDelCatsPane extends PAddEditPane{
 
 // 		$this->mInitFocus= 'name';
 	}
-//______________________________________________________________________________   removeElement("pane_container");removeElement("veil");'
+//______________________________________________________________________________
 
 	protected function getEditPaneButtons(){
 		$buttons= parent::getEditPaneButtons();
@@ -41,7 +41,7 @@ final class AddDelCatsPane extends PAddEditPane{
 //______________________________________________________________________________
 
 	public function initHtmlView( $view = '' ){
-		global $gl_Path;
+// 		global $gl_Path;
 
 		$tanindex	= 1;
 		$lines	= &$this->mLines;

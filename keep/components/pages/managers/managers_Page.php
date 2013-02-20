@@ -1,6 +1,6 @@
 <?php
 require_once( $gl_pagesPath.'managers/ManagersTable.php' );
-class managers_Page extends PPage {
+class managers_Page extends KeepPage {
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );

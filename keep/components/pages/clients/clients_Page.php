@@ -1,6 +1,6 @@
 <?php
 require_once( $gl_pagesPath."clients/ClientsTable.php" );
-class clients_Page extends PPage {
+class clients_Page extends KeepPage {
 	public function __construct($Owner) {
 		parent::__construct($Owner);
 		$this->initHtmlView();
