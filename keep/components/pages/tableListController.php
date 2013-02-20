@@ -19,7 +19,7 @@ class tableListController  extends Core{
 	}
 //______________________________________________________________________________
 
-	public static function buildSettingsTableHtmlContent( $codeName ){
+	public static function buildSelectedTableHtmlContent( $codeName ){
 		$cls_name	= $codeName.'Table';
 		$tbl_obj	= new $cls_name( NULL, FALSE );
 
@@ -37,7 +37,7 @@ class tableListController  extends Core{
 
 	public function showTable( &$objResponse, $info ){
 		$this->resetJsHandlers( $objResponse, $info );
-		$table_view	= self::buildSettingsTableHtmlContent( $info[ 'new_code' ] );
+		$table_view	= self::buildSelectedTableHtmlContent( $info[ 'new_code' ] );
 		$objResponse->assign( 'multi_tables_page_container', 'innerHTML', $table_view );
 	}
 //______________________________________________________________________________
