@@ -1,4 +1,5 @@
 <?php
+// class stock_Page extends SeveralTablesPage{
 class stock_Page extends KeepPage{
 
 	public function __construct( $Owner ){
@@ -16,4 +17,4 @@ class stock_Page extends KeepPage{
 // 	}
 //______________________________________________________________________________
 
-}
+}//		Class end

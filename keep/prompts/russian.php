@@ -87,4 +87,4 @@ define( '_TITLE_ASSIGN_CATS', 'Назначьте категории.' );
 @define( '_PPSK_DB_ERR_FOREIGN_KEY_CONSTRAINT', 'Невозможно удалить или изменить запись. Ее значения используются другими таблицами.' );
 
 
-define( '_SORRY', '<br><br><br><br><br><center><b>Извините. Страница  еще не реализована.</b></center><br>' );
+define( '_SORRY', '<br><br><br><br><br><center><b>Извините. Ещё не реализовано.</b></center><br>' );
