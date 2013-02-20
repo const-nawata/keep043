@@ -98,7 +98,7 @@ class SeveralTablesPage extends KeepPage{
 	'<tr>'.
 		$first_name_sell.
 		'<td id="multi_tables_page_container" rowspan="'.($this->mRowSpan + 1).'" class="SeveralTablesPageContainerSellTd">'.
-			tableListController::buildSettingsTableHtmlContent( $tbl_code ).
+			tableListController::buildSelectedTableHtmlContent( $tbl_code ).
 		'</td>'.
 	'</tr>'.$rest_menu_items.
 	'<tr><td class="SeveralTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.
