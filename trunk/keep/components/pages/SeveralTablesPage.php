@@ -51,6 +51,7 @@ class SeveralTablesPage extends KeepPage{
 
 	private function getTableNameSellHtmlContent( $prompt, $sellCode ){
 		$tbl_list	= &$this->mTablesList;
+
 		$this->mRowSpan++;
 		if( $sellCode != $tbl_list[0]['table_code'] ){
 			$css_class		= 'SeveralTablesPageMenuSellTd';
@@ -79,8 +80,8 @@ class SeveralTablesPage extends KeepPage{
 		$tbl_list	= &$this->mTablesList;
 
 		$rest_menu_items = '';
-		foreach( $tbl_list as $ind => &$tbl_params ){
-			$tbl_sell_name	= $this->getTableNameSellHtmlContent( $tbl_params['menu_prompt'], $tbl_params['table_code'] );
+		foreach( $tbl_list as $ind => &$params ){
+			$tbl_sell_name	= $this->getTableNameSellHtmlContent( $params['menu_prompt'], $params['table_code'] );
 
 			( $ind == 0 )
 				? $first_name_sell	= $tbl_sell_name
@@ -94,11 +95,14 @@ class SeveralTablesPage extends KeepPage{
 	'<tr>'.
 		$first_name_sell.
 		'<td id="multi_tables_page_container" rowspan="'.($this->mRowSpan + 1).'" class="SeveralTablesPageContainerSellTd">'.
-			tableListController::buildSelectedTableHtmlContent( $tbl_code ).
+// 			tableListController::buildSelectedTableHtmlContent( $tbl_code ).
 		'</td>'.
 	'</tr>'.$rest_menu_items.
 	'<tr><td class="SeveralTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.
 '</table>';
+
+
+// 		$tview	=	'<div>DEBUG VIEW</div>';
 
 		parent::initHtmlView( $tview );
 	}

@@ -2,6 +2,7 @@
 // require_once( $gl_pagesPath.'lists/panes/AddEditGoodsPane.php' );
 
 final class DepGoodsTable extends PTable{
+	private $mDepId;
 
 	public function __construct( $Owner=NULL, $isHndl=FALSE, $isInitView=TRUE ){
 		$this->setProperties();
@@ -16,11 +17,8 @@ final class DepGoodsTable extends PTable{
 	 * @return void
 	 */
 	private function setProperties(){
-
-
-
 		$this->mLevels			= array( 'manager' );
-		$this->mSourceDbTable	= 'goods_view';
+		$this->mSourceDbTable	= 'goods';
 		$this->mTargetDbTable	= 'goods';
 		$this->mSelectorColor	= '#EDD3EA';
 		$this->mPgLen			= 17;
@@ -56,6 +54,23 @@ final class DepGoodsTable extends PTable{
 
 	public function __destruct(){
 		parent::__destruct();
+	}
+//______________________________________________________________________________
+
+	protected function getCondition(){
+		$table	= $this->mSourceDbTable;
+
+		$join_cond	=
+'LEFT JOIN `stock` ON `stock`.`good_id`=`'.$table.'`.`id`'.
+'';
+
+
+		$sql_cond	= parent::getCondition();
+
+
+
+
+		return $sql_cond;
 	}
 //______________________________________________________________________________
 

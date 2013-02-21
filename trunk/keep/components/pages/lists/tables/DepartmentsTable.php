@@ -1,5 +1,5 @@
 <?php
-require_once( $gl_pagesPath."lists/panes/AddEditDepartmentPane.php" );
+require_once( $gl_pagesPath.'lists/panes/AddEditDepartmentPane.php' );
 
 class DepartmentsTable extends PTable{
 

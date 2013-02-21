@@ -551,8 +551,8 @@ abstract class PTable extends Core{
 	private function countAllRecs(){
 		$n_recs	= &$this->mInfo[ 'n_all' ];
 		$cond	= $this->getCondition();
-		$cond	= ($cond != '' ) ? ' WHERE '.$cond : $cond;
-		$sql		= "SELECT count( id ) AS count FROM ".$this->mSourceDbTable.$cond;
+// 		$cond	= ($cond != '' ) ? ' WHERE '.$cond : $cond;
+		$sql		= 'SELECT count(*) AS count FROM `'.$this->mSourceDbTable.'`'.$cond;
 
 		global $gl_MysqliObj;
 		$result = $gl_MysqliObj->query( $sql );
@@ -570,12 +570,12 @@ abstract class PTable extends Core{
 	private function preparePagingData(){
 		$pg_len		= &$this->mPgLen;
 
-		$n_recs		= &$this->mInfo[ 'n_all' ];
-		$max_page	= &$this->mInfo[ 'max_page' ];
+		$n_recs		= &$this->mInfo['n_all'];
+		$max_page	= &$this->mInfo['max_page'];
 
 		$class = get_class( $this );
 
-		$sess_page	= &$_SESSION[ 'tables' ][ $class ][ 'page' ];
+		$sess_page	= &$_SESSION['tables'][$class]['page'];
 		$sess_page	= ( $sess_page < self::_fstPg ) ? self::_fstPg : $sess_page;
 
 		$this->countAllRecs();
@@ -592,19 +592,19 @@ abstract class PTable extends Core{
 
 		( $sess_page > $max_page ) ? $sess_page	= $max_page:'';
 
-		$this->mInfo[ 'page' ]	= $sess_page;
+		$this->mInfo['page']	= $sess_page;
 		$this->findStartPgOfGrp();
 	}
 //______________________________________________________________________________
 
 	private function addEmptyLines(){
-		$page_recs	= &$this->mInfo[ 'recs' ];
+		$page_recs	= &$this->mInfo['recs'];
 		$p_recs		= count( $page_recs );
 		for( $i = $p_recs; $i < $this->mPgLen; $i++ ){
-			$page_recs[ $i ]	= array( 'id' => 0 );
+			$page_recs[$i]	= array( 'id' => 0 );
 			foreach( $this->mColumns as &$column ){
-				$index	= &$column[ 'field' ];
-				$page_recs[ $i ][  $index ]	= '&nbsp;';
+				$index	= &$column['field'];
+				$page_recs[$i][$index]	= '&nbsp;';
 			}
 		}
 	}
@@ -622,7 +622,7 @@ abstract class PTable extends Core{
 			}
 
 			$sql_cond	= implode( 'OR', $sql_cond );
-			$sql_cond	= '('.$sql_cond.')';
+			$sql_cond	= ' WHERE ('.$sql_cond.')';
 		}else
 			$sql_cond	= '';
 
@@ -656,17 +656,17 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-	protected function readDataForPage(){
+	public function readDataForPage(){
 		$class = get_class( $this );
 		$pg_len		= $this->mPgLen;
 		$start_rec	= ( $_SESSION['tables'][$class]['page'] - 1 ) * $pg_len;
 
 		$main	= $this->getMainPartSelQuery();
 		$cond	= $this->getCondition();
-		$cond	= ($cond != '' ) ? 'WHERE '.$cond : $cond;
+// 		$cond	= ($cond != '' ) ? 'WHERE '.$cond : $cond;
 		$order	= $this->getOrderCond();
 
-		$sql	= $main.' FROM `'.$this->mSourceDbTable.'` '.$cond.' '.$order.' LIMIT '.$start_rec.','.$pg_len;
+		$sql	= $main.' FROM `'.$this->mSourceDbTable.'`'.$cond.' '.$order.' LIMIT '.$start_rec.','.$pg_len;
 // Log::_log("$sql");
 		$db_obj	= new PDbl( $this );
 		$this->mInfo['recs']	= $db_obj->execSelectQuery( $sql );
