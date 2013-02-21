@@ -1,5 +1,5 @@
 <?php
-require_once( $gl_pagesPath.'tableListController.php' );
+// require_once( $gl_pagesPath.'tableListController.php' );
 
 class SeveralTablesPage extends KeepPage{
 
@@ -14,11 +14,30 @@ class SeveralTablesPage extends KeepPage{
 	protected $mTablesList	= array();
 
 	private $mRowSpan	= 0;
+	private $mListContr	= NULL;
 
 //------------------//-----------------//-----------------//-------------------/
 
 	public function __construct( $Owner ){
 		parent::__construct( $Owner );
+	}
+//______________________________________________________________________________
+
+	public function __get( $property ){
+		if( property_exists( 'SeveralTablesPage', $property )){
+			return $this->$property;
+		}else{
+			return parent::__get( $property )  ;
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( 'SeveralTablesPage', $property )){
+			$this->$property = $value;
+		}else{
+			parent::__set( $property, $value );
+		}
 	}
 //______________________________________________________________________________
 
@@ -89,13 +108,15 @@ class SeveralTablesPage extends KeepPage{
 		}
 
 		$tbl_code	= $tbl_list[0]['table_code'];
+
+		$list_contr	= new tableListController( $this );
 		$tview	=
 '<input id="prev_sell_code" name="prev_sell_code" type="hidden" value="'.$tbl_code.'" />'.
 '<table class="SeveralTablesPageTbl" cellpadding="0" cellspacing="0">'.
 	'<tr>'.
 		$first_name_sell.
 		'<td id="multi_tables_page_container" rowspan="'.($this->mRowSpan + 1).'" class="SeveralTablesPageContainerSellTd">'.
-// 			tableListController::buildSelectedTableHtmlContent( $tbl_code ).
+			$this->mListContr->buildSelectedTableHtmlContent( $tbl_code ).
 		'</td>'.
 	'</tr>'.$rest_menu_items.
 	'<tr><td class="SeveralTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.

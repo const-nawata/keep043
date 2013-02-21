@@ -6,6 +6,24 @@ class KeepPage extends Core{
 	}
 //______________________________________________________________________________
 
+	public function __get( $property ){
+		if( property_exists( 'KeepPage', $property )){
+			return $this->$property;
+		}else{
+			return parent::__get( $property )  ;
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( 'KeepPage', $property )){
+			$this->$property = $value;
+		}else{
+			parent::__set( $property, $value );
+		}
+	}
+//______________________________________________________________________________
+
 	public function __destruct(){
 		parent::__destruct();
 	}
