@@ -10,7 +10,7 @@ class PDbl extends Core{
 
 	protected function parserError( $sql = '' ){	//	1064 Syncas error
 		global $gl_MysqliObj;
-		$data	= &$this->mOwner->mSaveData;
+		$data	= isset($this->mOwner->mSaveData) ? $this->mOwner->mSaveData : NULL;
 
 		$err_no	= $gl_MysqliObj->errno;
 		$err_dscr	= $gl_MysqliObj->error;
@@ -23,13 +23,13 @@ class PDbl extends Core{
 					if( $items[0] == trim( $res['field'] )){ break; }
 				}
 
-				$res['description']	= sprintf( _PPSK_DB_ERR_DUBLICATE_ENTRY, $res[ 'value' ], $items[ 3 ] );
+				$res['description']	= sprintf( _PPSK_DB_ERR_DUBLICATE_ENTRY, $res['value'], $items[3] );
 				$res['focus_id']	= $items[2];
 				break;
 
 			case  self::_cannotDelUpdate:
 				$res[ 'description' ]	= _PPSK_DB_ERR_FOREIGN_KEY_CONSTRAINT;
-				$res[ 'focus_id' ]		= _EMPTY;
+				$res[ 'focus_id' ]		= '';
 				break;
 
 			default:

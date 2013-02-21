@@ -334,6 +334,12 @@ abstract class PTable extends Core{
 	 */
 	public function initHtmlView( $isHndl = FALSE ){
 		$paging	= &$this->mPaging;
+
+// $view	= '';
+
+
+// Log::_log(print_r( $this, TRUE));
+
 		$this->prepareData();
 		$class	= get_class( $this );
 		$paging_tool	=
@@ -428,11 +434,11 @@ abstract class PTable extends Core{
 		$class = get_class( $this );
 
 		if( count( $columns ) == 0 ){
-			throw new Exception( _EX."Columns array is impty for object instance: ".$class );
+			throw new Exception( _EX.'Columns array is empty for object instance: '.$class );
 		}
 		foreach( $columns as &$column ){
 			if( !isset( $column[ 'field' ] ) || $column[ 'field' ] == _EMPTY ){
-				throw new Exception( _EX."Bad column field definition for object instance: ".$class."" );
+				throw new Exception( _EX.'Bad column field definition for object instance: '.$class );
 			}
 			$column[ 'name' ]		= ( !isset( $column[ 'name' ] ) || $column['name'] == _EMPTY ) ? $column[ 'field' ] : $column[ 'name' ];
 			$column[ 'is_sort' ]	= ( !isset( $column[ 'is_sort' ] ) ) ? false : $column[ 'is_sort' ];
@@ -470,7 +476,7 @@ abstract class PTable extends Core{
 //______________________________________________________________________________
 
 	protected function setSearchFields( $fields ){
-		$this->mSearchParams[ 'fields' ]	= $fields;
+		$this->mSearchParams['fields']	= $fields;
 	}
 //______________________________________________________________________________
 
@@ -551,19 +557,23 @@ abstract class PTable extends Core{
 	private function countAllRecs(){
 		$n_recs	= &$this->mInfo[ 'n_all' ];
 		$cond	= $this->getCondition();
-// 		$cond	= ($cond != '' ) ? ' WHERE '.$cond : $cond;
+							// 		$cond	= ($cond != '' ) ? ' WHERE '.$cond : $cond;
 		$sql		= 'SELECT count(*) AS count FROM `'.$this->mSourceDbTable.'`'.$cond;
 
-		global $gl_MysqliObj;
-		$result = $gl_MysqliObj->query( $sql );
+						// 		global $gl_MysqliObj;
+						// 		$result = $gl_MysqliObj->query( $sql );
 
-		if( $result ){
-			$n_recs	= $result->fetch_assoc();
-			$n_recs	= $n_recs[ 'count' ];
-			$result->close();
-		}else{
-			throw new Exception( _EX."Bad MySQL result. Resource: PTable::countAllRecs. The whole SQL query is: ".$sql );
-		}
+						// 		if( $result ){
+						// 			$n_recs	= $result->fetch_assoc();
+						// 			$n_recs	= $n_recs[ 'count' ];
+						// 			$result->close();
+						// 		}else{
+						// 			throw new Exception( _EX."Bad MySQL result. Resource: PTable::countAllRecs. The whole SQL query is: ".$sql );
+						// 		}
+
+		$db_obj	= new PDbl( $this );
+		$db_obj->execSelectQuery($sql, get_class( $this ).'::countAllRecs');
+
 	}
 //______________________________________________________________________________
 
@@ -628,18 +638,22 @@ abstract class PTable extends Core{
 
 		return $sql_cond;
 	}
-//______________________________________________________________________________
+//______________________________________________________________________________ alias
 
 	protected function getMainPartSelQuery(){
+		$table	= $this->__get('mSourceDbTable');
+
 		$class = get_class( $this );
 		$pg_len		= $this->mPgLen;
 		$start_rec	= ( $_SESSION['tables'][$class]['page'] - 1 ) * $pg_len;
 
-		$sql	= 'SELECT `id`, ';
+		$sql	= 'SELECT `'.$table.'`.`id` AS `id`, ';
 
 		$fields	= array();
 		foreach( $this->mColumns as &$column ){
-			$fields[]	= '`'.$column['field'].'`';
+			$field	= $column['field'];
+			$alias	= isset($column['alias']) ? $column['alias'] : $table;
+			$fields[]	= '`'.$alias.'`.`'.$field.'` AS `'.$field.'`';
 		}
 		$fields	= implode( ',', $fields );
 		$sql	.= $fields;
@@ -870,12 +884,12 @@ abstract class PTable extends Core{
 //______________________________________________________________________________
 
 	//	Handlers	<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-
+//TODO: Change for __get
 	public function addRowHandler( &$objResponse, $dummy ){
 		$this->setPAddEditPane( $objResponse, NULL );
 	}
 //______________________________________________________________________________
-
+//TODO: Change for __get
 	public function editRowHandler( &$objResponse, $dummy ){
 		$class	= get_class( $this );
 		$this->setPAddEditPane( $objResponse, $_SESSION['tables'][$class]['line_id'] );

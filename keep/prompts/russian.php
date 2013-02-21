@@ -70,6 +70,9 @@ define( '_UNIT_NAME', 'Единица измерения' );
 define( '_UNITS_NAMES', 'Названия мер' );
 define( '_USER_NAME', 'Имя' );
 define( '_USER_PROFILE', 'Профиль пользователя' );
+define( '_GOOD_IN_PACK', 'Упаковок' );
+define( '_GOOD_IN_ASSORT', 'Россыпью' );
+
 define( '_USER_SURNAME', 'Фамилия' );
 define( '_WELCOME_LINE', 'Строка приветствия' );
 

@@ -11,20 +11,40 @@ final class DepGoodsTable extends PTable{
 	}
 //______________________________________________________________________________
 
+	public function __get( $property ){
+		if( property_exists( 'DepGoodsTable', $property )){
+			return $this->$property;
+		}else{
+			return parent::__get( $property )  ;
+		}
+	}
+//______________________________________________________________________________
+
+	public function __set( $property, $value=NULL ){
+		if( property_exists( 'DepGoodsTable', $property )){
+			$this->$property = $value;
+		}else{
+			parent::__set( $property, $value );
+		}
+	}
+//______________________________________________________________________________
+
 	/**
 	 * sets properties of table in constructor
 	 * @param	string $instName - uniq name for object instance.
 	 * @return void
 	 */
 	private function setProperties(){
-		$this->mLevels			= array( 'manager' );
-		$this->mSourceDbTable	= 'goods';
-		$this->mTargetDbTable	= 'goods';
-		$this->mSelectorColor	= '#EDD3EA';
-		$this->mPgLen			= 17;
-		$this->mMaxGrPg			= 10;
+		$this->__set( 'mLevels', $depId );
+		$this->__set( 'mSourceDbTable', 'goods' );
+		$this->__set( 'mTargetDbTable', 'goods' );
+		$this->__set( 'mSelectorColor', '#EDD3EA' );
+		$this->__set( 'mPgLen', 17 );
+		$this->__set( 'mMaxGrPg', 10 );
+		$this->__set( 'mIsFixHeight', TRUE );
 
-		$this->mIsFixHeight		= TRUE;
+		$this->setSearchFields( array( 'name', 'cku' ));
+
 
 		$this->mColumns	= array(
 			array(
@@ -43,12 +63,30 @@ final class DepGoodsTable extends PTable{
 				'sll_css'	=> 'goodsTblArticleClTd',
 				'bg_clr'	=> '#FFF7E2',
 				'is_sort'	=> TRUE
+			),
+
+			array(
+				'field'		=> 'qnt_packs',
+				'alias'		=> 'stock',
+				'name'		=> _GOOD_IN_PACK,
+				'ttl_css'	=> 'goodsTblArticleTtlTd',
+				'sll_css'	=> 'goodsTblArticleClTd',
+				'bg_clr'	=> '#FFF7E2'
+			),
+
+			array(
+				'field'		=> 'qnt_assr',
+				'alias'		=> 'stock',
+				'name'		=> _GOOD_IN_ASSORT,
+				'ttl_css'	=> 'goodsTblArticleTtlTd',
+				'sll_css'	=> 'goodsTblArticleClTd',
+				'bg_clr'	=> '#FFF7E2'
 			)
 
 		);
 
 		$this->setSearchFields( array( 'name', 'cku' ));
-// 		$this->mPaneClassName	= 'AddEditGoodsPane';
+		$this->mPaneClassName	= 'AddEditGoodsPane';
 	}
 //______________________________________________________________________________
 
@@ -64,10 +102,12 @@ final class DepGoodsTable extends PTable{
 'LEFT JOIN `stock` ON `stock`.`good_id`=`'.$table.'`.`id`'.
 '';
 
-
 		$sql_cond	= parent::getCondition();
+		$sql_cond	= ($sql_cond != '') ? ' AND '.$sql_cond : '';
 
+		$sql_cond	= $join_cond.' WHERE `stock`.`depatement_id`='.$this->mDepId.$sql_cond;
 
+// Log::_log("$sql_cond");
 
 
 		return $sql_cond;
