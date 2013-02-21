@@ -335,11 +335,6 @@ abstract class PTable extends Core{
 	public function initHtmlView( $isHndl = FALSE ){
 		$paging	= &$this->mPaging;
 
-// $view	= '';
-
-
-// Log::_log(print_r( $this, TRUE));
-
 		$this->prepareData();
 		$class	= get_class( $this );
 		$paging_tool	=
@@ -380,17 +375,17 @@ abstract class PTable extends Core{
 
 	private function adjustPagingParams(){
 		$paging	= &$this->mPaging;
-		$paging[ 'css_panel' ]		= 'PPSK_tablePagingPanelTd '.$paging[ 'css_panel' ];
-		$paging[ 'css_info' ]		= 'PPSK_tablePagingInfoTd '.$paging[ 'css_info' ];
-		$paging[ 'css_btn' ]		= 'PPSK_tablePagingBtnTd '.$paging[ 'css_btn' ];
+		$paging['css_panel']	= 'PPSK_tablePagingPanelTd '.$paging['css_panel'];
+		$paging['css_info']		= 'PPSK_tablePagingInfoTd '.$paging['css_info'];
+		$paging['css_btn']		= 'PPSK_tablePagingBtnTd '.$paging['css_btn'];
 
-		$paging[ 'num_pg_img_act' ]	= 'PPSK_tablePageNumberAct '.$paging[ 'num_pg_img_act' ];
-		$paging[ 'num_pg_img_dis' ]	= 'PPSK_tablePageNumberDis '.$paging[ 'num_pg_img_dis' ];
-		$paging[ 'num_pg_img_ovr' ]	= 'PPSK_lstPageNumberOvr '.$paging[ 'num_pg_img_dis' ];
+		$paging['num_pg_img_act']	= 'PPSK_tablePageNumberAct '.$paging['num_pg_img_act'];
+		$paging['num_pg_img_dis']	= 'PPSK_tablePageNumberDis '.$paging['num_pg_img_dis'];
+		$paging['num_pg_img_ovr']	= 'PPSK_lstPageNumberOvr '.$paging['num_pg_img_dis'];
 
-		$paging[ 'emp_pg_img_act' ]	= 'PPSK_tablePageEmptyDis '.$paging[ 'emp_pg_img_act' ];
-		$paging[ 'emp_pg_img_dis' ]	= 'PPSK_tablePageEmptyDis '.$paging[ 'emp_pg_img_dis' ];
-		$paging[ 'emp_pg_img_ovr' ]	= 'PPSK_tablePageEmptyDis '.$paging[ 'emp_pg_img_ovr' ];
+		$paging['emp_pg_img_act']	= 'PPSK_tablePageEmptyDis '.$paging['emp_pg_img_act'];
+		$paging['emp_pg_img_dis']	= 'PPSK_tablePageEmptyDis '.$paging['emp_pg_img_dis'];
+		$paging['emp_pg_img_ovr']	= 'PPSK_tablePageEmptyDis '.$paging['emp_pg_img_ovr'];
 	}
 //______________________________________________________________________________
 
@@ -400,7 +395,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_ADD_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'addRowHandler', get_class( $this ) ).'",null);'
+    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'addRowHandler', get_class( $this )).'",null);'
     				)
     			)
     		),
@@ -409,7 +404,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_EDIT_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'editRowHandler', get_class( $this ) ).'",null);'
+    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'editRowHandler', get_class( $this )).'",null);'
     				)
     			)
     		),
@@ -419,7 +414,7 @@ abstract class PTable extends Core{
 				'hint'	=> _PPSK_HINT_DELETE_ROW,
     			'handlers'	=> array(
     				'onclick'	=> array(
-    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'showConfirmHandler', get_class( $this ) ).'",'.
+    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'showConfirmHandler', get_class( $this )).'",'.
     									'{"message":"'._MESSAGE_IS_DEL_RECORD.'","action":"'.self::encipherFilledValue( 'deleteRowHandler' ).'"});'
     				)
     			)
@@ -437,15 +432,15 @@ abstract class PTable extends Core{
 			throw new Exception( _EX.'Columns array is empty for object instance: '.$class );
 		}
 		foreach( $columns as &$column ){
-			if( !isset( $column[ 'field' ] ) || $column[ 'field' ] == _EMPTY ){
+			if( !isset( $column['field'] ) || $column['field'] == '' ){
 				throw new Exception( _EX.'Bad column field definition for object instance: '.$class );
 			}
-			$column[ 'name' ]		= ( !isset( $column[ 'name' ] ) || $column['name'] == _EMPTY ) ? $column[ 'field' ] : $column[ 'name' ];
-			$column[ 'is_sort' ]	= ( !isset( $column[ 'is_sort' ] ) ) ? false : $column[ 'is_sort' ];
-			$column[ 'bg_clr' ]		= ( !isset( $column[ 'bg_clr' ] ) || $column[ 'bg_clr' ] == _EMPTY ) ?  _PPSK_WHITE_COLOR : $column[ 'bg_clr' ];
-			$column[ 'ttl_css' ]	= ( !isset( $column[ 'ttl_css' ] ) ) ? 'PPSK_tableColumnTitleCellTd' : 'PPSK_tableColumnTitleCellTd '.$column[ 'ttl_css' ];
-			$column[ 'sll_css' ]	= ( !isset( $column[ 'sll_css' ] ) ) ? 'PPSK_tableColumnInfoCellTd' :' PPSK_tableColumnInfoCellTd '.$column[ 'sll_css' ];
-			$column[ 'grd_clr' ]	= $this->adjustLineColor( $column[ 'bg_clr' ] );
+			$column['name']		= ( !isset( $column['name'] ) || $column['name'] == '' ) ? $column['field'] : $column['name'];
+			$column['is_sort']	= ( !isset( $column['is_sort'] )) ? false : $column['is_sort'];
+			$column['bg_clr']	= ( !isset( $column['bg_clr'] ) || $column['bg_clr'] == '' ) ?  _PPSK_WHITE_COLOR : $column['bg_clr'];
+			$column['ttl_css']	= ( !isset( $column['ttl_css'] )) ? 'PPSK_tableColumnTitleCellTd' : 'PPSK_tableColumnTitleCellTd '.$column['ttl_css'];
+			$column['sll_css']	= ( !isset( $column['sll_css'] )) ? 'PPSK_tableColumnInfoCellTd' :' PPSK_tableColumnInfoCellTd '.$column['sll_css'];
+			$column['grd_clr']	= $this->adjustLineColor( $column['bg_clr'] );
 		}
 	}
 //______________________________________________________________________________
@@ -453,16 +448,17 @@ abstract class PTable extends Core{
 	private function adjustSearchParams(){
 		$class = get_class( $this );
 		$search	= &$this->mSearchParams;
-		$search[ 'buttons' ][ 'search' ][ 'handlers' ]	= array(
-    			'onclick'	=> array(
-    				'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'searchByFilterHandler', get_class( $this ) )."\", document.getElementById(\"inp_".$class."_TableSearchField\").value );"
-    				)
-    				);
-        $search[ 'buttons' ][ 'clear' ][ 'handlers' ]	= array(
-    			'onclick'	=> array(
-    				'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'searchByFilterHandler', get_class( $this ) )."\", \"\" ); "
-    				)
-    				);
+		$search['buttons']['search']['handlers']	= array(
+    		'onclick'	=> array(
+    			'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'searchByFilterHandler', get_class( $this ))."\", document.getElementById(\"inp_".$class."_TableSearchField\").value );"
+    		)
+    	);
+
+        $search['buttons']['clear']['handlers']	= array(
+    		'onclick'	=> array(
+    			'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'searchByFilterHandler', get_class( $this ))."\", \"\");"
+    		)
+    	);
 	}
 //______________________________________________________________________________
 
@@ -481,7 +477,7 @@ abstract class PTable extends Core{
 //______________________________________________________________________________
 
 	public function getFilterButtonParams( $btnType ){
-		return $this->mSearchParams[ 'buttons' ][ $btnType ];
+		return $this->mSearchParams['buttons'][$btnType];
 	}
 //______________________________________________________________________________
 
@@ -507,18 +503,18 @@ abstract class PTable extends Core{
 		$string =
 '<table class="PPSK_tablePagingTbl" cellpadding="0" cellspacing="0">'.
 	'<tr>'.
-		"<td class='".(isset( $paging['css_info'] ) ? $paging['css_info'] : '')."'>"._FOUND.": ".$info['n_all']."</td>";
+		'<td class="'.(isset( $paging['css_info'] ) ? $paging['css_info'] : '').'">'._FOUND.': '.$info['n_all'].'</td>';
 
 		if( $info['n_all'] > $this->mPgLen ){
 			$pg_obj	= new PagingButton( $this );
 
 			$pg_obj->mBntName	= 'prv_gr';
 			$string .=
-		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView('prv_gr')."</td>";
+		'<td class="'.$paging['css_btn'].'">'.$pg_obj->getHtmlView('prv_gr').'</td>';
 
 			$pg_obj->mBntName	= 'prv_pg';
 			$string .=
-		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView('prv_pg')."</td>";
+		'<td class="'.$paging['css_btn'].'">'.$pg_obj->getHtmlView('prv_pg').'</td>';
 
 			$max_grp_pg	= $max_grp_pg_valid = $info['grp_start'] + $this->mMaxGrPg;
 
@@ -529,21 +525,21 @@ abstract class PTable extends Core{
 			for( $n_page = $info['grp_start']; $n_page < $max_grp_pg; $n_page++ ){
 				$pg_obj->mBntName	= 'num_pg';
 				$pg_obj->mNum	= $n_page;
-				$string .= "<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView().'</td>';
+				$string .= '<td class="'.$paging['css_btn'].'">'.$pg_obj->getHtmlView().'</td>';
 			}
 			$pg_obj->mNum	= NULL;
 
 			for( $n_page; $n_page < $max_grp_pg_valid; $n_page++ ){
-				$string .= "<td class='".$paging['css_btn']."'>&nbsp;</td>";
+				$string .= '<td class="'.$paging['css_btn'].'">&nbsp;</td>';
 			}
 
 			$pg_obj->mBntName	= 'nxt_pg';
 			$string .=
-		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'nxt_pg' )."</td>";
+		'<td class="'.$paging['css_btn'].'">'.$pg_obj->getHtmlView( 'nxt_pg' ).'</td>';
 
 			$pg_obj->mBntName	= 'nxt_gr';
 			$string .=
-		"<td class='".$paging['css_btn']."'>".$pg_obj->getHtmlView( 'nxt_gr' )."</td>";
+		'<td class="'.$paging['css_btn'].'">'.$pg_obj->getHtmlView( 'nxt_gr' ).'</td>';
 
 		}
 		$string .=
@@ -555,25 +551,10 @@ abstract class PTable extends Core{
 //______________________________________________________________________________
 
 	private function countAllRecs(){
-		$n_recs	= &$this->mInfo[ 'n_all' ];
 		$cond	= $this->getCondition();
-							// 		$cond	= ($cond != '' ) ? ' WHERE '.$cond : $cond;
 		$sql		= 'SELECT count(*) AS count FROM `'.$this->mSourceDbTable.'`'.$cond;
-
-						// 		global $gl_MysqliObj;
-						// 		$result = $gl_MysqliObj->query( $sql );
-
-						// 		if( $result ){
-						// 			$n_recs	= $result->fetch_assoc();
-						// 			$n_recs	= $n_recs[ 'count' ];
-						// 			$result->close();
-						// 		}else{
-						// 			throw new Exception( _EX."Bad MySQL result. Resource: PTable::countAllRecs. The whole SQL query is: ".$sql );
-						// 		}
-
 		$db_obj	= new PDbl( $this );
 		$db_obj->execSelectQuery($sql, get_class( $this ).'::countAllRecs');
-
 	}
 //______________________________________________________________________________
 
@@ -632,13 +613,14 @@ abstract class PTable extends Core{
 			}
 
 			$sql_cond	= implode( 'OR', $sql_cond );
-			$sql_cond	= ' WHERE ('.$sql_cond.')';
 		}else
-			$sql_cond	= '';
+			$sql_cond	= '1=1';
+
+		$sql_cond	= ' WHERE ('.$sql_cond.')';
 
 		return $sql_cond;
 	}
-//______________________________________________________________________________ alias
+//______________________________________________________________________________
 
 	protected function getMainPartSelQuery(){
 		$table	= $this->__get('mSourceDbTable');
@@ -657,7 +639,6 @@ abstract class PTable extends Core{
 		}
 		$fields	= implode( ',', $fields );
 		$sql	.= $fields;
-
 
 		return $sql;
 	}
@@ -713,14 +694,14 @@ abstract class PTable extends Core{
 
 	private function renderFieldName( $column ){
 		$class = get_class( $this );
-		$sort	= &$_SESSION[ 'tables' ][ $class ][ 'sort' ];
+		$sort	= &$_SESSION['tables'][$class]['sort'];
 
-		$col_name	= ( $column[ 'is_sort' ] )
-		? "<a onclick='".$this->createColumnAction( $column[ 'field' ] )."'>".$column[ 'name' ]."</a>"
-		: $column[ 'name' ];
+		$col_name	= ( $column['is_sort'] )
+		? "<a onclick='".$this->createColumnAction( $column['field'] )."'>".$column['name'].'</a>'
+		: $column['name'];
 
 		$mark = 'PPSK_noSort';
-		if( $column[ 'field' ] == $sort[ 'field' ] ){
+		if( $column['field'] == $sort['field'] ){
 			switch( $sort[ 'dir' ] ){
 				case 'asc':		$mark = 'PPSK_sortAsc'; break;
 				case 'desc':	$mark = 'PPSK_sortDesc'; break;
@@ -732,21 +713,20 @@ abstract class PTable extends Core{
 
 	private function buildColumnsHtmlContent(){
 		$columns = &$this->mColumns;
-		$view	= "";
+		$view	=
+'<tr>';
 		foreach ( $columns as &$column ){
 			$data	= $this->renderFieldName( $column );
 			$view .=
-	"<td class='".$column['ttl_css']."'>".
-		"<table cellpadding='0' cellspacing='0' class='PPSK_tableColumnTitleCellTbl'>".
-			"<tr>".
-				"<td>".$data[ 'name' ]."</td>
-				<td class='PPSK_sortMarkSell'><div class='".$data[ 'mark' ]."'>&nbsp;</div></td>
-			</tr>
-		</table>
-	</td>";
+	'<td class="'.$column['ttl_css'].'">'.
+		'<table cellpadding="0" cellspacing="0" class="PPSK_tableColumnTitleCellTbl">'.
+			'<tr>'.'<td>'.$data['name'].'</td><td class="PPSK_sortMarkSell"><div class="'.$data['mark'].'">&nbsp;</div></td></tr>'.
+		'</table>'.
+	'</td>';
 		}
-		$view	.= "
-</tr>";
+
+		$view	.=
+'</tr>';
 
 		return $view;
 	}
@@ -931,15 +911,15 @@ abstract class PTable extends Core{
 	public function searchByFilterHandler( &$objResponse, $filterValue ){
 		$class	= get_class( $this );
 
-		$sess	= &$_SESSION[ 'tables' ][ $class ];
-		$sess[ 'page' ]		= self::_fstPg;
-		$sess[ 'line_id' ]	= NULL;
-		$sess[ 'filter' ]	= trim( $filterValue );
+		$sess	= &$_SESSION['tables'][ $class ];
+		$sess['page']	= self::_fstPg;
+		$sess['line_id']= NULL;
+		$sess['filter']	= trim( $filterValue );
 
 		$tbl_obj	= new $class( NULL, true );
 
-		$objResponse->assign( $class."_container", 'innerHTML', $tbl_obj->getHtmlView() );
-		$objResponse->assign( 'inp_'.$class."_TableSearchField", 'value', $sess[ 'filter' ] );
+		$objResponse->assign( $class.'_container', 'innerHTML', $tbl_obj->getHtmlView());
+		$objResponse->assign( 'inp_'.$class.'_TableSearchField', 'value', $sess['filter'] );
 	}
 //______________________________________________________________________________
 
@@ -955,7 +935,7 @@ abstract class PTable extends Core{
 			$db_obj	= new PDbl( $this );
 			$result	= $db_obj->deleteRow( $_SESSION['tables'][$class]['line_id'] );
 
-			if( $result[ 'is_error' ] ){
+			if( $result['is_error'] ){
 				$this->showAlertHandler( $objResponse, array( 'message' => $result['description'], 'focus' => $result['focus_id'] ));
 			}else{
 				$this->initHtmlView( TRUE );

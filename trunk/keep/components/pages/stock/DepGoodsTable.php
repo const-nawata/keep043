@@ -98,19 +98,12 @@ final class DepGoodsTable extends PTable{
 	protected function getCondition(){
 		$table	= $this->mSourceDbTable;
 
-		$join_cond	=
-'LEFT JOIN `stock` ON `stock`.`good_id`=`'.$table.'`.`id`'.
-'';
+		$join_cond	= 'LEFT JOIN `stock` ON `stock`.`good_id`=`'.$table.'`.`id`';
 
 		$sql_cond	= parent::getCondition();
-		$sql_cond	= ($sql_cond != '') ? ' AND '.$sql_cond : '';
+// 		$sql_cond	= ($sql_cond != '') ? ' AND '.$sql_cond : '';
 
-		$sql_cond	= $join_cond.' WHERE `stock`.`depatement_id`='.$this->mDepId.$sql_cond;
-
-// Log::_log("$sql_cond");
-
-
-		return $sql_cond;
+		return $join_cond.$sql_cond.' AND `stock`.`depatement_id`='.$this->mDepId;
 	}
 //______________________________________________________________________________
 
