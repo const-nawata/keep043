@@ -10,19 +10,15 @@ class DepsListController extends tableListController{
 //______________________________________________________________________________
 
 	public function buildSelectedTableHtmlContent( $depId ){
-
-// Log::_log("depId: $depId");
-
 		$tbl_obj	= new DepGoodsTable( NULL, FALSE, FALSE );
 		$tbl_obj->__set( 'mDepId', $depId );
 		$tbl_obj->initHtmlView();
-// 		$tbl_obj->
 		return $this->getHtmlContent( $tbl_obj, 'DepGoodsTable' );
 	}
 //______________________________________________________________________________
 
 	public function __destruct(){
-		parent::__destruct ();
+		parent::__destruct();
 	}
 //______________________________________________________________________________
 

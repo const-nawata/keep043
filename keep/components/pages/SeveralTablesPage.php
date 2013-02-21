@@ -41,7 +41,11 @@ class SeveralTablesPage extends KeepPage{
 	}
 //______________________________________________________________________________
 
-	public static function getNotSelectedSellHanlders( $sellCode, $prompt ){
+	public function getNotSelectedSellHanlders( $sellCode, $prompt ){
+
+
+// Log::_log(print_r( $this->__get('mListContr'), TRUE));
+
 		return array(
 			'onmouseover'	=> "setMouseOverCss(this, \"SeveralTablesPageMenuOverSellTd\");",
 			'onmouseout'	=> "setMouseOutCss(this);",
@@ -49,10 +53,13 @@ class SeveralTablesPage extends KeepPage{
 				"var old_code = document.getElementById(\"prev_sell_code\").value;".
 				"var old_div_id = \"div_sell_\" + old_code;".
 				"var info = {\"old_code\":old_code,".
-							"\"new_code\":\"".$sellCode."\",".
-							"\"old_prompt\":document.getElementById(old_div_id).innerHTML,".
-							"\"new_prompt\":\"".$prompt."\"};".
-				"xajax_onHandler( \"".self::getHandleResourceString( 'showTable', 'tableListController' )."\", info);"
+					"\"new_code\":\"".$sellCode."\",".
+					"\"old_prompt\":document.getElementById(old_div_id).innerHTML,".
+					"\"new_prompt\":\"".$prompt."\",".
+					'"class":"'.get_class( $this ).'"'.
+				"};".
+// 				"xajax_onHandler( \"".self::getHandleResourceString( 'showTable', 'tableListController' )."\", info);"
+				"xajax_onHandler( \"".self::getHandleResourceString( 'showTable', get_class( $this->__get('mListContr')))."\", info);"
 		);
 	}
 //______________________________________________________________________________
@@ -74,7 +81,7 @@ class SeveralTablesPage extends KeepPage{
 		$this->mRowSpan++;
 		if( $sellCode != $tbl_list[0]['table_code'] ){
 			$css_class		= 'SeveralTablesPageMenuSellTd';
-			$handlers	= self::getNotSelectedSellHanlders( $sellCode, $prompt );
+			$handlers	= $this->getNotSelectedSellHanlders( $sellCode, $prompt );
 		}else{
 			$handlers	= array();
 			$css_class	= 'SeveralTablesPageMenuSelectedSellTd';
