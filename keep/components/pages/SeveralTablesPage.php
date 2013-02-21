@@ -39,16 +39,12 @@ class SeveralTablesPage extends KeepPage{
 //______________________________________________________________________________
 
 	public static function getSellHtmlContent( $sellCode, $prompt, $handlers, $css ){
-
-
-		//echo "prompt: $prompt<br>";
-
-		$view	= "<div id='div_sell_".$sellCode."' class='".$css."'";
+		$view	= '<div id="div_sell_'.$sellCode.'" class="'.$css.'"';
 
 		foreach( $handlers as $event => $handler ){
-			$view	.= " ".$event."='".$handler."'";
+			$view	.= ' '.$event."='".$handler."'";
 		}
-		$view	.= ">".$prompt."</div>";
+		$view	.= '>'.$prompt.'</div>';
 		return $view;
 	}
 //______________________________________________________________________________
@@ -56,16 +52,16 @@ class SeveralTablesPage extends KeepPage{
 	private function getTableNameSellHtmlContent( $prompt, $sellCode ){
 		$tbl_list	= &$this->mTablesList;
 		$this->mRowSpan++;
-		if( $sellCode != $tbl_list[ 0 ][ 'table_code' ] ){
-			$css_class		= "SeveralTablesPageMenuSellTd";
+		if( $sellCode != $tbl_list[0]['table_code'] ){
+			$css_class		= 'SeveralTablesPageMenuSellTd';
 			$handlers	= self::getNotSelectedSellHanlders( $sellCode, $prompt );
 		}else{
 			$handlers	= array();
-			$css_class	= "SeveralTablesPageMenuSelectedSellTd";
+			$css_class	= 'SeveralTablesPageMenuSelectedSellTd';
 		}
 
 		return
-"<td id='td_sell_".$sellCode."'>".self::getSellHtmlContent( $sellCode, $prompt, $handlers, $css_class )."</td>";
+'<td id="td_sell_'.$sellCode.'">'.self::getSellHtmlContent( $sellCode, $prompt, $handlers, $css_class ).'</td>';
 	}
 //______________________________________________________________________________
 
