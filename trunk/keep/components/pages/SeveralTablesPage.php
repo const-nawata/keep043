@@ -109,7 +109,6 @@ class SeveralTablesPage extends KeepPage{
 
 		$tbl_code	= $tbl_list[0]['table_code'];
 
-// 		$list_contr	= new tableListController( $this );
 		$tview	=
 '<input id="prev_sell_code" name="prev_sell_code" type="hidden" value="'.$tbl_code.'" />'.
 '<table class="SeveralTablesPageTbl" cellpadding="0" cellspacing="0">'.
@@ -121,9 +120,6 @@ class SeveralTablesPage extends KeepPage{
 	'</tr>'.$rest_menu_items.
 	'<tr><td class="SeveralTablesPageMenuEmptySellTd" style="height:'.$this->getEmptySellHeight().'px;">&nbsp;</td></tr>'.
 '</table>';
-
-
-// 		$tview	=	'<div>DEBUG VIEW</div>';
 
 		parent::initHtmlView( $tview );
 	}

@@ -677,11 +677,10 @@ abstract class PTable extends Core{
 
 		$main	= $this->getMainPartSelQuery();
 		$cond	= $this->getCondition();
-// 		$cond	= ($cond != '' ) ? 'WHERE '.$cond : $cond;
 		$order	= $this->getOrderCond();
 
 		$sql	= $main.' FROM `'.$this->mSourceDbTable.'`'.$cond.' '.$order.' LIMIT '.$start_rec.','.$pg_len;
-// Log::_log("$sql");
+
 		$db_obj	= new PDbl( $this );
 		$this->mInfo['recs']	= $db_obj->execSelectQuery( $sql );
 	}
