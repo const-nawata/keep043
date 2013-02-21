@@ -109,7 +109,7 @@ class SeveralTablesPage extends KeepPage{
 
 		$tbl_code	= $tbl_list[0]['table_code'];
 
-		$list_contr	= new tableListController( $this );
+// 		$list_contr	= new tableListController( $this );
 		$tview	=
 '<input id="prev_sell_code" name="prev_sell_code" type="hidden" value="'.$tbl_code.'" />'.
 '<table class="SeveralTablesPageTbl" cellpadding="0" cellspacing="0">'.

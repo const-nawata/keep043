@@ -19,19 +19,23 @@ class tableListController  extends Core{
 	}
 //______________________________________________________________________________
 
-	public function buildSelectedTableHtmlContent( $codeName ){
-		$cls_name	= $codeName.'Table';
-		$tbl_obj	= new $cls_name( NULL, FALSE );
-
+	protected function getHtmlContent( $tblObj, $codeName ){
 		return
 '<table cellpadding="0" cellspacing="0">'.
 	'<tr>'.
-		'<td class="Page_Multi_Tables_'.$codeName.'_SearchSellTd">'.$tbl_obj->mSearchInputObj->getHtmlView().'</td>'.
-		'<td class="Page_Multi_Tables_ToolSellTd">'.$tbl_obj->mToolPaneObj->getHtmlView().'</td>'.
+		'<td class="Page_Multi_Tables_'.$codeName.'_SearchSellTd">'.$tblObj->mSearchInputObj->getHtmlView().'</td>'.
+		'<td class="Page_Multi_Tables_ToolSellTd">'.$tblObj->mToolPaneObj->getHtmlView().'</td>'.
 	'</tr>'.
 
-	'<tr><td colspan="2">'.$tbl_obj->getHtmlView().'</td></tr>'.
+	'<tr><td colspan="2">'.$tblObj->getHtmlView().'</td></tr>'.
 '</table>';
+	}
+//______________________________________________________________________________
+
+	public function buildSelectedTableHtmlContent( $codeName ){
+		$cls_name	= $codeName.'Table';
+		$tbl_obj	= new $cls_name( NULL, FALSE );
+		return $this->getHtmlContent( $tbl_obj, $codeName );
 	}
 //______________________________________________________________________________
 
