@@ -90,6 +90,20 @@ final class DepGoodsTable extends PTable{
 	}
 //______________________________________________________________________________
 
+	protected function getToolBtns(){
+		return array(
+			'stk_ops'	=> array(
+				'hint'	=> _STOCK_OPERATIONS,
+    			'handlers'	=> array(
+    				'onclick'	=> array(
+    					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'onShowStkOps', get_class( $this )).'",null);'
+    				)
+    			)
+    		)
+    	);
+	}
+//______________________________________________________________________________
+
 	public function __destruct(){
 		parent::__destruct();
 	}
@@ -97,13 +111,17 @@ final class DepGoodsTable extends PTable{
 
 	protected function getCondition(){
 		$table	= $this->mSourceDbTable;
-
 		$join_cond	= 'LEFT JOIN `stock` ON `stock`.`good_id`=`'.$table.'`.`id`';
-
 		$sql_cond	= parent::getCondition();
-// 		$sql_cond	= ($sql_cond != '') ? ' AND '.$sql_cond : '';
-
 		return $join_cond.$sql_cond.' AND `stock`.`depatement_id`='.$this->mDepId;
+	}
+//______________________________________________________________________________
+
+	public function onShowStkOps( &$objResponse, $dummy ){
+
+
+		$objResponse->script( 'alert("onShowStkOps handler was call!!!");' );
+// 		$this->setPAddEditPane( $objResponse, NULL );
 	}
 //______________________________________________________________________________
 
