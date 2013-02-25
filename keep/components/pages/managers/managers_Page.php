@@ -15,16 +15,17 @@ class managers_Page extends KeepPage {
 
 	public function initHtmlView( $view = NULL ){
 		if( $view == NULL ){
-			$mng_tbl_obj	= new ManagersTable();
+			$tbl_obj	= new ManagersTable();
+			$tpane_obj	= $tbl_obj->__get('mToolPaneObj');
 
 			$view	=
 '<table cellpadding="0" cellspacing="0">'.
 	'<tr>'.
-		'<td class="Page_Managers_SearchSellTd">'.$mng_tbl_obj->mSearchInputObj->getHtmlView().'</td>'.
-		'<td class="Page_Managers_ToolSellTd">'.$mng_tbl_obj->mToolPaneObj->getHtmlView().'</td>'.
+		'<td class="Page_Managers_SearchSellTd">'.$tbl_obj->mSearchInputObj->getHtmlView().'</td>'.
+		'<td class="Page_Managers_ToolSellTd">'.$tpane_obj->getHtmlView().'</td>'.
 	'</tr>'.
 
-	'<tr><td colspan="2" style="background-color:#aaffaa;">'.$mng_tbl_obj->getHtmlView().'</td></tr>'.
+	'<tr><td colspan="2" style="background-color:#aaffaa;">'.$tbl_obj->getHtmlView().'</td></tr>'.
 '</table>';
 		}
 		parent::initHtmlView( $view );

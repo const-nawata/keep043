@@ -235,7 +235,7 @@ abstract class PTable extends Core{
 	/**
 	 * @property object $mToolPaneObj - Table tool pane
 	 */
-	public $mToolPaneObj;
+	private $mToolPaneObj;
 
 	/**
 	 * @property arraly $mToolPaneButtons
@@ -298,7 +298,11 @@ abstract class PTable extends Core{
 			$this->adjustProperties();
 			$this->initSessionInfo();
 			parent::__construct( $Owner );
-			$this->mToolPaneObj	= new TableToolPane( $this );
+
+			$tpane_obj	= new TableToolPane( $this );
+			$tpane_obj->__set( 'mButtons', $this->getToolBtns());
+			$this->mToolPaneObj	= $tpane_obj;
+
 			$class	= get_class( $this );
 			$this->mSearchInputObj	= new TableSearchField( $this, $_SESSION['tables'][$class]['filter'] );
 		}else{
@@ -387,8 +391,8 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-	protected function adjustToolBtns(){
-		$this->mToolPaneButtons	= array(
+	protected function getToolBtns(){
+		return array(
 			'add'	=> array(
 				'hint'	=> _PPSK_HINT_ADD_ROW,
     			'handlers'	=> array(
@@ -464,7 +468,6 @@ abstract class PTable extends Core{
 		$this->adjustPagingParams();
 		$this->adjustColumnsParams();
 		$this->adjustSearchParams();
-		$this->adjustToolBtns();
 		$this->mTargetDbTable	= ( '' == $this->mTargetDbTable ) ? $this->mSourceDbTable : $this->mTargetDbTable;
 	}
 //______________________________________________________________________________

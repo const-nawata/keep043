@@ -9,16 +9,17 @@ class clients_Page extends KeepPage {
 
 	public function initHtmlView( $view = NULL ){
 		if( $view == NULL ){
-			$cl_tbl_obj	= new ClientsTable();
+			$tbl_obj	= new ClientsTable();
+			$tpane_obj	= $tbl_obj->__get('mToolPaneObj');
 
 			$view	=
 '<table cellpadding="0" cellspacing="0">'.
 	'<tr>'.
-		'<td class="Page_Managers_SearchSellTd">'.$cl_tbl_obj->mSearchInputObj->getHtmlView().'</td>'.
-		'<td class="Page_Managers_ToolSellTd">'.$cl_tbl_obj->mToolPaneObj->getHtmlView().'</td>'.
+		'<td class="Page_Managers_SearchSellTd">'.$tbl_obj->mSearchInputObj->getHtmlView().'</td>'.
+		'<td class="Page_Managers_ToolSellTd">'.$tpane_obj->getHtmlView().'</td>'.
 	'</tr>'.
 
-	'<tr><td colspan="2">'.$cl_tbl_obj->getHtmlView().'</td></tr>'.
+	'<tr><td colspan="2">'.$tbl_obj->getHtmlView().'</td></tr>'.
 '</table>';
 		}
 		parent::initHtmlView( $view );
