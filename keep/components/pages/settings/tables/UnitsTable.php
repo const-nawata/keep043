@@ -43,7 +43,7 @@ class UnitsTable extends PTable{
 			)
 		);
 
-		$this->setSearchFields( array( 'full_name', 'brief_name' ) );
+		$this->__set( 'mSearchParams', array( ['fields']=>array( 'full_name', 'brief_name' )));
 		$this->mPaneClassName	= 'AddEditUnitPane';
 	}
 //______________________________________________________________________________

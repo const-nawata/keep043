@@ -43,7 +43,7 @@ final class DepGoodsTable extends PTable{
 		$this->__set( 'mMaxGrPg', 10 );
 		$this->__set( 'mIsFixHeight', TRUE );
 
-		$this->setSearchFields( array( 'name', 'cku' ));
+		$this->__set( 'mSearchParams', array( ['fields']=>array( 'name', 'cku' )));
 
 
 		$this->mColumns	= array(
@@ -85,7 +85,7 @@ final class DepGoodsTable extends PTable{
 
 		);
 
-		$this->setSearchFields( array( 'name', 'cku' ));
+		$this->__set( 'mSearchParams', array( ['fields']=>array( 'name', 'cku' )));
 		$this->mPaneClassName	= 'AddEditGoodsPane';
 	}
 //______________________________________________________________________________

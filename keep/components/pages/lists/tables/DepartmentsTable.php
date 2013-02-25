@@ -44,7 +44,8 @@ class DepartmentsTable extends PTable{
 			)
 		);
 
-		$this->setSearchFields( array( 'name' ) );
+		$this->__set( 'mSearchParams', array( ['fields']=>array( 'name' )));
+
 		$this->mPaneClassName	= 'AddEditDepartmentPane';
 	}
 //______________________________________________________________________________

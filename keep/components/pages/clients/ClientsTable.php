@@ -71,7 +71,8 @@ class ClientsTable extends PTable{
 			)
 		);
 
-		$this->setSearchFields( array( 'surname', 'firstname' ) );
+		$this->__set( 'mSearchParams', array( ['fields']=>array( 'surname', 'surname' )));
+
 		$this->mPaneClassName	= 'AddEditClientPane';
 	}
 //______________________________________________________________________________
