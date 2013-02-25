@@ -301,6 +301,7 @@ abstract class PTable extends Core{
 
 			$tpane_obj	= new TableToolPane( $this );
 			$tpane_obj->__set( 'mButtons', $this->getToolBtns());
+			$tpane_obj->initHtmlView();
 			$this->mToolPaneObj	= $tpane_obj;
 
 			$class	= get_class( $this );
@@ -765,22 +766,22 @@ abstract class PTable extends Core{
 
 	private function buildLinesHtmlContent(){
 		$lines	= &$this->mInfo[ 'recs' ];
-		$view	= "";
+		$view	= '';
 		foreach( $lines as $line ){
-			$evt_out = $evt_over = $evt_onclick = $id_h = $line[ 'tr_id' ] = _EMPTY;
-			if( $line[ 'id' ] && $this->mSelectorColor != _EMPTY ){
-				$evt_over	= " onmouseover='PPSK_tblLineOver( this );' ";
-				$evt_out	= " onmouseout='PPSK_tblLineOut( this );' ";
+			$evt_out = $evt_over = $evt_onclick = $id_h = $line['tr_id'] = '';
+			if( $line['id'] && $this->mSelectorColor != '' ){
+				$evt_over	= " onmouseover='PPSK_tblLineOver(this);' ";
+				$evt_out	= " onmouseout='PPSK_tblLineOut(this);' ";
 
 				$class = get_class( $this );
 				$id_h		= self::encipherFilledValue( $line[ 'id' ] );
-				$line[ 'tr_id' ]	= $id_h;
-				$id_h	= " id='TrId_".$id_h."' ";
+				$line['tr_id']	= $id_h;
+				$id_h	= ' id="TrId_'.$id_h.'" ';
 
 				$resourse	= self::getHandleResourceString( 'onClickSelLineHandler', $class );
 				$evt_onclick	= " onclick='xajax_onHandler( \"".$resourse."\", this.id );' ";
 			}
-			$view .= "<tr".$id_h.$evt_onclick.$evt_over.$evt_out.">".$this->buildLineSellsHtmlContent( $line )."</tr>";
+			$view .= '<tr'.$id_h.$evt_onclick.$evt_over.$evt_out.'>'.$this->buildLineSellsHtmlContent( $line ).'</tr>';
 			$this->mGradFlg = !$this->mGradFlg;
 		}
 		return $view;
