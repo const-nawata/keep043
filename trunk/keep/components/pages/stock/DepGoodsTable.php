@@ -86,19 +86,25 @@ final class DepGoodsTable extends PTable{
 		);
 
 		$this->__set( 'mSearchParams', array( 'fields'=>array( 'name', 'cku' )));
-		$this->mPaneClassName	= 'AddEditGoodsPane';
+		$this->mPaneClassName	= 'StockOptsPane';
 	}
 //______________________________________________________________________________
 
 	protected function getToolBtns(){
+		$type	= 'stk_ops';
+
 		return array(
-			'stk_ops'	=> array(
+			"$type"	=> array(
 				'hint'	=> _STOCK_OPERATIONS,
     			'handlers'	=> array(
     				'onclick'	=> array(
     					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'onShowStkOps', get_class( $this )).'",null);'
     				)
-    			)
+    			),
+				'css_dis'	=> 'Keep_'.$type.'BtnDisabled',
+				'css_act'	=> 'Keep_'.$type.'BtnEnabled',
+				'css_ovr'	=> 'Keep_'.$type.'BtnOver',
+				'css_dwn'	=> 'Keep_'.$type.'BtnDown'
     		)
     	);
 	}
