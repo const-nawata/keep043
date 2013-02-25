@@ -35,7 +35,7 @@ class CountriesTable extends PTable{
 			)
 		);
 
-		$this->__set( 'mSearchParams', array( ['fields']=>array( 'name' )));
+		$this->__set( 'mSearchParams', array( 'fields'=>array( 'name' )));
 		$this->mPaneClassName	= 'AddEditCountryPane';
 	}
 //______________________________________________________________________________

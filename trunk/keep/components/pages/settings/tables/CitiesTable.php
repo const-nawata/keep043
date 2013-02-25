@@ -46,7 +46,7 @@ class CitiesTable extends PTable{
 			)
 		);
 
-		$this->__set( 'mSearchParams', array( ['fields']=>array( 'name', 'country' )));
+		$this->__set( 'mSearchParams', array( 'fields'=>array( 'name', 'country' )));
 		$this->mPaneClassName	= 'AddEditCityPane';
 	}
 //______________________________________________________________________________
