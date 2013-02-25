@@ -80,19 +80,20 @@ abstract class PTable extends Core{
 //------------------//-----------------//-----------------//-------------------/
 
 	/**
-	 * @property string $mSourceDbTable -  Table name which is used for SQL query. Mandatory.
-	 * 		Must contain only one name of table.
+	 * Table name which is used for SQL query to get data. Mandatory. Must contain only one name of table or view.
+	 * @property string $mSourceDbTable
 	 */
 	protected $mSourceDbTable	= '';
 
 	/**
-	 * @property string $mSourceDbTable -  Table name which is used for SQL query. Mandatory.
-	 * 		Must contain only one name of table.
+	 * Table name which is used for SQL query to put data. Must contain only one name of table (not view). Mandatory.
+	 * @property string $mSourceDbTable
 	 */
 	protected $mTargetDbTable	= '';
 
 	/**
-	 * @property array $mColumns[] => array(	-Columns properties. Mandatory.
+	 * contains Columns properties. Mandatory.
+	 * @property array $mColumns[] => array(
 		[field]	-	field name in DB table.  Mandatory.
 
 		[name] -	column name to show in presentation view. Optional. Default value = field value.
@@ -119,28 +120,26 @@ abstract class PTable extends Core{
 	protected $mColumns		= array();
 
 	/**
-	 * @property string $mPgLen - Number of lines in page. Optional.
+	 * Number of lines in page. Optional.
+	 * @property string $mPgLen
 	 */
 	protected $mPgLen		= self::_stdPgLen;
 
 	/**
-	 * @property integer $mMaxGrPg - max number of page items which must be shown in pagination. Optional.
+	 * max number of page items which must be shown in pagination. Optional.
+	 * @property integer $mMaxGrPg
 	 */
 	protected $mMaxGrPg	= self::_stdPgGrpLen;
 
 	/**
-	 * @filesource PTable.php
-	 * @access	protected
-	 * @property boolean $mIsFixHeight - defines if last page must be fixed height or no.
-	 * Must be set to true value if height of last page is fixed one (equals to $mPgLen).
+	 * defines if last page must be fixed height or no. Must be set to true value if height of last page is fixed one (equals to $mPgLen).
+	 * @property boolean $mIsFixHeight
 	 */
 	protected $mIsFixHeight	= FALSE;
 
 	/**
-	 * @filesource PTable.php
-	 * @access	protected
-	 * @property boolean $mIsGrad  - difines if to show lines with differnt back-
-	 * 		ground color. Optional.
+	 * difines if to show lines with differnt back-ground color.
+	 * @property boolean $mIsGrad  -
 	 */
 	protected $mIsGrad	= TRUE;
 
@@ -235,7 +234,6 @@ abstract class PTable extends Core{
 
 	/**
 	 * @property object $mToolPaneObj - Table tool pane
-	 * @
 	 */
 	public $mToolPaneObj;
 
@@ -389,7 +387,7 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-	private function adjustToolPaneButtonsParams(){
+	protected function adjustToolBtns(){
 		$this->mToolPaneButtons	= array(
 			'add'	=> array(
 				'hint'	=> _PPSK_HINT_ADD_ROW,
@@ -466,13 +464,8 @@ abstract class PTable extends Core{
 		$this->adjustPagingParams();
 		$this->adjustColumnsParams();
 		$this->adjustSearchParams();
-		$this->adjustToolPaneButtonsParams();
+		$this->adjustToolBtns();
 		$this->mTargetDbTable	= ( '' == $this->mTargetDbTable ) ? $this->mSourceDbTable : $this->mTargetDbTable;
-	}
-//______________________________________________________________________________
-
-	private function setSearchFields( $fields ){
-		$this->mSearchParams['fields']	= $fields;
 	}
 //______________________________________________________________________________
 
@@ -863,12 +856,12 @@ abstract class PTable extends Core{
 //______________________________________________________________________________
 
 	//	Handlers	<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>
-//TODO: Change for __get
+
 	public function addRowHandler( &$objResponse, $dummy ){
 		$this->setPAddEditPane( $objResponse, NULL );
 	}
 //______________________________________________________________________________
-//TODO: Change for __get
+
 	public function editRowHandler( &$objResponse, $dummy ){
 		$class	= get_class( $this );
 		$this->setPAddEditPane( $objResponse, $_SESSION['tables'][$class]['line_id'] );

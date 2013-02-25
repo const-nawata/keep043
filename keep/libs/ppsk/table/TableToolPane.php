@@ -37,6 +37,9 @@ class TableToolPane extends PPane{
 
 	private function adjustProperties( &$Owner ){
 		foreach( $Owner->mToolPaneButtons as $type => &$button ){
+
+// Log::_log(print_r( $type, TRUE));
+
 			$button['name']		= 'btn_'.$type.$this->mName;
 			$button['css_dis']	= ( !isset( $button['css_dis'] )) ? 'PPSK_'.$type.'RowBtnDisabled' : $button['css_dis'];
 			$button['css_act']	= ( !isset( $button['css_act'] )) ? 'PPSK_'.$type.'RowBtnEnabled' : $button['css_act'];
