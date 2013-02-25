@@ -337,7 +337,7 @@ abstract class PTable extends Core{
 		$class	= get_class( $this );
 		$paging_tool	=
 '<tr>'.
-	'<td colspan="'.count( $this->mColumns ).'" class="'.(isset( $paging['css_panel'] ) ? $paging['css_panel'] : '').'">'.// isset ?????
+	'<td colspan="'.count( $this->mColumns ).'" class="'.(isset( $paging['css_panel'] ) ? $paging['css_panel'] : '').'">'.
 		$this->buildPagingHtmlContent().
 	'</td>'.
 '</tr>';
