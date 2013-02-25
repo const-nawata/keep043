@@ -23,11 +23,12 @@ class tableListController  extends Core{
 //______________________________________________________________________________
 
 	protected function getHtmlContent( $tblObj, $codeName ){
+		$tpane_obj	= $tblObj->__get('mToolPaneObj');
 		return
 '<table cellpadding="0" cellspacing="0">'.
 	'<tr>'.
 		'<td class="Page_Multi_Tables_'.$codeName.'_SearchSellTd">'.$tblObj->mSearchInputObj->getHtmlView().'</td>'.
-		'<td class="Page_Multi_Tables_ToolSellTd">'.$tblObj->mToolPaneObj->getHtmlView().'</td>'.
+		'<td class="Page_Multi_Tables_ToolSellTd">'.$tpane_obj->getHtmlView().'</td>'.
 	'</tr>'.
 
 	'<tr><td colspan="2">'.$tblObj->getHtmlView().'</td></tr>'.
