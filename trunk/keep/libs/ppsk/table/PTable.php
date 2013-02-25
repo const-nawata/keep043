@@ -471,7 +471,7 @@ abstract class PTable extends Core{
 	}
 //______________________________________________________________________________
 
-	protected function setSearchFields( $fields ){
+	private function setSearchFields( $fields ){
 		$this->mSearchParams['fields']	= $fields;
 	}
 //______________________________________________________________________________

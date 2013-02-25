@@ -55,7 +55,7 @@ final class GoodsTable extends PTable{
 
 		);
 
-		$this->setSearchFields( array( 'name', 'cku' ));
+		$this->__set( 'mSearchParams', array( ['fields']=>array( 'name', 'cku' )));
 		$this->mPaneClassName	= 'AddEditGoodsPane';
 	}
 //______________________________________________________________________________
