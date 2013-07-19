@@ -19,22 +19,19 @@ class PDbl extends Core{
 			case  self::_duplicateEntry:
 				$res	= self::getDuplicateEntryParams( $err_dscr );
 
-				foreach( $data as $items ){
+				foreach( $data as $items )
 					if( $items[0] == trim( $res['field'] )){ break; }
-				}
 
 				$res['description']	= sprintf( _PPSK_DB_ERR_DUBLICATE_ENTRY, $res['value'], $items[3] );
 				$res['focus_id']	= $items[2];
 				break;
 
 			case  self::_cannotDelUpdate:
-				$res[ 'description' ]	= _PPSK_DB_ERR_FOREIGN_KEY_CONSTRAINT;
-				$res[ 'focus_id' ]		= '';
+				$res['description']	= _PPSK_DB_ERR_FOREIGN_KEY_CONSTRAINT;
+				$res['focus_id']	= '';
 				break;
 
 			default:
-				//				$res[ 'description' ]	= _MESSAGE_DB_ERROR;
-
 				$res['description']	= 'DB Error. Number: '.$err_no.' / Description: '.$err_dscr." / The whole query is:\n".$sql;
 				$res['focus_id']		= '';
 		}
@@ -51,10 +48,11 @@ class PDbl extends Core{
 		$result = $gl_MysqliObj->query( $sql );
 
 		if( $result ){
-			$list	= array();
-			while( $row = $result->fetch_assoc() ){
+			$list	= [];
+
+			while( $row = $result->fetch_assoc() )
 				$list[] = $row;
-			}
+
 			$result->close();
 
 		}else{
@@ -69,21 +67,22 @@ class PDbl extends Core{
 
 	private function getDuplicateEntryParams( $errDescr ){
 		$err_params	= explode( "'", $errDescr );
-		return array( 'field' => $err_params[ 3 ], 'value' => $err_params[ 1 ] );
+		return [ 'field' => $err_params[3], 'value' => $err_params[1] ];
 	}
 //______________________________________________________________________________
 
 	public function updateRow(){
 		$data	= &$this->mOwner->mSaveData;
-		$sql = "UPDATE `".$this->mOwner->getTargetDbTable()."` SET ";
+		$sql = 'UPDATE `'.$this->mOwner->getTargetDbTable().'` SET ';
 
 		$id	= 'NULL';
-		foreach( $data as $items ){
-			( $items[ 0 ] != 'id' ) ? $sql .=  "`".$items[ 0 ]."` = '".$items[ 1 ]."'," : $id = $items[ 1 ];
-		}
-		$len	= strlen( $sql ) - 1;
-		$sql	= substr( $sql, 0, $len );
-		$sql	.= " WHERE `id` = ".$id;
+
+		$fields	= [];
+		foreach( $data as $items )
+			( $items[0] != 'id' ) ? $fields[] =  "`".$items[0]."`='".$items[1]."'" : $id = $items[1];
+
+		$fields	= implode( ',', $fields );
+		$sql	.= $fields.' WHERE `id`='.$id;
 
 		return $this->execQuery( $sql );
 	}
@@ -92,20 +91,23 @@ class PDbl extends Core{
 	public function addRow(){
 		$data	= &$this->mOwner->mSaveData;
 
-		$sql	="INSERT INTO `".$this->mOwner->getTargetDbTable()."` (";
-		foreach( $data as $items ){
-			$sql .=  "`".$items[ 0 ]."`,";
-		}
-		$len	= strlen( $sql ) - 1;
-		$sql	= substr( $sql, 0, $len );
+		$sql	='INSERT INTO `'.$this->mOwner->getTargetDbTable().'`(';
 
-		$sql	.= ")VALUES(";
-		foreach( $data as $items ){
-			$sql .=  ( !$items[ 1 ] ) ? "NULL," : "'".$items[ 1 ]."',";
-		}
-		$len	= strlen( $sql ) - 1;
-		$sql	= substr( $sql, 0, $len );
-		$sql	.= ")";
+
+		$its	= [];
+		foreach( $data as $items )
+			$its[]	= '`'.$items[0].'`';
+
+		$its	= implode( ',', $its );
+		$sql	.= $its.')VALUES(';
+
+
+		$its	= [];
+		foreach( $data as $items )
+			$its[]	= ( !$items[1] ) ? 'NULL' : "'".$items[1]."'";
+
+		$its	= implode( ',', $its );
+		$sql	.= $its.')';
 
 		return $this->execQuery( $sql );
 	}
@@ -116,7 +118,7 @@ class PDbl extends Core{
 			$sql = 'SHOW COLUMNS FROM '.$tbl;
 			$fields	= $this->execSelectQuery( $sql );
 
-			$item	= array();
+			$item	= [];
 			foreach( $fields as $fld ){
 				$name	= $fld['Field'];
 				$item["$name"]	= NULL;
@@ -131,9 +133,8 @@ class PDbl extends Core{
 	public function getRow( $id, $isSetFields = FALSE ){
 		$tbl	= $this->mOwner->getSourceDbTable();
 
-		if( !(bool)$id && $isSetFields ){
+		if( !(bool)$id && $isSetFields )
 			return $this->getTblNullItem( $tbl, $isSetFields );
-		}
 
 		$sql	= 'SELECT * FROM `'.$tbl.'` WHERE `id`='.$id.' LIMIT 1';
 
@@ -147,12 +148,9 @@ class PDbl extends Core{
 		global $gl_MysqliObj;
 		$res = $gl_MysqliObj->query( $sql );
 
-		if( !$res ){
-			$result	= $this->parserError( $sql );
-		}else{
-			$result	= array( 'is_error' => FALSE, 'id' => $gl_MysqliObj->insert_id );
-		}
-		return $result;
+		return ( !$res )
+			? $this->parserError( $sql )
+			: [ 'is_error' => FALSE, 'id' => $gl_MysqliObj->insert_id ];
 	}
 //______________________________________________________________________________
 
