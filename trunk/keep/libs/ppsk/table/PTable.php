@@ -27,7 +27,7 @@ require_once($gl_PpskPath.'table/TableSearchField.php');
  $this->mMaxPgGroup     = 6;             //  Optionlal. Default = 5
 
  // Paging Properties
- $this->mHints = array(...);   //  Values are set from properties.php if those properties were not defined
+ $this->mHints = [...];   //  Values are set from properties.php if those properties were not defined
 
 
  // Columns Properties
@@ -98,7 +98,7 @@ abstract class PTable extends Core{
 
 		[name] -	column name to show in presentation view. Optional. Default value = field value.
 
-		[is_sort] -	false or true. This parameter is set if column must use sorting functionality. Optional.
+		[is_sort] -	false or TRUE. This parameter is set if column must use sorting functionality. Optional.
 		Default value = false.
 
 		[ttl_css] -	CSS class name to set style properties for title column cell. Optional. Default = empty
@@ -117,7 +117,7 @@ abstract class PTable extends Core{
 		Don't use background-color property in CSS class which name is defined in sll_css value.
 		)
 		*/
-	protected $mColumns		= array();
+	protected $mColumns		= [];
 
 	/**
 	 * Number of lines in page. Optional.
@@ -132,7 +132,7 @@ abstract class PTable extends Core{
 	protected $mMaxGrPg	= self::_stdPgGrpLen;
 
 	/**
-	 * defines if last page must be fixed height or no. Must be set to true value if height of last page is fixed one (equals to $mPgLen).
+	 * defines if last page must be fixed height or no. Must be set to TRUE value if height of last page is fixed one (equals to $mPgLen).
 	 * @property boolean $mIsFixHeight
 	 */
 	protected $mIsFixHeight	= FALSE;
@@ -189,7 +189,7 @@ abstract class PTable extends Core{
 		)
 
 		*/
-	protected $mPaging		= array(
+	protected $mPaging		= [
 		'css_panel'			=> '',
 		'css_info'			=> '',
 		'css_btn'			=> '',
@@ -230,7 +230,7 @@ abstract class PTable extends Core{
 // 	,'emp_gr_img_dis'	=>_EMPTY,
 // 	,'emp_gr_img_ovr'	=>_EMPTY,
 // 	,'emp_gr_hint'		=>_EMPTY
-	);
+	];
 
 	/**
 	 * @property object $mToolPaneObj - Table tool pane
@@ -252,18 +252,18 @@ abstract class PTable extends Core{
 	 * @access	protected
 	 * @property array $mSearchParams
 	 */
-	private $mSearchParams	= array(
-		'fields'	=> array(),
-		'buttons'	=> array(
-			'search'	=> array(
+	private $mSearchParams	= [
+		'fields'	=> [],
+		'buttons'	=> [
+			'search'	=> [
 				'hint'	=> _PPSK_HINT_SEARCH
-			),
+			],
 
-			'clear'		=> array(
+			'clear'		=> [
 				'hint'	=> _PPSK_HINT_SEARCH_CLEAR
-			)
-		)
-	);
+			]
+		]
+	];
 
 	/**
 	 * Table line which is set above title sells.
@@ -277,7 +277,7 @@ abstract class PTable extends Core{
 	 * @access	protected
 	 * @property array $mLevels
 	 */
-	protected $mLevels	= array();
+	protected $mLevels	= [];
 
 	/**
 	 * Name of class of pane for add / edit
@@ -294,6 +294,7 @@ abstract class PTable extends Core{
 	public function __construct( $Owner ){
 		global $gl_PpskPath;
 		$auth_obj = new Authentication();
+
 		if( $auth_obj->isGrantAccess( $this->mLevels ) ){
 			$this->adjustProperties();
 			$this->initSessionInfo();
@@ -306,27 +307,26 @@ abstract class PTable extends Core{
 
 			$class	= get_class( $this );
 			$this->mSearchInputObj	= new TableSearchField( $this, $_SESSION['tables'][$class]['filter'] );
-		}else{
+		}else
 			header( 'Location: '.$gl_PpskPath.'access.php' );
-		}
+
 	}
 //______________________________________________________________________________
 
 	public function __get( $property ){
-		if( property_exists( 'PTable', $property )){
-			return $this->$property;
-		}else{
-			return parent::__get( $property )  ;
-		}
+		return ( property_exists( 'PTable', $property ))
+			? $this->$property
+			: parent::__get( $property )  ;
 	}
 //______________________________________________________________________________
 
 	public function __set( $property, $value=NULL ){
-		if( property_exists( 'PTable', $property )){
+
+		if( property_exists( 'PTable', $property ))
 			$this->$property = $value;
-		}else{
+
+		else
 			parent::__set( $property, $value );
-		}
 	}
 //______________________________________________________________________________
 
@@ -393,36 +393,36 @@ abstract class PTable extends Core{
 //______________________________________________________________________________
 
 	protected function getToolBtns(){
-		return array(
-			'add'	=> array(
+		return [
+			'add'	=> [
 				'hint'	=> _PPSK_HINT_ADD_ROW,
-    			'handlers'	=> array(
-    				'onclick'	=> array(
+    			'handlers'	=> [
+    				'onclick'	=> [
     					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'addRowHandler', get_class( $this )).'",null);'
-    				)
-    			)
-    		),
+    				]
+    			]
+    		],
 
-			'edit'	=> array(
+			'edit'	=> [
 				'hint'	=> _PPSK_HINT_EDIT_ROW,
-    			'handlers'	=> array(
-    				'onclick'	=> array(
+    			'handlers'	=> [
+    				'onclick'	=> [
     					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'editRowHandler', get_class( $this )).'",null);'
-    				)
-    			)
-    		),
+    				]
+    			]
+    		],
 
 
-			'delete'	=> array(
+			'delete'=> [
 				'hint'	=> _PPSK_HINT_DELETE_ROW,
-    			'handlers'	=> array(
-    				'onclick'	=> array(
+    			'handlers'	=> [
+    				'onclick'	=> [
     					'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'showConfirmHandler', get_class( $this )).'",'.
     									'{"message":"'._MESSAGE_IS_DEL_RECORD.'","action":"'.self::encipherFilledValue( 'deleteRowHandler' ).'"});'
-    				)
-    			)
-    		)
-    	);
+    				]
+    			]
+    		]
+    	];
 	}
 //______________________________________________________________________________
 
@@ -431,13 +431,14 @@ abstract class PTable extends Core{
 
 		$class = get_class( $this );
 
-		if( count( $columns ) == 0 ){
+		if( count( $columns ) == 0 )
 			throw new Exception( _EX.'Columns array is empty for object instance: '.$class );
-		}
+
 		foreach( $columns as &$column ){
-			if( !isset( $column['field'] ) || $column['field'] == '' ){
+
+			if( !isset( $column['field'] ) || $column['field'] == '' )
 				throw new Exception( _EX.'Bad column field definition for object instance: '.$class );
-			}
+
 			$column['name']		= ( !isset( $column['name'] ) || $column['name'] == '' ) ? $column['field'] : $column['name'];
 			$column['is_sort']	= ( !isset( $column['is_sort'] )) ? false : $column['is_sort'];
 			$column['bg_clr']	= ( !isset( $column['bg_clr'] ) || $column['bg_clr'] == '' ) ?  _PPSK_WHITE_COLOR : $column['bg_clr'];
@@ -450,18 +451,19 @@ abstract class PTable extends Core{
 
 	private function adjustSearchParams(){
 		$class = get_class( $this );
-		$search	= &$this->mSearchParams;
-		$search['buttons']['search']['handlers']	= array(
-    		'onclick'	=> array(
-    			'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'searchByFilterHandler', get_class( $this ))."\", document.getElementById(\"inp_".$class."_TableSearchField\").value );"
-    		)
-    	);
+		$buttons	= &$this->mSearchParams['buttons'];
 
-        $search['buttons']['clear']['handlers']	= array(
-    		'onclick'	=> array(
-    			'handler'	=> "xajax_onHandler(\"".self::getHandleResourceString( 'searchByFilterHandler', get_class( $this ))."\", \"\");"
-    		)
-    	);
+		$buttons['search']['handlers']	= [
+    		'onclick'	=> [
+    			'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'searchByFilterHandler', get_class( $this )).'", document.getElementById("inp_'.$class.'_TableSearchField").value );'
+    		]
+    	];
+
+        $buttons['clear']['handlers']	= [
+    		'onclick'	=> [
+    			'handler'	=> 'xajax_onHandler("'.self::getHandleResourceString( 'searchByFilterHandler', get_class( $this )).'","");'
+    		]
+    	];
 	}
 //______________________________________________________________________________
 
@@ -526,9 +528,8 @@ abstract class PTable extends Core{
 			}
 			$pg_obj->mNum	= NULL;
 
-			for( $n_page; $n_page < $max_grp_pg_valid; $n_page++ ){
+			for( $n_page; $n_page < $max_grp_pg_valid; $n_page++ )
 				$string .= '<td class="'.$paging['css_btn'].'">&nbsp;</td>';
-			}
 
 			$pg_obj->mBntName	= 'nxt_pg';
 			$string .=
@@ -551,13 +552,13 @@ abstract class PTable extends Core{
 		$cond	= $this->getCondition();
 		$sql		= 'SELECT count(*) AS count FROM `'.$this->mSourceDbTable.'`'.$cond;
 		$db_obj	= new PDbl( $this );
-		$db_obj->execSelectQuery($sql, get_class( $this ).'::countAllRecs');
+		$recs	= $db_obj->execSelectQuery($sql, get_class( $this ).'::countAllRecs');
+		$this->mInfo['n_all'] = $recs[0]['count'];
 	}
 //______________________________________________________________________________
 
 	private function preparePagingData(){
 		$pg_len		= &$this->mPgLen;
-
 		$n_recs		= &$this->mInfo['n_all'];
 		$max_page	= &$this->mInfo['max_page'];
 
@@ -589,7 +590,7 @@ abstract class PTable extends Core{
 		$page_recs	= &$this->mInfo['recs'];
 		$p_recs		= count( $page_recs );
 		for( $i = $p_recs; $i < $this->mPgLen; $i++ ){
-			$page_recs[$i]	= array( 'id' => 0 );
+			$page_recs[$i]	= [ 'id' => 0 ];
 			foreach( $this->mColumns as &$column ){
 				$index	= &$column['field'];
 				$page_recs[$i][$index]	= '&nbsp;';
@@ -604,7 +605,7 @@ abstract class PTable extends Core{
 		$flields	= &$this->mSearchParams['fields'];
 
 		if( '' != $filter && count( $flields) > 0 ){
-			$sql_cond	= array();
+			$sql_cond	= [];
 			foreach( $flields as &$field_name ){
 				$sql_cond[]	= '(`'.$field_name."` LIKE '%".$filter."%')";
 			}
@@ -628,7 +629,7 @@ abstract class PTable extends Core{
 
 		$sql	= 'SELECT `'.$table.'`.`id` AS `id`, ';
 
-		$fields	= array();
+		$fields	= [];
 		foreach( $this->mColumns as &$column ){
 			$field	= $column['field'];
 			$alias	= isset($column['alias']) ? $column['alias'] : $table;
@@ -668,7 +669,7 @@ abstract class PTable extends Core{
 		$class = get_class( $this );
 		$sess_ln_id	= &$_SESSION['tables'][$class]['line_id'];
 
-		$this->mInfo	= array( 'page'=>NULL, 'max_page'=>NULL, 'recs'=>NULL, 'n_all'=>NULL, 'grp_start'=>0, 'max_gr_pg'=> $this->mMaxGrPg );
+		$this->mInfo	= [ 'page'=>NULL, 'max_page'=>NULL, 'recs'=>NULL, 'n_all'=>NULL, 'grp_start'=>0, 'max_gr_pg'=> $this->mMaxGrPg ];
 		$this->preparePagingData();
 		$this->readDataForPage();
 
@@ -809,12 +810,12 @@ abstract class PTable extends Core{
 	protected function initSessionInfo(){
 		$class = get_class( $this );
 		if( !isset( $_SESSION[ 'tables' ][ $class ] ) ){
-			$_SESSION[ 'tables' ][ $class ] = array(
+			$_SESSION['tables'][$class] = [
 				'page'		=> self::_fstPg,
-				'sort'		=> array( 'field' => NULL, 'dir' => 'asc' ),
+				'sort'		=> [ 'field' => NULL, 'dir' => 'asc' ],
 				'line_id'	=> NULL,
-				'filter'	=> _EMPTY
-			);
+				'filter'	=> ''
+			];
 		}
 	}
 //______________________________________________________________________________
@@ -835,17 +836,14 @@ abstract class PTable extends Core{
 			$objResponse->assign( 'inp_'.$class.'_TableSearchField', 'value', $_SESSION['tables'][$class]['filter'] );	//	This necessary for Firefox!!!
 
 			$script	= $info_pane_obj->mJsScript;
-			if( '' != $script ){
+			if( '' != $script )
 				$objResponse->script( $script );
-			}
 
-			if( '' != $info_pane_obj->mInitFocus ){
+			if( '' != $info_pane_obj->mInitFocus )
 				$objResponse->script( 'setFocus("'.$info_pane_obj->mInitFocus.'");' );
-			}
 
-		}else{
+		}else
 			$objResponse = $this->doAccessDenied();
-		}
 	}
 //______________________________________________________________________________
 
@@ -879,9 +877,9 @@ abstract class PTable extends Core{
 		if(	$sort['field'] != $field ){
 			$sort['field']	= $field;
 			$sort['dir']		= 'asc';
-		}else{
+		}else
 			$sort['dir']	= ( $sort[ 'dir' ] == 'asc' ) ? 'desc' : 'asc';
-		}
+
 		$tbl_obj	= new $class( NULL, TRUE );
 		$objResponse->assign( $class.'_container', 'innerHTML', $tbl_obj->getHtmlView() );
 	}
@@ -900,7 +898,7 @@ abstract class PTable extends Core{
 	public function onClickPgBtnHandler( &$objResponse, $page ){
 		$class	= get_class( $this );
 		$_SESSION['tables'][$class]['page']	= $page;
-		$tbl_obj	= new $class( NULL, true );
+		$tbl_obj	= new $class( NULL, TRUE );
 		$objResponse->assign( $class.'_container', 'innerHTML', $tbl_obj->getHtmlView() );
 	}
 //______________________________________________________________________________
@@ -913,9 +911,9 @@ abstract class PTable extends Core{
 		$sess['line_id']= NULL;
 		$sess['filter']	= trim( $filterValue );
 
-		$tbl_obj	= new $class( NULL, true );
+		$tbl_obj	= new $class( NULL, TRUE );
 
-		$objResponse->assign( $class.'_container', 'innerHTML', $tbl_obj->getHtmlView());
+		$objResponse->assign( $class.'_container', 'innerHTML', $tbl_obj->getHtmlView() );
 		$objResponse->assign( 'inp_'.$class.'_TableSearchField', 'value', $sess['filter'] );
 	}
 //______________________________________________________________________________
@@ -932,15 +930,15 @@ abstract class PTable extends Core{
 			$db_obj	= new PDbl( $this );
 			$result	= $db_obj->deleteRow( $_SESSION['tables'][$class]['line_id'] );
 
-			if( $result['is_error'] ){
-				$this->showAlertHandler( $objResponse, array( 'message' => $result['description'], 'focus' => $result['focus_id'] ));
-			}else{
+			if( $result['is_error'] )
+				$this->showAlertHandler( $objResponse, [ 'message' => $result['description'], 'focus' => $result['focus_id'] ] );
+
+			else{
 				$this->initHtmlView( TRUE );
-				$objResponse->assign( $class.'_container', 'innerHTML', $this->getHtmlView());
+				$objResponse->assign( $class.'_container', 'innerHTML', $this->getHtmlView() );
 			}
-		}else{
+		}else
 			$objResponse = $this->doAccessDenied();
-		}
 	}
 //______________________________________________________________________________
 

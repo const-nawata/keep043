@@ -6,7 +6,7 @@ class CitiesTable extends PTable{
 	public function __construct( $Owner = NULL, $isHndl=FALSE, $isInitView=TRUE ){
 		$this->setProperties();
 		parent::__construct( $Owner );
-		if( $isInitView ){ $this->initHtmlView( $isHndl ); }
+		( $isInitView ) ? $this->initHtmlView( $isHndl ):NULL;
 	}
 //______________________________________________________________________________
 
@@ -28,21 +28,21 @@ class CitiesTable extends PTable{
 
 		$this->mColumns	= array(
 			array(
-		    		'field'		=> 'name',
-		    		'name'		=> _CITY,
-	    			'ttl_css'	=> 'cities_viewTblCityTtlTd',
-	    			'sll_css'	=> 'cities_viewTblCityClTd',
-	    			'bg_clr'	=> '#FFF7E2',
-		    		'is_sort'	=> TRUE
+	    		'field'		=> 'name',
+	    		'name'		=> _CITY,
+    			'ttl_css'	=> 'cities_viewTblCityTtlTd',
+    			'sll_css'	=> 'cities_viewTblCityClTd',
+    			'bg_clr'	=> '#FFF7E2',
+	    		'is_sort'	=> TRUE
 			),
 
 			array(
-		    		'field'		=> 'country',
-		    		'name'		=> _COUNTRY,
-	    			'ttl_css'	=> 'cities_viewTblCountryTtlTd',
-	    			'sll_css'	=> 'cities_viewTblCountryClTd',
-	    			'bg_clr'	=> '#FFF7E2',
-		    		'is_sort'	=> TRUE
+	    		'field'		=> 'country',
+	    		'name'		=> _COUNTRY,
+    			'ttl_css'	=> 'cities_viewTblCountryTtlTd',
+    			'sll_css'	=> 'cities_viewTblCountryClTd',
+    			'bg_clr'	=> '#FFF7E2',
+	    		'is_sort'	=> TRUE
 			)
 		);
 
