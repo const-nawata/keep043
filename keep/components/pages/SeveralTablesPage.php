@@ -24,11 +24,9 @@ class SeveralTablesPage extends KeepPage{
 //______________________________________________________________________________
 
 	public function __get( $property ){
-		if( property_exists( 'SeveralTablesPage', $property )){
-			return $this->$property;
-		}else{
-			return parent::__get( $property )  ;
-		}
+		return ( property_exists( 'SeveralTablesPage', $property ))
+			? $this->$property
+			: parent::__get( $property )  ;
 	}
 //______________________________________________________________________________
 

@@ -12,12 +12,11 @@ final class DepGoodsTable extends PTable{
 //______________________________________________________________________________
 
 	public function __get( $property ){
-		if( property_exists( 'DepGoodsTable', $property )){
-			return $this->$property;
-		}else{
-			return parent::__get( $property )  ;
-		}
+		return ( property_exists( 'DepGoodsTable', $property ))
+			? $this->$property
+			: parent::__get( $property )  ;
 	}
+
 //______________________________________________________________________________
 
 	public function __set( $property, $value=NULL ){

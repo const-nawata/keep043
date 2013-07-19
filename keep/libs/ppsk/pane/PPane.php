@@ -64,11 +64,9 @@ class PPane extends Core{
 //----------------------//-----------------------//
 
 	public function __get( $property ){
-		if( property_exists( 'PPane', $property )){
-			return $this->$property;
-		}else{
-			return parent::__get( $property )  ;
-		}
+		return ( property_exists( 'PPane', $property ))
+			? $this->$property
+			: parent::__get( $property )  ;
 	}
 //______________________________________________________________________________
 
