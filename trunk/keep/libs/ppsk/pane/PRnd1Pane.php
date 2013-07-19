@@ -11,13 +11,10 @@ require_once($gl_PpskPath.'pane/PPane.php');
  */
 class PRnd1Pane extends PPane{
 
-
 	public function __get( $property ){
-		if( property_exists( 'PRnd1Pane', $property )){
-			return $this->$property;
-		}else{
-			return parent::__get( $property )  ;
-		}
+		return ( property_exists( 'PRnd1Pane', $property ))
+			? $this->$property
+			: parent::__get( $property )  ;
 	}
 //______________________________________________________________________________
 

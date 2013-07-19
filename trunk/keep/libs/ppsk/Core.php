@@ -51,9 +51,11 @@ abstract class Core{
 //______________________________________________________________________________
 
 	public function __get( $property ){
-		if( property_exists( 'Core', $property )){
+
+		if( property_exists( 'Core', $property ))
 			return $this->$property;
-		}else{
+
+		else{
 			$class = get_class( $this );
 			throw new Exception( 'Undefind property `'.$property.'` was requested in class '.$class.' by __get method.' );
 		}
@@ -61,9 +63,11 @@ abstract class Core{
 //______________________________________________________________________________
 
 	public function __set( $property, $value=NULL ){
-		if( property_exists( $this, $property )){
+
+		if( property_exists( $this, $property ))
 			$this->$property = $value;
-		}else{
+
+		else{
 			$class = get_class( $this );
 			throw new Exception( 'Undefind property `'.$property.'` was requested in class '.$class.' by __set method.' );
 		}

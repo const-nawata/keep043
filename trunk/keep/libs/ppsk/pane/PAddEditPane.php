@@ -68,12 +68,9 @@ abstract class PAddEditPane extends PRnd1Pane{
 //______________________________________________________________________________
 
 	public function __get( $property ){
-		if( property_exists( 'PAddEditPane', $property )){
-
-			return $this->$property;
-		}else{
-			return parent::__get( $property );
-		}
+		return ( property_exists( 'PAddEditPane', $property ))
+			? $this->$property
+			: parent::__get( $property )  ;
 	}
 //______________________________________________________________________________
 

@@ -14,12 +14,11 @@ class TableToolPane extends PPane{
 //______________________________________________________________________________
 
 	public function __get( $property ){
-		if( property_exists( 'TableToolPane', $property )){
-			return $this->$property;
-		}else{
-			return parent::__get( $property )  ;
-		}
+		return ( property_exists( 'TableToolPane', $property ))
+			? $this->$property
+			: parent::__get( $property )  ;
 	}
+
 //______________________________________________________________________________
 
 	public function __set( $property, $value=NULL ){

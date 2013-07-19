@@ -292,10 +292,9 @@ abstract class PTable extends Core{
 	//-----------------//----------------//----------------//-----------------//Methods
 
 	public function __construct( $Owner ){
-		global $gl_PpskPath;
 		$auth_obj = new Authentication();
 
-		if( $auth_obj->isGrantAccess( $this->mLevels ) ){
+		if( $auth_obj->isGrantAccess( $this->mLevels )){
 			$this->adjustProperties();
 			$this->initSessionInfo();
 			parent::__construct( $Owner );
@@ -307,8 +306,10 @@ abstract class PTable extends Core{
 
 			$class	= get_class( $this );
 			$this->mSearchInputObj	= new TableSearchField( $this, $_SESSION['tables'][$class]['filter'] );
-		}else
+		}else{
+			global $gl_PpskPath;
 			header( 'Location: '.$gl_PpskPath.'access.php' );
+		}
 
 	}
 //______________________________________________________________________________
