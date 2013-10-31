@@ -21,3 +21,6 @@ require_once( $gl_Path.'RunApp.php' );
 global $gl_CompsPath; $gl_CompsPath	= $gl_Path.'components/';
 require_once( $gl_CompsPath.'inc_comps.php' );
 
+
+
+
