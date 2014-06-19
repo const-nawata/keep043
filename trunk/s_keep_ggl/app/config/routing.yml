@@ -1,4 +1,0 @@
-demos_blog:
-    resource: "@DemosBlogBundle/Resources/config/routing.xml"
-    prefix:   /
-
