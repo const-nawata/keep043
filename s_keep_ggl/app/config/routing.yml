@@ -1,0 +1,5 @@
+demos_blog:
+    resource: "@DemosBlogBundle/Controller/"
+    type:     annotation
+    prefix:   /blog
+
