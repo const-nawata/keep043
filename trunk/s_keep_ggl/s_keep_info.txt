@@ -4,8 +4,11 @@ http://habrahabr.ru/post/125469/		- familiarization
 
 	
 	
-http://skeep.kc/web/app_dev.php/hello/username
+http://skeep.kc/web/app_dev.php/blog/hello/username
 
 
 Global Secret
-		SKeepNawata043SKeepNawata0433ec895d430377678
+		Nwt043NewSymfNewNwt034Natata
+
+		
+During bundl creation choose "annotation"
