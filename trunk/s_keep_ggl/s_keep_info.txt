@@ -1,0 +1,26 @@
+
+
+http://habrahabr.ru/post/125469/		- familiarization
+
+
+Set php 5.4.29. Get ready instanse in mail.ru Cloud.
+
+Проверить конфигурацию:
+	http://skeep.kc/web/config.php
+	
+И дейсвовать по инструкции.	
+
+	
+	
+http://skeep.kc/web/app_dev.php/hello/username
+
+
+Global Secret
+		SKeepNawata043SKeepNawata0433ec895d430377678
+
+
+
+								Set this additionally in php.ini
+
+[APC]
+apc.cache_by_default = 0
