@@ -1,5 +1,0 @@
-_assetic:
-    resource: .
-    type: assetic
-_app:
-    resource: 'D:/Web/root/s_keep_ggl/app/config/routing_dev.yml'
