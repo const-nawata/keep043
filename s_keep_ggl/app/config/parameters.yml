@@ -1,17 +1,1 @@
-# This file is auto-generated during the composer install
-parameters:
-    database_driver: pdo_mysql
-    database_host: 127.0.0.1
-    database_port: null
-    database_name: symfony
-    database_user: root
-    database_password: null
-    mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
-    locale: en
-    secret: ThisTokenIsNotSoSecretChangeIt
-    debug_toolbar: true
-    debug_redirects: false
-    use_assetic_controller: true
+{ parameters: { database_driver: pdo_mysql, database_host: 127.0.0.1, database_port: null, database_name: s_keep, database_user: nawata, database_password: '043', mailer_transport: smtp, mailer_host: 127.0.0.1, mailer_user: null, mailer_password: null, locale: en, secret: SKeepNawata043SKeepNawata0433ec895d430377678, debug_toolbar: true, debug_redirects: false, use_assetic_controller: true, database_path: null } }
