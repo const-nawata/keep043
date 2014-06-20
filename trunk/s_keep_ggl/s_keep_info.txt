@@ -5,6 +5,7 @@ http://habrahabr.ru/post/125469/		- familiarization
 	
 	
 http://skeep.kc/web/app_dev.php/blog/hello/username
+http://skeep.kc/web/app_dev.php/blog/show/1
 
 
 Global Secret
