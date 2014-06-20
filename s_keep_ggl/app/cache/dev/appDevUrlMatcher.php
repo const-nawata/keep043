@@ -135,9 +135,22 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // demos_blog_default_index
-        if (0 === strpos($pathinfo, '/blog/hello') && preg_match('#^/blog/hello/(?P<name>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'demos_blog_default_index')), array (  '_controller' => 'Demos\\BlogBundle\\Controller\\DefaultController::indexAction',));
+        if (0 === strpos($pathinfo, '/blog')) {
+            // demos_blog_default_index
+            if (0 === strpos($pathinfo, '/blog/hello') && preg_match('#^/blog/hello/(?P<name>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'demos_blog_default_index')), array (  '_controller' => 'Demos\\BlogBundle\\Controller\\DefaultController::indexAction',));
+            }
+
+            // demos_blog_default_create
+            if ($pathinfo === '/blog/create') {
+                return array (  '_controller' => 'Demos\\BlogBundle\\Controller\\DefaultController::createAction',  '_route' => 'demos_blog_default_create',);
+            }
+
+            // demos_blog_default_show
+            if (0 === strpos($pathinfo, '/blog/show') && preg_match('#^/blog/show/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'demos_blog_default_show')), array (  '_controller' => 'Demos\\BlogBundle\\Controller\\DefaultController::showAction',));
+            }
+
         }
 
         // _welcome

@@ -18,3 +18,8 @@ f1ea29,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/hello/nawata,1403167482,2bc
 320c56,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/hello/username,1403170907,31123a
 31123a,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/hello/username,1403170907,
 5303d4,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/blog/hello/username,1403170920,
+ce2a44,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/blog/create,1403181529,
+8f67a1,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/blog/show/1,1403182277,
+cf09d2,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/blog/show/1,1403256194,5ea01e
+5ea01e,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/blog/show/1,1403256194,
+3cc560,127.0.0.1,GET,http://skeep.kc/web/app_dev.php/blog/show/1,1403256237,
