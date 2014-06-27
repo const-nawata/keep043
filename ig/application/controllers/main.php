@@ -8,7 +8,19 @@ class Main extends CI_Controller{
 //------------------------------------------------------------------------------
 
 	public function index(){
-		$this->load->view('main_page');
+
+		$data	= [
+			'title'	=> 'Main page',
+			'heading'	=> 'Title of Main Page'
+		];
+
+// 		$ret	=
+		$this->load->view('main_page', $data, TRUE );
+
+
+// echo "ret:<br />";
+// print_r($ret);
+
 	}
 //------------------------------------------------------------------------------
 
