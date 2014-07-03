@@ -39,7 +39,7 @@
 */
 
 // $route['default_controller'] = "welcome";
-$route['default_controller'] = 'kpp';
+$route['default_controller'] = 'home';
 $route['404_override'] = '';
 
 
