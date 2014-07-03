@@ -9,7 +9,7 @@ class Items extends CI_Model{
 	public function __construct(){
         parent::__construct();
     }
-//------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     public function insertItem( $data ){
     	$this->name	= $data['name'];
@@ -17,7 +17,7 @@ class Items extends CI_Model{
 
     	$this->db->insert( $this->tbl1, $this);
     }
-//------------------------------------------------------------------------------
+//______________________________________________________________________________
 
     public function getItems( $count='all' ){
 
