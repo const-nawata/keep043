@@ -2,6 +2,14 @@
 <html  xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" type="text/javascript"></script>
+
+	<script src="../assets/js/global.js" type="text/javascript"></script>
+
+
+
 	<title><?php echo $title; ?></title>
 </head>
 
@@ -10,7 +18,7 @@
 
 	<div class="wrapper">
 
-		<?php echo $body; ?>
+		<?php echo $body; echo "<br><br><br><br>BASEPATH: ".BASEPATH."<br><br><br>";?>
 
 	</div>
 
