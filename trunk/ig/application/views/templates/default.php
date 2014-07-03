@@ -3,10 +3,10 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js" type="text/javascript"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
-	<script src="../assets/js/global.js" type="text/javascript"></script>
+	<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js' type='text/javascript'></script>
+
 
 
 
@@ -18,9 +18,14 @@
 
 	<div class="wrapper">
 
-		<?php echo $body; echo "<br><br><br><br>BASEPATH: ".BASEPATH."<br><br><br>";?>
+		<?php //echo $body; echo "<br><br><br><br>BASEPATH: ".BASEPATH."<br><br><br>";?>
 
 	</div>
 
 </body>
+
+<script src='//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js'></script>
+
+<script src="../assets/js/global.js" type="text/javascript"></script>
+
 </html>
