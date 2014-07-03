@@ -11,12 +11,20 @@ class Items extends CI_Model{
     }
 //------------------------------------------------------------------------------
 
-    public function insert_item( $data ){
+    public function insertItem( $data ){
     	$this->name	= $data['name'];
     	$this->date	= $data['date'];
 
     	$this->db->insert( $this->tbl1, $this);
     }
 //------------------------------------------------------------------------------
+
+    public function getItems( $count='all' ){
+
+    	$count	= $count=='all' ? NULL : $count;
+    	$query	= $this->db->get( $this->tbl1, $count );
+
+    	return $query->result();
+    }
 
 }//	Class end
