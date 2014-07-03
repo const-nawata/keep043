@@ -17,15 +17,12 @@ class Home extends CI_Controller{
 
 	public function index(){
 
-			$page_data	= [
-				'title'	=> 'Home',
-				'heading'	=> 'Home Page'
-			];
+		$page_data = [
+		    'title' => 'Home',
+			'heading'=> 'Home Page'
+		];
 
-			$this->load->view( 'header', $page_data );
-			$this->load->view( 'home_page', $page_data );
-			$this->load->view( 'footer' );
-
+		$this->template->load( 'default', 'home/index', $page_data );
 	}
 //------------------------------------------------------------------------------
 
@@ -40,7 +37,7 @@ class Home extends CI_Controller{
 
 		$data	= [
 			'name'	=> $name,
-			'date'	=> date('Y-m-d', strtotime($date)),
+			'date'	=> date('Y-m-d', strtotime( $date )),
 		];
 
 		$this->items->insertItem( $data );
@@ -55,12 +52,11 @@ class Home extends CI_Controller{
 
 		$page_data	= [
 			'title'	=> 'Items',
+			'heading'=> 'Items Page',
 			'items'	=> $this->items->getItems( $count )
 		];
 
-		$this->load->view( 'header', $page_data );
-		$this->load->view( 'items_page', $page_data );
-		$this->load->view( 'footer' );
+		$this->template->load( 'default', 'home/items', $page_data );
 	}
 //------------------------------------------------------------------------------
 
