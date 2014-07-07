@@ -1,5 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
+/**
 | -------------------------------------------------------------------
 | AUTO-LOADER
 | -------------------------------------------------------------------
@@ -27,7 +27,7 @@
 |
 */
 
-/*
+/**
 | -------------------------------------------------------------------
 |  Auto-load Packges
 | -------------------------------------------------------------------
@@ -37,10 +37,10 @@
 |
 */
 
-$autoload['packages'] = array();
+$autoload['packages'] = [];
 
 
-/*
+/**
 | -------------------------------------------------------------------
 |  Auto-load Libraries
 | -------------------------------------------------------------------
@@ -52,13 +52,16 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array(
-	'database',
-	'template'
-);
+$autoload['libraries'] = [
+	'database'
+	,'template'
+	,'session'
+	,'javascript'
+// 	,'javascript/jquery'
+];
 
 
-/*
+/**
 | -------------------------------------------------------------------
 |  Auto-load Helper Files
 | -------------------------------------------------------------------
@@ -67,10 +70,14 @@ $autoload['libraries'] = array(
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array();
+$autoload['helper'] = [
+	'url'
+	,'form'
+
+];
 
 
-/*
+/**
 | -------------------------------------------------------------------
 |  Auto-load Config files
 | -------------------------------------------------------------------
@@ -83,10 +90,10 @@ $autoload['helper'] = array();
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = [];
 
 
-/*
+/**
 | -------------------------------------------------------------------
 |  Auto-load Language files
 | -------------------------------------------------------------------
@@ -99,10 +106,10 @@ $autoload['config'] = array();
 |
 */
 
-$autoload['language'] = array();
+$autoload['language'] = [];
 
 
-/*
+/**
 | -------------------------------------------------------------------
 |  Auto-load Models
 | -------------------------------------------------------------------
@@ -112,7 +119,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = [];
 
 
 /* End of file autoload.php */

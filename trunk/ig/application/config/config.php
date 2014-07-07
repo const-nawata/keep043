@@ -1,5 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// $config['javascript_location'] = 'https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js';
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -224,7 +226,7 @@ $config['cache_path'] = 'http://ig.kc/cache/';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = 'mAlAchitE0$3';
 
 /*
 |--------------------------------------------------------------------------
