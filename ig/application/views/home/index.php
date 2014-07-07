@@ -3,6 +3,7 @@
 
 
 	<div><?php echo anchor('home/items', 'All Items');?></div>
+	<div><?php echo anchor('auth/login', 'login');?></div>
 
 	<?php echo form_open('home/login'); ?>
 

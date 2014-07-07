@@ -73,7 +73,7 @@ $autoload['libraries'] = [
 $autoload['helper'] = [
 	'url'
 	,'form'
-
+	,'main'
 ];
 
 
