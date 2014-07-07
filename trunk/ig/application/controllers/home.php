@@ -13,23 +13,14 @@ class Home extends CI_Controller{
 	}
 //------------------------------------------------------------------------------
 
-	private function _get_ext_js(){
-		return ''
-			.$this->javascript->external('https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js')
-			.$this->javascript->external('//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js', TRUE )
-			.$this->javascript->external(base_url().'assets/js/main.js')
-		;
-	}
-//------------------------------------------------------------------------------
-
 	public function index(){
 
 		$page_data = [
 		    'title' => 'Home',
 			'heading'=> 'Home Page'
-			,'external_js'=> $this->_get_ext_js()
+			,'external_js'=> get_ext_js( $this )
 		];
-// 		$this->javascript->click('#nn_btn', "alert('Hello!');");
+		$this->javascript->click('#nn_btn', "alert('Hello!');");
 		$this->javascript->ready('');
 		$this->javascript->compile('script_ready');
 
@@ -65,7 +56,7 @@ class Home extends CI_Controller{
 			'title'	=> 'Items',
 			'heading'=> 'Items Page',
 			'items'	=> $this->items->getItems( $count )
-			,'external_js'=> $this->_get_ext_js()
+			,'external_js'=> get_ext_js( $this )
 		];
 
 		$this->javascript->ready('');
